@@ -1,0 +1,4 @@
+pandas>=1.4.0
+screeninfo>=0.7
+Pillow>9
+openpyxl>3
