@@ -35,7 +35,14 @@ months = {
 
 random_colors = [(102,155,188),(168,198,134),(243,167,18),(41,51,92),(228,87,46),(255,155,113),(255,253,130),(45,48,71),(237,33,124),(27,153,139),(245,213,71),(219,48,105),(20,70,160),(0,0,200),(0,200,0),(200,0,0),(66,217,200),(44,140,153),(50,103,113),(40,70,75),(147,22,33),(208,227,127),(221,185,103),(209,96,61),(34,29,35),(97,87,113),(81,70,99),(77,83,130),(202,207,133),(140,186,128),(101,142,156)]
 
-SCALEFACTOR = ctypes.windll.shcore.GetScaleFactorForDevice(0) / 100
+if platform.system() == "Windows":
+    SCALEFACTOR = ctypes.windll.shcore.GetScaleFactorForDevice(0) / 100
+elif platform.system() == "Darwin": # if OS is mac
+    SCALEFACTOR = 1
+elif platform.system() == "Linux": # if OS is linux
+    SCALEFACTOR = 1
+else: # if OS can't be detected
+    SCALEFACTOR = 1
 
 min_slice = 0.03
 min_slice_image = 0.055

@@ -15,6 +15,7 @@ import operator
 import os
 import ctypes
 import json
+import platform
 
 from screeninfo import get_monitors
 
@@ -35,7 +36,14 @@ months = {
 
 random_colors = [(102,155,188),(168,198,134),(243,167,18),(41,51,92),(228,87,46),(255,155,113),(255,253,130),(45,48,71),(237,33,124),(27,153,139),(245,213,71),(219,48,105),(20,70,160),(0,0,200),(0,200,0),(200,0,0),(66,217,200),(44,140,153),(50,103,113),(40,70,75),(147,22,33),(208,227,127),(221,185,103),(209,96,61),(34,29,35),(97,87,113),(81,70,99),(77,83,130),(202,207,133),(140,186,128),(101,142,156)]
 
-SCALEFACTOR = ctypes.windll.shcore.GetScaleFactorForDevice(0) / 100
+if platform.system() == "Windows":
+    SCALEFACTOR = ctypes.windll.shcore.GetScaleFactorForDevice(0) / 100
+elif platform.system() == "Darwin": # if OS is mac
+    SCALEFACTOR = 1
+elif platform.system() == "Linux": # if OS is linux
+    SCALEFACTOR = 1
+else: # if OS can't be detected
+    SCALEFACTOR = 1
 
 min_slice = 0.03
 min_slice_image = 0.055
@@ -120,20 +128,20 @@ class bar_race(cv.sub_plot):
                 color = None
 
             if fraction > 0.0000001 and bar_number < self.number_of_bars and not name == "Other":
-                self.bars[name] = bar(name=name, canvas=self.canvas, x=self.x_pos + self.width/5, target_y=current_height, color=color, root=self.root, size=int(self.distance), width=fraction*self.width*0.75, radius=0, value=value, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors)
+                self.bars[name] = bar(name=name, canvas=self.canvas, x=self.x_pos + self.width/5, target_y=current_height, color=color, root=self.root, size=int(self.distance), width=fraction*self.width*0.75, radius=0, value=value, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places)
                 current_height = current_height + 3 * self.distance / 2
                 bar_number = bar_number + 1
             else:
                 if self.origin == "n":
                     self.bars[name] = bar(name=name, canvas=self.canvas, x=self.x_pos + self.width / 5,
                                           target_y=-500, color=color, root=self.root,
-                                          size=int(self.distance), width=fraction*self.width*0.75, radius=0, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors)
+                                          size=int(self.distance), width=fraction*self.width*0.75, radius=0, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places)
                 elif self.origin == "s":
                     self.bars[name] = bar(name=name, canvas=self.canvas, x=self.x_pos + self.width / 5,
                                           target_y=self.distance/2 + self.y_pos + (self.number_of_bars) * 3 * self.distance / 2, color=color, root=self.root,
-                                          size=int(self.distance), width=fraction*self.width*0.75, radius=0, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors)
+                                          size=int(self.distance), width=fraction*self.width*0.75, radius=0, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places)
 
-        self.rec = self.canvas.create_rectangle(self.x_pos - 500, self.y_pos + self.height, self.x_pos + self.width + 100, self.y_pos + self.height + 3 * self.distance, fill = cv._from_rgb(self.back_ground_color), outline="")
+        self.rec = self.canvas.create_rectangle(self.x_pos - 0, self.y_pos + self.height, self.x_pos + self.width, self.y_pos + self.height + 1.35 * self.distance, fill = cv._from_rgb(self.back_ground_color), outline="")
 
 
     def update(self, time):
@@ -203,7 +211,7 @@ class bar_race(cv.sub_plot):
 
 class bar():
 
-    def __init__(self, name=None, canvas=None, color=None, root=None, target_y=0, x=100, size=10, width=0, radius=0, value=0, unit=None, display_value=True, multi_colors=None, color_data=None, font_color=(0,0,0), mode=None, colors=None):
+    def __init__(self, name=None, canvas=None, color=None, root=None, target_y=0, x=100, size=10, width=0, radius=0, value=0, unit=None, display_value=True, multi_colors=None, color_data=None, font_color=(0,0,0), mode=None, colors=None, decimal_places=decimal_places):
         self.mass = 2
         self.stiffness = 0.2 * size / 100
         self.damping = 0.6
@@ -219,6 +227,8 @@ class bar():
         else:
             self.unit = ""
             self.money = ""
+
+        self.decimal_places = decimal_places
 
         self.radius = radius
         self.colors = colors
@@ -270,7 +280,7 @@ class bar():
         if not isinstance(color_data, pd.core.series.Series):
             self.has_multi_color_data = False
             self.bar = self._round_rectangle(self.x, self.y + self.size*0.15, self.x + width, self.y + self.size*1.3, fill=self.color, width=0)
-            self.canvas.tag_lower(self.bar)
+            # self.canvas.tag_lower(self.bar)
         else:
             self.has_multi_color_data = False
             for index in color_data.index:
@@ -299,7 +309,7 @@ class bar():
                 self.draw_in_bar = True
                 self.frame_in_bar = 0
                 self.frame_not_in_bar = 0
-                self.value = self.canvas.create_text(self.x + width - self.size*0.25, target_y + (self.size)/3, text=str(self.money) + format(value, ",.{}f".format(decimal_places)) + str(self.unit), anchor="ne", font=self.font, fill=cv._from_rgb((255,255,255)))
+                self.value = self.canvas.create_text(self.x + width - self.size*0.25, target_y + (self.size)/3, text=str(self.money) + format(value, ",.{}f".format(self.decimal_places)) + str(self.unit), anchor="ne", font=self.font, fill=cv._from_rgb((255,255,255)))
             else:
                 self.draw_in_bar = False
                 self.frame_not_in_bar = 0
@@ -307,12 +317,12 @@ class bar():
                 if self.img:
                     self.value = self.canvas.create_text(self.x + width + 0.5 * self.size + self.image_obj.width(), self.y + (self.size) / 3,
                                                          text=str(self.money) + format(value, ",.{}f".format(
-                                                             decimal_places)) + str(self.unit), anchor="nw", font=self.font,
+                                                             self.decimal_places)) + str(self.unit), anchor="nw", font=self.font,
                                                          fill=cv._from_rgb(self.font_color))
                 else:
                     self.value = self.canvas.create_text(self.x + width + 0.25 * self.size, self.y + (self.size) / 3,
                                                          text=str(self.money) + format(value, ",.{}f".format(
-                                                             decimal_places)) + str(self.unit), anchor="nw",
+                                                             self.decimal_places)) + str(self.unit), anchor="nw",
                                                          font=self.font,
                                                          fill=cv._from_rgb(self.font_color))
 
@@ -392,7 +402,7 @@ class bar():
             self.v = self.v + self.a
             self.y = self.y + self.v
 
-            self.last_frame = str(self.money) + format(value, ",.{}f".format(decimal_places)) + str(self.unit) + str(self.x + width + self.size*1.5)
+            self.last_frame = str(self.money) + format(value, ",.{}f".format(self.decimal_places)) + str(self.unit) + str(self.x + width + self.size*1.5)
 
             self.canvas.coords(self.text, self.x - 10, self.y + (self.size)/3)
 
@@ -410,7 +420,7 @@ class bar():
                     self.canvas.itemconfig(self.value, fill=cv._from_rgb(self.font_color), anchor="nw")
 
                 if not self.last_value == value:
-                    self.canvas.itemconfig(self.value, text=str(self.money) + format(value, ",.{}f".format(decimal_places)) + str(self.unit))
+                    self.canvas.itemconfig(self.value, text=str(self.money) + format(value, ",.{}f".format(self.decimal_places)) + str(self.unit))
 
             if abs(target_y - self.y) > 1 or not self.last_width == width:
                 if not self.has_multi_color_data:
@@ -473,7 +483,7 @@ class bar_stripes():
         self.y_min = y_min
         self.y_max = y_max
 
-        self.font = font.Font(family=text_font, size=int(height/50/ SCALEFACTOR), weight="bold")
+        self.font = font.Font(family=text_font, size=int(height/40/SCALEFACTOR), weight="bold")
 
         self.width = width
 
@@ -516,9 +526,11 @@ class bar_stripes():
         else:
             if row.max() > self.current_max:
                 self.current_max = row.max()
+
             max = self.current_max
 
-        self.spacing = cv.calc_spacing(row.max(), self.spacing, self.N)
+
+        self.spacing = cv.calc_spacing(max, self.spacing, self.N)
         # self.spacing = 5
 
         for i in range(1, self.N * 2 + 1):
@@ -526,17 +538,21 @@ class bar_stripes():
             if max == 0:
                 fraction = 0
             else:
-                fraction = value / row.max()
+                if self.allow_decrease:
+                    fraction = value / row.max()
+                else:
+                    fraction = value / max
             x_pos = self.x + fraction * self.width
 
-            if value > row.max():
+            if fraction > 1:
                 self.canvas.itemconfig(self.lines["lines"][i-1], fill="")
                 self.canvas.itemconfig(self.lines["text"][i-1], fill="")
             else:
                 self.canvas.itemconfig(self.lines["lines"][i-1], fill=self.color)
                 self.canvas.itemconfig(self.lines["text"][i-1], text=format(value, ",.{}f".format(decimal_places)), fill=self.color)
+
             self.canvas.coords(self.lines["lines"][i-1], x_pos, self.y_min, x_pos, self.y_max)
             self.canvas.coords(self.lines["text"][i-1], x_pos, self.y_min)
 
-            self.canvas.tag_lower(self.lines["lines"][i-1])
-            self.canvas.tag_lower(self.lines["text"][i-1])
+            # self.canvas.tag_lower(self.lines["lines"][i-1])
+            # self.canvas.tag_lower(self.lines["text"][i-1])

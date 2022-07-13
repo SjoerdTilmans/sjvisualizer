@@ -1,11 +1,12 @@
 import setuptools
+# to make the whl file: python setup.py bdist_wheel --universal
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="sjvisualizer",
-    version="0.0.1",
+    version="0.0.2",
     author="Sjoerd Tilmans",
     author_email="info@sjdataviz.com",
     description="Package to animate your data",
