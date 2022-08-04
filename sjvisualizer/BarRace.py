@@ -255,7 +255,7 @@ class bar():
         self.a = 0
 
         try:
-            img = cv.load_image("assets\\" + self.name.replace("*", "") + ".png", int(1.15*self.size), int(1.15*self.size), root, name)
+            img = cv.load_image("assets\" + self.name.replace("*", "") + ".png", int(1.15*self.size), int(1.15*self.size), root, name)
         except:
             print("No image for {}".format(self.name))
             img = None
