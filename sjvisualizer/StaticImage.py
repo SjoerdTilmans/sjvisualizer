@@ -66,6 +66,30 @@ HEIGHT = monitor.height
 WIDTH = monitor.width
 
 class static_image(sub_plot):
+    """
+    Use this to add static images to your visualization.
+
+    :param canvas: tkinter canvas to draw the graph to
+    :type canvas: tkinter.Canvas
+
+    :param width: width of the image in pixels
+    :type width: int
+
+    :param height: height of the image in pixels
+    :type height: int
+
+    :param x_pos: the x location of the top left pixel of this image
+    :type x_pos: int
+
+    :param y_pos: the y location of the top left pixel of this image
+    :type y_pos: int
+
+    :param file: file location of the image you want to add the canvas, only png files are support
+    :type file: str
+
+    :param on_top: set this to True to always draw this image on top
+    :type on_top: boolean
+    """
 
     def draw(self, *args, **kwargs):
         img = cv.load_image(self.file, self.width, self.height, self.root, self.file)

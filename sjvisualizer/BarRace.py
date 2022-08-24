@@ -48,7 +48,7 @@ else: # if OS can't be detected
 min_slice = 0.03
 min_slice_image = 0.055
 min_slice_percentage_display = 0.055
-decimal_places = 2
+decimal_places = 0
 text_font = "Microsoft JhengHei UI"
 min_color = 20
 max_color = 225
@@ -67,7 +67,54 @@ HEIGHT = monitor.height
 WIDTH = monitor.width
 
 class bar_race(cv.sub_plot):
+    """
+    Class to construct a bar race
 
+    :param canvas: tkinter canvas to draw the graph to
+    :type canvas: tkinter.Canvas
+
+    :param width: width of the plot in pixels, default depends on screen resolution
+    :type width: int
+
+    :param height: height of the plot in pixels, default depends on screen resolution
+    :type height: int
+
+    :param x_pos: the x location of the top left pixel in this plot, default depends on screen resolution
+    :type x_pos: int
+
+    :param y_pos: the y location of the top left pixel in this plot, default depends on screen resolution
+    :type y_pos: int
+
+    :param df: pandas dataframe that holds the data
+    :type df: pandas.DataFrame
+
+    :param colors: dictionary that holds color information for each of the data categories. The key of the dict should
+    corespond to the name of the data category (column). The value of the dict should be the RGB values of the color:
+        {
+            "United States": [
+                23,
+                60,
+                225
+            ]
+        }, default is {}
+    :type colors: dict
+
+    :param unit: unit of the values visualized, default is ""
+    :type unit: str
+
+    :param back_ground_color: color of the background. To hide bars that fall outside of the top X, a square is drawn
+    at the bottom of the visualization. Typically you want this square to match the color of the background. Default is (255,255,255)
+    :type back_ground_color: tuple of length 3 with integers
+
+    :param font_color: font color, default is (0,0,0)
+    :type font_color: tuple of length 3 with integers
+
+    :param sort: should the values of this plot be softed? True/False, default is True
+    :type sort: boolean
+
+    :param number_of_bars: number of bars to display in the animation, default is 10 unless you have less than 10 data categories
+    :type number_of_bars: int
+    """
     def draw(self, time):
         self.distance = self.height / (self.number_of_bars+(self.number_of_bars+1)*0.5)
         self.bars = {}
@@ -141,7 +188,7 @@ class bar_race(cv.sub_plot):
                                           target_y=self.distance/2 + self.y_pos + (self.number_of_bars) * 3 * self.distance / 2, color=color, root=self.root,
                                           size=int(self.distance), width=fraction*self.width*0.75, radius=0, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places)
 
-        self.rec = self.canvas.create_rectangle(self.x_pos - 0, self.y_pos + self.height, self.x_pos + self.width, self.y_pos + self.height + 1.35 * self.distance, fill = cv._from_rgb(self.back_ground_color), outline="")
+        self.rec = self.canvas.create_rectangle(self.x_pos - 25, self.y_pos + self.height, self.x_pos + self.width, self.y_pos + self.height + 1.35 * self.distance, fill = cv._from_rgb(self.back_ground_color), outline="")
 
 
     def update(self, time):

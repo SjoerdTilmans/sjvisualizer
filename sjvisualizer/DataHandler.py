@@ -4,8 +4,18 @@ import os.path
 import numpy
 
 class DataHandler():
+    """Class to handle the data, and interpolate values between each data point"""
 
     def __init__(self, excel_file=None, number_of_frames=0, log_scale=False):
+        """
+        Constructor for DataHandler class
+
+        :param excel_file: source Excel file to get the data
+        :type excel_file: str
+
+        :param number_of_frames: number of frames in your animation. Typically you want to aim for 60*FPS*Duration
+        :type number_of_frames: int
+        """
         self.excel_file = excel_file
         self.number_of_frames = number_of_frames
         self.log_scale = log_scale
@@ -58,8 +68,11 @@ class DataHandler():
         print("Setting column to numerical value for interpolation")
         # set columns to numeric values for interpolation
         for col in temp_df:
-            if not col == "img" and not col == "text":
-                temp_df[col] = pd.to_numeric(temp_df[col])
+            if not isinstance(temp_df[col][0], str):
+                try:
+                    temp_df[col] = pd.to_numeric(temp_df[col])
+                except ValueError:
+                    pass
 
         print("Interpolating")
         try:
