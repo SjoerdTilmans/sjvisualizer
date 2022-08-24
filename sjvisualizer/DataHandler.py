@@ -4,18 +4,15 @@ import os.path
 import numpy
 
 class DataHandler():
-    """Class to handle the data, and interpolate values between each data point"""
+    """Class to handle the data, and interpolate values between each data point
 
+    :param excel_file: source Excel file to get the data
+    :type excel_file: str
+
+    :param number_of_frames: number of frames in your animation. Typically you want to aim for 60*FPS*Duration
+    :type number_of_frames: int
+    """
     def __init__(self, excel_file=None, number_of_frames=0, log_scale=False):
-        """
-        Constructor for DataHandler class
-
-        :param excel_file: source Excel file to get the data
-        :type excel_file: str
-
-        :param number_of_frames: number of frames in your animation. Typically you want to aim for 60*FPS*Duration
-        :type number_of_frames: int
-        """
         self.excel_file = excel_file
         self.number_of_frames = number_of_frames
         self.log_scale = log_scale
