@@ -46,7 +46,7 @@ else: # if OS can't be detected
 min_slice = 0.03
 min_slice_image = 0.055
 min_slice_percentage_display = 0.055
-decimal_places = 2
+decimal_places = 0
 text_font = "Microsoft JhengHei UI"
 min_color = 20
 max_color = 225
@@ -65,9 +65,15 @@ HEIGHT = monitor.height
 WIDTH = monitor.width
 
 class canvas():
+    """Canvas to which all the graphs will be drawn
 
+    :param bg: Background color in RGB, defaults to (255, 255, 255) (white)
+    :type bg: tuple of length 3 with integers"""
     def __init__(self, width=None, height=None, bg=(255, 255, 255), colors={}):
+        """
 
+
+        """
         self.tk = Tk()
         if not width:
             width = WIDTH
@@ -96,6 +102,12 @@ class canvas():
             os.mkdir('assets')
 
     def update(self, time):
+        """
+        Update function that gets called every frame of the animation.
+
+        :param time: time object that corresponds to the frame
+        :type time: datetime object
+        """
         for sub in self.sub_canvas:
             sub.update(time)
 
@@ -103,6 +115,12 @@ class canvas():
         self.tk.update()
 
     def add_sub_plot(self, sub_plot):
+        """
+        Function to add sub plots to this canvas
+
+        :param sub_plot: sub_plot object
+        :type sub_plot: sjvisualizer.Canvas.sub_plot
+        """
         sub_plot.set_root(self.tk)
         self.sub_canvas.append(sub_plot)
 
@@ -111,6 +129,16 @@ class canvas():
         decimal_places = decimals
 
     def play(self, df=None, fps=30):
+        """
+        Main loop of the animation. This function will orchestrate the animation for each time step set in the pandas df
+
+        :param df: pandas data frame to be animated
+        :type df: pandas.DataFrame
+
+        :param fps: frame rate of the animation, defaults to 30 frames per second
+        :type fps: int
+
+        """
         if not df:
             for sub in self.sub_canvas:
                 if not sub.df is None:
@@ -130,14 +158,46 @@ class canvas():
             print("FPS: {}".format(format(1/time_used, ",.{}f".format(decimal_places))))
 
     def add_title(self, text, color=(0, 0, 0)):
+        """
+        Helper function to add a title to your animation.
+
+        :param text: title to be displayed at the top of the visualization
+        :type text: str
+
+        :param color: title color in RGB, defaults to (0, 0, 0) black
+        :type color: tuple of length 3 with integers
+
+        """
         title_font = font.Font(family=text_font, size=int(HEIGHT/30/ SCALEFACTOR), weight="bold")
         self.canvas.create_text(WIDTH/2, HEIGHT/20, font=title_font, text=text, fill=_from_rgb(color))
 
     def add_sub_title(self, text, color=(0, 0, 0)):
+        """
+        Helper function to add a sub title to your animation.
+
+        :param text: sub title to be displayed at the top of the visualization
+        :type text: str
+
+        :param color: sub title color in RGB, defaults to (0, 0, 0) black
+        :type color: tuple of length 3 with integers
+
+        """
         title_font = font.Font(family=text_font, size=int(HEIGHT/45/ SCALEFACTOR), weight="bold")
         self.canvas.create_text(WIDTH/2, HEIGHT/11, font=title_font, text=text, fill=_from_rgb(color))
 
     def add_time(self, df, time_indicator="year", color=(150, 150, 150)):
+        """
+        Helper function to add a timestamp to the visualization
+
+        :param df: pandas dataframe that holds the timestamps as the index
+        :type df: pandas.DataFrame
+
+        :param time_indicator: determine the format of the timestamp, possible values: "day", "month", "year", defaults to "year"
+        :type time_indicator: str
+
+        :param color: text color in RGB, defaults to (150, 150, 150)
+        :type color: tuple of length 3 with integers
+        """
         from sjvisualizer import Date
         sub_plot = Date.date(canvas=self.canvas, start_time=list(df.index)[0], width=0, height=HEIGHT/12,
                                        x_pos=WIDTH/10, y_pos=HEIGHT*0.85, time_indicator=time_indicator,
@@ -145,6 +205,12 @@ class canvas():
         self.add_sub_plot(sub_plot)
 
     def add_logo(self, logo):
+        """
+        Helper function to add a logo
+
+        :param logo: image name of your logo, absolute or relative path
+        :type str
+        """
         from sjvisualizer import StaticImage
         img = StaticImage.static_image(canvas=self.canvas, width=int(WIDTH/15), height=int(WIDTH/15), x_pos=WIDTH*0.95,
                                            y_pos=HEIGHT*0.00,
@@ -152,9 +218,31 @@ class canvas():
         self.add_sub_plot(img)
 
 class sub_plot():
+    """
+    Basic sub_plot class from which all chart types are inherited
 
+    :param canvas: tkinter canvas to draw the graph to
+    :type canvas: tkinter.Canvas
+
+    :param width: width of the plot in pixels
+    :type width: int
+
+    :param height: height of the plot in pixels
+    :type height: int
+
+    :param x_pos: the x location of the top left pixel in this plot
+    :type x_pos: int
+
+    :param y_pos: the y location of the top left pixel in this plot
+    :type y_pos: int
+
+    :param font_color: font color
+    :type font_color: tuple of length 3 with integers
+    """
     def __init__(self, canvas=None, width=None, height=None, x_pos=None, y_pos=None, start_time=None, text=None, df=None, multi_color_df=None, anchor="c", sort=True, colors={}, root=None, display_percentages=True, display_label=True, title=None, invert=False, origin="s", display_value=True, font_color=(0,0,0), back_ground_color=(255,255,255), events=[], time_indicator="year", number_of_bars=None, unit="", x_ticks = 4, y_ticks = 4, log_scale=False, only_show_latest_event=True, allow_decrease=True, format="Europe", draw_points=True, area=True, color_bar_color=[[100, 100, 100], [255, 0, 0]], **kwargs):
+        """
 
+        """
         if width == None:
             self.width = 0.65 * WIDTH
         else:
@@ -322,3 +410,6 @@ def format_date(time, time_indicator, format="Europe"):
             text = str("{} {} {}".format(time.day, months[time.month], time.year))
 
     return text
+
+def hex_to_rgb(h):
+    return tuple(int(h.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4))

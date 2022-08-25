@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="sjvisualizer",
-    version="0.0.2",
+    version="0.0.3",
     author="Sjoerd Tilmans",
     author_email="info@sjdataviz.com",
     description="Package to animate your data",

@@ -4,13 +4,20 @@ import os.path
 import numpy
 
 class DataHandler():
+    """Class to handle the data, and interpolate values between each data point
 
+    :param excel_file: source Excel file to get the data
+    :type excel_file: str
+
+    :param number_of_frames: number of frames in your animation. Typically you want to aim for 60*FPS*Duration
+    :type number_of_frames: int
+    """
     def __init__(self, excel_file=None, number_of_frames=0, log_scale=False):
         self.excel_file = excel_file
         self.number_of_frames = number_of_frames
         self.log_scale = log_scale
 
-        self.cache_location = "_pandas_cache/{}{}.xlsx".format(self.excel_file.split(".")[0].split("/")[1], int(self.number_of_frames))
+        self.cache_location = os.path.join("_pandas_cache","{}{}.xlsx".format(self.excel_file.split(".")[0].split("/")[1], int(self.number_of_frames)))
 
         # making sure last modified date of the cached file is always more recent than the last modified date of the data file
         if os.path.isfile(self.cache_location) and os.path.getmtime(self.cache_location) > os.path.getmtime(excel_file):
@@ -58,8 +65,11 @@ class DataHandler():
         print("Setting column to numerical value for interpolation")
         # set columns to numeric values for interpolation
         for col in temp_df:
-            if not col == "img" and not col == "text":
-                temp_df[col] = pd.to_numeric(temp_df[col])
+            if not isinstance(temp_df[col][0], str):
+                try:
+                    temp_df[col] = pd.to_numeric(temp_df[col])
+                except ValueError:
+                    pass
 
         print("Interpolating")
         try:

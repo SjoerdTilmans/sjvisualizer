@@ -17,7 +17,7 @@ class DataHandler():
         self.number_of_frames = number_of_frames
         self.log_scale = log_scale
 
-        self.cache_location = "_pandas_cache/{}{}.xlsx".format(self.excel_file.split(".")[0].split("/")[1], int(self.number_of_frames))
+        self.cache_location = os.path.join("_pandas_cache","{}{}.xlsx".format(self.excel_file.split(".")[0].split("/")[1], int(self.number_of_frames)))
 
         # making sure last modified date of the cached file is always more recent than the last modified date of the data file
         if os.path.isfile(self.cache_location) and os.path.getmtime(self.cache_location) > os.path.getmtime(excel_file):

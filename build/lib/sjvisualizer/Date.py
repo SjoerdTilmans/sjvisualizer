@@ -67,7 +67,33 @@ HEIGHT = monitor.height
 WIDTH = monitor.width
 
 class date(cv.sub_plot):
+    """
+    Use this to add a timestamp to your visualization.
 
+    :param canvas: tkinter canvas to draw the graph to
+    :type canvas: tkinter.Canvas
+
+    :param width: width of the timestamp in pixels (doesn't change the font size), default depends on screen resolution
+    :type width: int
+
+    :param height: height of the timestamp in pixels, this settings also changes the font size, default depends on screen resolution
+    :type height: int
+
+    :param x_pos: the x location of the top left pixel of the timestamp, default depends on screen resolution
+    :type x_pos: int
+
+    :param y_pos: the y location of the top left pixel of the timestamp, default depends on screen resolution
+    :type y_pos: int
+
+    :param prefix: text to prefix the timestamp, default is "
+    :type prefix: str
+
+    :param time_indicator: format of the timestamp, "day", "month", "year", default is "year"
+    :type time_indicator: str
+
+    :param font_color: font color, default is (0,0,0)
+    :type font_color: tuple of length 3 with integers
+    """
     def draw(self, time):
 
         if not hasattr(self, 'prefix'):
@@ -88,7 +114,6 @@ class date(cv.sub_plot):
         else:
             position = (self.x_pos + self.width/2, self.y_pos + self.height/2)
         self.obj_id = self.canvas.create_text(*position, text=self.prefix + text, font=font.Font(family=text_font, size=int(self.height*0.65/ SCALEFACTOR), weight="bold"), fill=cv._from_rgb(self.font_color), anchor=self.anchor)
-
 
     def update(self, time):
         if self.time_indicator == "year":
