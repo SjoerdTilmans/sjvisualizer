@@ -238,8 +238,8 @@ class pie():
         self.obj_ID2 = self.canvas.create_arc(self.x1 + self.size / 5, self.y1 + self.size / 5, self.x2 - self.size / 5, self.y2 - self.size / 5,
                                               fill=self.color2, start=start, extent=extent, outline="")
 
-        self.font = font.Font(family=text_font, size=int((12 + self.size / 150) / SCALEFACTOR), weight="bold")
-        self.font2 = font.Font(family=text_font, size=int((8 + self.size / 200) / SCALEFACTOR), weight="bold")
+        self.font = font.Font(family=text_font, size=int((12 + self.size / 75) / SCALEFACTOR), weight="bold")
+        self.font2 = font.Font(family=text_font, size=int((8 + self.size / 100) / SCALEFACTOR), weight="bold")
 
         x_dir = math.sin((90 - (self.extent + 2 * self.start) / 2) / 360 * 2 * math.pi)
         y_dir = math.cos((90 - (self.extent + 2 * self.start) / 2) / 360 * 2 * math.pi)
