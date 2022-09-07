@@ -17,10 +17,14 @@ class DataHandler():
         self.number_of_frames = number_of_frames
         self.log_scale = log_scale
 
-        self.cache_location = os.path.join("_pandas_cache","{}{}.xlsx".format(self.excel_file.split(".")[0].split("/")[1], int(self.number_of_frames)))
+        # try to find cached location of the file
+        try:
+            self.cache_location = os.path.join("_pandas_cache","{}{}.xlsx".format(self.excel_file.split(".")[0].split("/")[1], int(self.number_of_frames)))
+        except:
+            self.cache_location = None
 
         # making sure last modified date of the cached file is always more recent than the last modified date of the data file
-        if os.path.isfile(self.cache_location) and os.path.getmtime(self.cache_location) > os.path.getmtime(excel_file):
+        if self.cache_location and os.path.isfile(self.cache_location) and os.path.getmtime(self.cache_location) > os.path.getmtime(excel_file):
             print("Loading cashed data frame {}".format(self.cache_location))
             self._load_file()
         else:
@@ -53,13 +57,13 @@ class DataHandler():
                 print(time)
                 print(index)
                 while time < index:
-                    temp_df = temp_df.append(pd.DataFrame(None, index=[time], columns=self.df.columns))
+                    temp_df = pd.concat([temp_df, pd.DataFrame(None, index=[time], columns=self.df.columns)])
                     time = time + self.dt
 
-                temp_df = temp_df.append(pd.DataFrame([list(row)], index=[index], columns=self.df.columns))
+                temp_df = pd.concat([temp_df, pd.DataFrame([list(row)], index=[index], columns=self.df.columns)])
                 time = index + self.dt
             elif i == 0:
-                temp_df = temp_df.append(pd.DataFrame([list(row)], index=[index], columns=self.df.columns))
+                temp_df = pd.concat([temp_df, pd.DataFrame([list(row)], index=[index], columns=self.df.columns)])
                 time = time + self.dt
 
         print("Setting column to numerical value for interpolation")
@@ -84,7 +88,7 @@ class DataHandler():
         print("Appending values")
         for i in range(1, 60*10):
             time = temp_df.tail(1).index[0] + dt
-            temp_df = temp_df.append(pd.DataFrame([list(row)], index=[time], columns=self.df.columns))
+            temp_df = pd.concat([temp_df, pd.DataFrame([list(row)], index=[time], columns=self.df.columns)])
 
         if self.log_scale:
             temp_df = numpy.log10(temp_df)
@@ -98,7 +102,8 @@ class DataHandler():
         if not os.path.isdir('_pandas_cache'):
             os.mkdir('_pandas_cache')
 
-        temp_df.to_excel(self.cache_location)
+        if self.cache_location:
+            temp_df.to_excel(self.cache_location)
 
 class SizeCompareDataHandler():
 

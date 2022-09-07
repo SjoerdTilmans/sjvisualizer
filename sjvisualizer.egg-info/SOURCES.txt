@@ -3,7 +3,6 @@ README.md
 setup.py
 sjvisualizer/BarRace.py
 sjvisualizer/Canvas.py
-sjvisualizer/DataHandler.py
 sjvisualizer/Date.py
 sjvisualizer/StaticImage.py
 sjvisualizer/__init__.py

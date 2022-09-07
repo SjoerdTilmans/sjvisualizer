@@ -7,6 +7,11 @@
    :members:
    :undoc-members:
    :show-inheritance:
+  
+.. automodule:: sjvisualizer.PieRace
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 .. automodule:: sjvisualizer.DataHandler
    :members:
