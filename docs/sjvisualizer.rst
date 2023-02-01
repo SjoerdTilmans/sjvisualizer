@@ -27,6 +27,11 @@
    :members:
    :undoc-members:
    :show-inheritance:
+  
+.. automodule:: sjvisualizer.StaticText
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 .. automodule:: sjvisualizer
    :members:
