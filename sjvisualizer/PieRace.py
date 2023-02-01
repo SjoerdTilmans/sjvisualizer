@@ -46,7 +46,7 @@ elif platform.system() == "Linux": # if OS is linux
 else: # if OS can't be detected
     SCALEFACTOR = 1
 
-min_slice = 0.03
+min_slice = 0.02
 min_slice_image = 0.055
 min_slice_percentage_display = 0.055
 decimal_places = 2
@@ -413,7 +413,7 @@ class pie():
             if self.display_label and self.text:
                 self.canvas.delete(self.text)
                 self.text = None
-            if self.display_label and self.text2:
+            if self.display_percentages and self.text2:
                 self.canvas.delete(self.text2)
                 self.text2 = None
             if self.display_label and self.line:
