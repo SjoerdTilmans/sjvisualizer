@@ -3,7 +3,7 @@ sjvisualizer is a data visualization and animation library for Python. It curren
 - Bar races
 - Animated pie charts
 
-To learn more about sjvisualizer and see additional examples and full documentation, please visit sjdataviz.com/software.
+To learn more about sjvisualizer and see additional examples and full documentation, please visit my website [https://www.sjdataviz.com/software](sjdataviz.com/software).
 
 If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
 
