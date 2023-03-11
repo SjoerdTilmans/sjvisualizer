@@ -1,4 +1,4 @@
-#sjvisualizer 📊
+# sjvisualizer 📊
 sjvisualizer is a data visualization and animation library for Python. It currently supports the following:
 - Bar races
 - Animated pie charts
@@ -7,7 +7,7 @@ To learn more about sjvisualizer and see additional examples and full documentat
 
 If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
 
-##Installation
+## Installation
 To install sjvisualizer, you can download the latest wheel file from the dist folder of this repository and install it using pip:
 
 ```
@@ -15,7 +15,7 @@ pip install sjvisualizer-<version>-py3-none-any.whl
 ```
 Replace <version> with the actual version number of the wheel file.
 
-##Usage
+## Usage
 ```python
 from sjvisualizer import Canvas
 from sjvisualizer import DataHandler
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     main()
 ```
 
-##Contributing
+## Contributing
 Contributions are always welcome! Here are some ways to get involved:
 
 Create an issue to report a bug or suggest a new feature.
@@ -58,8 +58,8 @@ Fork the repository and create a new branch to work on.
 Submit a pull request to request a merge of your changes.
 Please make sure to write clear commit messages.
 
-##License
+## License
 sjvisualizer is released under the MIT License. See the LICENSE file for more details.
 
-##Contact
+## Contact
 If you have any questions or suggestions regarding sjvisualizer, please don't hesitate to contact us at info@sjdataviz.com.
