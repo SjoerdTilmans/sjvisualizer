@@ -6,7 +6,7 @@ sjvisualizer is a data visualization and animation library for Python. It curren
 More chart types to follow!
 
 There are two ways of learning sjvisualizer:
-- Find additional examples and full documentation on my website https://www.sjdataviz.com/software
+- Find additional examples and full documentation on my [website](https://www.sjdataviz.com/software)
 - Or follow my course on [Udemy](https://www.udemy.com/course/mastering-data-visualization-and-animation-with-python/?referralCode=0F9CC9944C6DD1BA643B)
 
 If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
