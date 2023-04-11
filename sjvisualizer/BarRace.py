@@ -48,7 +48,7 @@ else: # if OS can't be detected
 min_slice = 0.03
 min_slice_image = 0.055
 min_slice_percentage_display = 0.055
-decimal_places = 0
+decimal_places = 1
 text_font = "Microsoft JhengHei UI"
 min_color = 20
 max_color = 225
@@ -135,7 +135,7 @@ class bar_race(cv.sub_plot):
             data = self._get_data_for_frame(time).sort_values(ascending=True)
             names = []
             values = []
-            for name, value in data.iteritems():
+            for name, value in data.items():
                 if abs(value) > 0:
                     names.append(name)
                     values.append(value)
@@ -149,7 +149,7 @@ class bar_race(cv.sub_plot):
 
         if self.mode == "Other":
             sum = data.sum()
-            for name, d in data.iteritems():
+            for name, d in data.items():
                 if d / sum > min_slice:
                     data[name] = 0
 
@@ -167,7 +167,7 @@ class bar_race(cv.sub_plot):
 
         current_height = self.distance/2 + self.y_pos
         bar_number = 0
-        for i, (name, value) in enumerate(data.iteritems()):
+        for i, (name, value) in enumerate(data.items()):
             if not self.invert:
                 fraction = value / data.max()
                 self.current_max = data.max()
@@ -194,7 +194,7 @@ class bar_race(cv.sub_plot):
                                           target_y=self.distance/2 + self.y_pos + (self.number_of_bars) * 3 * self.distance / 2 + self.shift, color=color, root=self.root,
                                           size=int(self.distance), width=fraction*self.width*0.75, radius=0, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places, font_scale=self.font_scale)
 
-        self.rec = self.canvas.create_rectangle(self.x_pos - 125, self.y_pos + self.height + self.shift, self.x_pos + self.width, self.y_pos + self.height + 1.35 * self.distance + self.shift, fill = cv._from_rgb(self.back_ground_color), outline="")
+        self.rec = self.canvas.create_rectangle(self.x_pos - 145, self.y_pos + self.height + self.shift, self.x_pos + self.width, self.y_pos + self.height + 1.35 * self.distance + self.shift, fill = cv._from_rgb(self.back_ground_color), outline="")
 
 
     def update(self, time):
@@ -203,7 +203,7 @@ class bar_race(cv.sub_plot):
             names = []
             values = []
 
-            for name, value in data.iteritems():
+            for name, value in data.items():
                 if abs(value) > 0:
                     names.append(name)
                     values.append(value)
@@ -229,7 +229,7 @@ class bar_race(cv.sub_plot):
             data_multi_color = None
 
         bar_number = 0
-        for i, (name, value) in enumerate(data.iteritems()):
+        for i, (name, value) in enumerate(data.items()):
             if i < 1.5 * self.number_of_bars:
                 if not self.invert:
                     if self.allow_decrease:
@@ -541,7 +541,7 @@ class bar_stripes():
         self.y_min = y_min
         self.y_max = y_max
 
-        self.font = font.Font(family=text_font, size=int(height/60/SCALEFACTOR), weight="bold")
+        self.font = font.Font(family=text_font, size=int(height/40/SCALEFACTOR), weight="bold")
 
         self.width = width
 

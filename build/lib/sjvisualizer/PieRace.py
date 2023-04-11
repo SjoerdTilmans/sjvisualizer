@@ -124,7 +124,7 @@ class pie_plot(sub_plot):
             scale_labels = False
 
         start = 0
-        for i, (name, value) in enumerate(data.iteritems()):
+        for i, (name, value) in enumerate(data.items()):
             if not name == "Other" and not name == "Others":
                 fraction = value/data.sum()
                 if name in self.colors:
@@ -158,7 +158,7 @@ class pie_plot(sub_plot):
             data = self._get_data_for_frame(time)
 
         start = 0
-        for name, value in data.iteritems():
+        for name, value in data.items():
             if not name == "Other" and not name == "Others":
                 fraction = value / data.sum()
                 if fraction > min_slice:

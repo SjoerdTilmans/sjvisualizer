@@ -97,6 +97,10 @@ class DataHandler():
         self.df = temp_df.loc[:, ~temp_df.columns.str.contains('^Unnamed')]
         self.temp_df = temp_df.loc[:, ~temp_df.columns.str.contains('^Unnamed')]
 
+        # replace null values with 0
+        self.df = self.df.fillna(0)
+        temp_df = temp_df.fillna(0)
+
         print("Saving to Excel")
 
         if not os.path.isdir('_pandas_cache'):
