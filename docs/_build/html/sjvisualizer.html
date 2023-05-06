@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; sjvisualizer 0.0.5 documentation</title>
+  <title>&lt;no title&gt; &mdash; sjvisualizer 0.0.7 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -12,10 +12,8 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
@@ -26,18 +24,104 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> sjvisualizer
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            sjvisualizer
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <!-- Local TOC -->
-              <div class="local-toc"><ul class="simple">
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">calc_spacing()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.canvas"><code class="docutils literal notranslate"><span class="pre">canvas</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.canvas.add_logo"><code class="docutils literal notranslate"><span class="pre">canvas.add_logo()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.canvas.add_sub_plot"><code class="docutils literal notranslate"><span class="pre">canvas.add_sub_plot()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.canvas.add_sub_title"><code class="docutils literal notranslate"><span class="pre">canvas.add_sub_title()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.canvas.add_time"><code class="docutils literal notranslate"><span class="pre">canvas.add_time()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.canvas.add_title"><code class="docutils literal notranslate"><span class="pre">canvas.add_title()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.canvas.play"><code class="docutils literal notranslate"><span class="pre">canvas.play()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.canvas.set_decimals"><code class="docutils literal notranslate"><span class="pre">canvas.set_decimals()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.canvas.update"><code class="docutils literal notranslate"><span class="pre">canvas.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.format_date"><code class="docutils literal notranslate"><span class="pre">format_date()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.hex_to_rgb"><code class="docutils literal notranslate"><span class="pre">hex_to_rgb()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.load_image"><code class="docutils literal notranslate"><span class="pre">load_image()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.sub_plot"><code class="docutils literal notranslate"><span class="pre">sub_plot</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.sub_plot.load_image"><code class="docutils literal notranslate"><span class="pre">sub_plot.load_image()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.sub_plot.save_colors"><code class="docutils literal notranslate"><span class="pre">sub_plot.save_colors()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.sub_plot.set_root"><code class="docutils literal notranslate"><span class="pre">sub_plot.set_root()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.sub_plot.update"><code class="docutils literal notranslate"><span class="pre">sub_plot.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.Canvas.truncate"><code class="docutils literal notranslate"><span class="pre">truncate()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.BarRace.bar"><code class="docutils literal notranslate"><span class="pre">bar</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.BarRace.bar.delete"><code class="docutils literal notranslate"><span class="pre">bar.delete()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.BarRace.bar.draw"><code class="docutils literal notranslate"><span class="pre">bar.draw()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.BarRace.bar.update"><code class="docutils literal notranslate"><span class="pre">bar.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.BarRace.bar_race"><code class="docutils literal notranslate"><span class="pre">bar_race</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.BarRace.bar_race.draw"><code class="docutils literal notranslate"><span class="pre">bar_race.draw()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.BarRace.bar_race.update"><code class="docutils literal notranslate"><span class="pre">bar_race.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.BarRace.bar_stripes"><code class="docutils literal notranslate"><span class="pre">bar_stripes</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.BarRace.bar_stripes.draw"><code class="docutils literal notranslate"><span class="pre">bar_stripes.draw()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.BarRace.bar_stripes.update"><code class="docutils literal notranslate"><span class="pre">bar_stripes.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.PieRace.pie"><code class="docutils literal notranslate"><span class="pre">pie</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.PieRace.pie.draw"><code class="docutils literal notranslate"><span class="pre">pie.draw()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.PieRace.pie.update"><code class="docutils literal notranslate"><span class="pre">pie.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.PieRace.pie_plot"><code class="docutils literal notranslate"><span class="pre">pie_plot</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.PieRace.pie_plot.draw"><code class="docutils literal notranslate"><span class="pre">pie_plot.draw()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.PieRace.pie_plot.update"><code class="docutils literal notranslate"><span class="pre">pie_plot.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.DataHandler.DataHandler"><code class="docutils literal notranslate"><span class="pre">DataHandler</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.DataHandler.SizeCompareDataHandler"><code class="docutils literal notranslate"><span class="pre">SizeCompareDataHandler</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Date.date"><code class="docutils literal notranslate"><span class="pre">date</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.Date.date.draw"><code class="docutils literal notranslate"><span class="pre">date.draw()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.Date.date.update"><code class="docutils literal notranslate"><span class="pre">date.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.StaticImage.static_image"><code class="docutils literal notranslate"><span class="pre">static_image</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.StaticImage.static_image.draw"><code class="docutils literal notranslate"><span class="pre">static_image.draw()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.StaticImage.static_image.update"><code class="docutils literal notranslate"><span class="pre">static_image.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.StaticText.static_text"><code class="docutils literal notranslate"><span class="pre">static_text</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.StaticText.static_text.draw"><code class="docutils literal notranslate"><span class="pre">static_text.draw()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.StaticText.static_text.update"><code class="docutils literal notranslate"><span class="pre">static_text.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.StackedBarChart.bar_graph_y_tick"><code class="docutils literal notranslate"><span class="pre">bar_graph_y_tick</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.StackedBarChart.bar_graph_y_tick.draw"><code class="docutils literal notranslate"><span class="pre">bar_graph_y_tick.draw()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.StackedBarChart.bar_graph_y_tick.update"><code class="docutils literal notranslate"><span class="pre">bar_graph_y_tick.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.StackedBarChart.stacked_bar_chart"><code class="docutils literal notranslate"><span class="pre">stacked_bar_chart</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.StackedBarChart.stacked_bar_chart.draw"><code class="docutils literal notranslate"><span class="pre">stacked_bar_chart.draw()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.StackedBarChart.stacked_bar_chart.draw_y_ticks"><code class="docutils literal notranslate"><span class="pre">stacked_bar_chart.draw_y_ticks()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.StackedBarChart.stacked_bar_chart.update"><code class="docutils literal notranslate"><span class="pre">stacked_bar_chart.update()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sjvisualizer.StackedBarChart.stacked_bar_graph_bar"><code class="docutils literal notranslate"><span class="pre">stacked_bar_graph_bar</span></code></a><ul>
+<li><a class="reference internal" href="#sjvisualizer.StackedBarChart.stacked_bar_graph_bar.draw"><code class="docutils literal notranslate"><span class="pre">stacked_bar_graph_bar.draw()</span></code></a></li>
+<li><a class="reference internal" href="#sjvisualizer.StackedBarChart.stacked_bar_graph_bar.update"><code class="docutils literal notranslate"><span class="pre">stacked_bar_graph_bar.update()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </div>
         </div>
@@ -53,8 +137,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>&lt;no title&gt;</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/sjvisualizer.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -75,8 +159,8 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Canvas to which all the graphs will be drawn</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>bg</strong> (<em>tuple of length 3 with integers</em>) – Background color in RGB, defaults to (255, 255, 255) (white)</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bg</strong> (<em>tuple</em><em> of </em><em>length 3 with integers</em>) – Background color in RGB, defaults to (255, 255, 255) (white)</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -84,7 +168,7 @@
 <span class="sig-name descname"><span class="pre">add_logo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/Canvas.html#canvas.add_logo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.Canvas.canvas.add_logo" title="Permalink to this definition"></a></dt>
 <dd><p>Helper function to add a logo</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>logo</strong> – image name of your logo, absolute or relative path</p>
 </dd>
 </dl>
@@ -96,7 +180,7 @@
 <span class="sig-name descname"><span class="pre">add_sub_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub_plot</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/Canvas.html#canvas.add_sub_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.Canvas.canvas.add_sub_plot" title="Permalink to this definition"></a></dt>
 <dd><p>Function to add sub plots to this canvas</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>sub_plot</strong> (<a class="reference internal" href="#sjvisualizer.Canvas.sub_plot" title="sjvisualizer.Canvas.sub_plot"><em>sjvisualizer.Canvas.sub_plot</em></a>) – sub_plot object</p>
 </dd>
 </dl>
@@ -107,10 +191,10 @@
 <span class="sig-name descname"><span class="pre">add_sub_title</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/Canvas.html#canvas.add_sub_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.Canvas.canvas.add_sub_title" title="Permalink to this definition"></a></dt>
 <dd><p>Helper function to add a sub title to your animation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>text</strong> (<em>str</em>) – sub title to be displayed at the top of the visualization</p></li>
-<li><p><strong>color</strong> (<em>tuple of length 3 with integers</em>) – sub title color in RGB, defaults to (0, 0, 0) black</p></li>
+<li><p><strong>color</strong> (<em>tuple</em><em> of </em><em>length 3 with integers</em>) – sub title color in RGB, defaults to (0, 0, 0) black</p></li>
 </ul>
 </dd>
 </dl>
@@ -121,11 +205,11 @@
 <span class="sig-name descname"><span class="pre">add_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_indicator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'year'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(150,</span> <span class="pre">150,</span> <span class="pre">150)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/Canvas.html#canvas.add_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.Canvas.canvas.add_time" title="Permalink to this definition"></a></dt>
 <dd><p>Helper function to add a timestamp to the visualization</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – pandas dataframe that holds the timestamps as the index</p></li>
 <li><p><strong>time_indicator</strong> (<em>str</em>) – determine the format of the timestamp, possible values: “day”, “month”, “year”, defaults to “year”</p></li>
-<li><p><strong>color</strong> (<em>tuple of length 3 with integers</em>) – text color in RGB, defaults to (150, 150, 150)</p></li>
+<li><p><strong>color</strong> (<em>tuple</em><em> of </em><em>length 3 with integers</em>) – text color in RGB, defaults to (150, 150, 150)</p></li>
 </ul>
 </dd>
 </dl>
@@ -136,10 +220,10 @@
 <span class="sig-name descname"><span class="pre">add_title</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/Canvas.html#canvas.add_title"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.Canvas.canvas.add_title" title="Permalink to this definition"></a></dt>
 <dd><p>Helper function to add a title to your animation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>text</strong> (<em>str</em>) – title to be displayed at the top of the visualization</p></li>
-<li><p><strong>color</strong> (<em>tuple of length 3 with integers</em>) – title color in RGB, defaults to (0, 0, 0) black</p></li>
+<li><p><strong>color</strong> (<em>tuple</em><em> of </em><em>length 3 with integers</em>) – title color in RGB, defaults to (0, 0, 0) black</p></li>
 </ul>
 </dd>
 </dl>
@@ -150,7 +234,7 @@
 <span class="sig-name descname"><span class="pre">play</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/Canvas.html#canvas.play"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.Canvas.canvas.play" title="Permalink to this definition"></a></dt>
 <dd><p>Main loop of the animation. This function will orchestrate the animation for each time step set in the pandas df</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – pandas data frame to be animated</p></li>
 <li><p><strong>fps</strong> (<em>int</em>) – frame rate of the animation, defaults to 30 frames per second</p></li>
@@ -169,7 +253,7 @@
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/Canvas.html#canvas.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.Canvas.canvas.update" title="Permalink to this definition"></a></dt>
 <dd><p>Update function that gets called every frame of the animation.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>time</strong> (<em>datetime object</em>) – time object that corresponds to the frame</p>
 </dd>
 </dl>
@@ -198,14 +282,14 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Basic sub_plot class from which all chart types are inherited</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>canvas</strong> (<em>tkinter.Canvas</em>) – tkinter canvas to draw the graph to</p></li>
 <li><p><strong>width</strong> (<em>int</em>) – width of the plot in pixels</p></li>
 <li><p><strong>height</strong> (<em>int</em>) – height of the plot in pixels</p></li>
 <li><p><strong>x_pos</strong> (<em>int</em>) – the x location of the top left pixel in this plot</p></li>
 <li><p><strong>y_pos</strong> (<em>int</em>) – the y location of the top left pixel in this plot</p></li>
-<li><p><strong>font_color</strong> (<em>tuple of length 3 with integers</em>) – font color</p></li>
+<li><p><strong>font_color</strong> (<em>tuple</em><em> of </em><em>length 3 with integers</em>) – font color</p></li>
 </ul>
 </dd>
 </dl>
@@ -238,7 +322,7 @@
 
 <span class="target" id="module-sjvisualizer.BarRace"></span><dl class="py class">
 <dt class="sig sig-object py" id="sjvisualizer.BarRace.bar">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sjvisualizer.BarRace.</span></span><span class="sig-name descname"><span class="pre">bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">canvas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal_places</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/BarRace.html#bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.BarRace.bar" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sjvisualizer.BarRace.</span></span><span class="sig-name descname"><span class="pre">bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">canvas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimal_places</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/BarRace.html#bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.BarRace.bar" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sjvisualizer.BarRace.bar.delete">
@@ -263,7 +347,7 @@
 <dd><p>Bases: <a class="reference internal" href="#sjvisualizer.Canvas.sub_plot" title="sjvisualizer.Canvas.sub_plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub_plot</span></code></a></p>
 <p>Class to construct a bar race</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>canvas</strong> (<em>tkinter.Canvas</em>) – tkinter canvas to draw the graph to</p></li>
 <li><p><strong>width</strong> (<em>int</em>) – width of the plot in pixels, default depends on screen resolution</p></li>
@@ -290,7 +374,7 @@
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>unit</strong> (<em>str</em>) – unit of the values visualized, default is “”</p></li>
 <li><p><strong>back_ground_color</strong> – color of the background. To hide bars that fall outside of the top X, a square is drawn</p></li>
@@ -300,9 +384,9 @@
 <p>at the bottom of the visualization. Typically you want this square to match the color of the background. Default is (255,255,255)
 :type back_ground_color: tuple of length 3 with integers</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>font_color</strong> (<em>tuple of length 3 with integers</em>) – font color, default is (0,0,0)</p></li>
+<li><p><strong>font_color</strong> (<em>tuple</em><em> of </em><em>length 3 with integers</em>) – font color, default is (0,0,0)</p></li>
 <li><p><strong>sort</strong> (<em>boolean</em>) – should the values of this plot be softed? True/False, default is True</p></li>
 <li><p><strong>number_of_bars</strong> (<em>int</em>) – number of bars to display in the animation, default is 10 unless you have less than 10 data categories</p></li>
 </ul>
@@ -358,7 +442,7 @@
 <dd><p>Bases: <a class="reference internal" href="#sjvisualizer.Canvas.sub_plot" title="sjvisualizer.Canvas.sub_plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub_plot</span></code></a></p>
 <p>Class to construct a pie chart race</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>canvas</strong> (<em>tkinter.Canvas</em>) – tkinter canvas to draw the graph to</p></li>
 <li><p><strong>width</strong> (<em>int</em>) – width of the plot in pixels, default depends on screen resolution</p></li>
@@ -385,16 +469,16 @@
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>back_ground_color</strong> – color of the background. To hide bars that fall outside of the top X, a square is drawn</p>
 </dd>
 </dl>
 <p>at the bottom of the visualization. Typically you want this square to match the color of the background. Default is (255,255,255)
 :type back_ground_color: tuple of length 3 with integers</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>font_color</strong> (<em>tuple of length 3 with integers</em>) – font color, default is (0,0,0)</p></li>
+<li><p><strong>font_color</strong> (<em>tuple</em><em> of </em><em>length 3 with integers</em>) – font color, default is (0,0,0)</p></li>
 <li><p><strong>sort</strong> (<em>boolean</em>) – should the values of this plot be softed? True/False, default is True</p></li>
 </ul>
 </dd>
@@ -417,7 +501,7 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class to handle the data, and interpolate values between each data point</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>excel_file</strong> (<em>str</em>) – source Excel file to get the data</p></li>
 <li><p><strong>number_of_frames</strong> (<em>int</em>) – number of frames in your animation. Typically you want to aim for 60*FPS*Duration</p></li>
@@ -438,7 +522,7 @@
 <dd><p>Bases: <a class="reference internal" href="#sjvisualizer.Canvas.sub_plot" title="sjvisualizer.Canvas.sub_plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub_plot</span></code></a></p>
 <p>Use this to add a timestamp to your visualization.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>canvas</strong> (<em>tkinter.Canvas</em>) – tkinter canvas to draw the graph to</p></li>
 <li><p><strong>width</strong> (<em>int</em>) – width of the timestamp in pixels (doesn’t change the font size), default depends on screen resolution</p></li>
@@ -447,7 +531,7 @@
 <li><p><strong>y_pos</strong> (<em>int</em>) – the y location of the top left pixel of the timestamp, default depends on screen resolution</p></li>
 <li><p><strong>prefix</strong> (<em>str</em>) – text to prefix the timestamp, default is “</p></li>
 <li><p><strong>time_indicator</strong> (<em>str</em>) – format of the timestamp, “day”, “month”, “year”, default is “year”</p></li>
-<li><p><strong>font_color</strong> (<em>tuple of length 3 with integers</em>) – font color, default is (0,0,0)</p></li>
+<li><p><strong>font_color</strong> (<em>tuple</em><em> of </em><em>length 3 with integers</em>) – font color, default is (0,0,0)</p></li>
 </ul>
 </dd>
 </dl>
@@ -469,7 +553,7 @@
 <dd><p>Bases: <a class="reference internal" href="#sjvisualizer.Canvas.sub_plot" title="sjvisualizer.Canvas.sub_plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub_plot</span></code></a></p>
 <p>Use this to add static images to your visualization.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>canvas</strong> (<em>tkinter.Canvas</em>) – tkinter canvas to draw the graph to</p></li>
 <li><p><strong>width</strong> (<em>int</em>) – width of the image in pixels</p></li>
@@ -499,7 +583,7 @@
 <dd><p>Bases: <a class="reference internal" href="#sjvisualizer.Canvas.sub_plot" title="sjvisualizer.Canvas.sub_plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub_plot</span></code></a></p>
 <p>Class to add a static text to the visualization</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>text</strong> (<em>str</em>) – text to be displayed, for example a title</p></li>
 <li><p><strong>anchor</strong> (<em>str</em>) – Anchors are used to define where text is positioned relative to a reference point. Possible values correspond wind directions:
@@ -517,7 +601,7 @@ SE</p></li>
 <li><p><strong>height</strong> (<em>int</em>) – height of the text, closely resembles font size</p></li>
 <li><p><strong>x_pos</strong> (<em>int</em>) – the x location of the top left pixel in this plot, default depends on screen resolution</p></li>
 <li><p><strong>y_pos</strong> (<em>int</em>) – the y location of the top left pixel in this plot, default depends on screen resolution</p></li>
-<li><p><strong>font_color</strong> (<em>tuple of length 3 with integers</em>) – font color, default is (0,0,0)</p></li>
+<li><p><strong>font_color</strong> (<em>tuple</em><em> of </em><em>length 3 with integers</em>) – font color, default is (0,0,0)</p></li>
 </ul>
 </dd>
 </dl>
@@ -529,6 +613,96 @@ SE</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="sjvisualizer.StaticText.static_text.update">
 <span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/StaticText.html#static_text.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.StaticText.static_text.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-sjvisualizer.StackedBarChart"></span><dl class="py class">
+<dt class="sig sig-object py" id="sjvisualizer.StackedBarChart.bar_graph_y_tick">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sjvisualizer.StackedBarChart.</span></span><span class="sig-name descname"><span class="pre">bar_graph_y_tick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/StackedBarChart.html#bar_graph_y_tick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.StackedBarChart.bar_graph_y_tick" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sjvisualizer.StackedBarChart.bar_graph_y_tick.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/StackedBarChart.html#bar_graph_y_tick.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.StackedBarChart.bar_graph_y_tick.draw" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sjvisualizer.StackedBarChart.bar_graph_y_tick.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fraction</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/StackedBarChart.html#bar_graph_y_tick.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.StackedBarChart.bar_graph_y_tick.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sjvisualizer.StackedBarChart.stacked_bar_chart">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sjvisualizer.StackedBarChart.</span></span><span class="sig-name descname"><span class="pre">stacked_bar_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pos</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_color_df</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anchor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_percentages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">invert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">back_ground_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(255,</span> <span class="pre">255,</span> <span class="pre">255)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time_indicator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'year'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_bars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_ticks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_ticks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">only_show_latest_event</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_decrease</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Europe'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw_points</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_bar_color</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[[100,</span> <span class="pre">100,</span> <span class="pre">100],</span> <span class="pre">[255,</span> <span class="pre">0,</span> <span class="pre">0]]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/StackedBarChart.html#stacked_bar_chart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.StackedBarChart.stacked_bar_chart" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sjvisualizer.Canvas.sub_plot" title="sjvisualizer.Canvas.sub_plot"><code class="xref py py-class docutils literal notranslate"><span class="pre">sub_plot</span></code></a></p>
+<p>Class to construct an animated stack bar chart</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>canvas</strong> (<em>tkinter.Canvas</em>) – tkinter canvas to draw the graph to</p></li>
+<li><p><strong>width</strong> (<em>int</em>) – width of the plot in pixels, default depends on screen resolution</p></li>
+<li><p><strong>height</strong> (<em>int</em>) – height of the plot in pixels, default depends on screen resolution</p></li>
+<li><p><strong>x_pos</strong> (<em>int</em>) – the x location of the top left pixel in this plot, default depends on screen resolution</p></li>
+<li><p><strong>y_pos</strong> (<em>int</em>) – the y location of the top left pixel in this plot, default depends on screen resolution</p></li>
+<li><p><strong>df</strong> (<em>pandas.DataFrame</em>) – pandas dataframe that holds the data</p></li>
+<li><p><strong>colors</strong> – dictionary that holds color information for each of the data categories. The key of the dict should</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>corespond to the name of the data category (column). The value of the dict should be the RGB values of the color:</dt><dd><dl>
+<dt>{</dt><dd><dl class="simple">
+<dt>“United States”: [</dt><dd><p>23,
+60,
+225</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>}, default is {}</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>unit</strong> (<em>str</em>) – unit of the values visualized, default is “”</p></li>
+<li><p><strong>font_color</strong> (<em>tuple</em><em> of </em><em>length 3 with integers</em>) – font color, default is (0,0,0)</p></li>
+<li><p><strong>number_of_bars</strong> (<em>int</em>) – number of horizontal bars to display in the animation, default is 10.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="sjvisualizer.StackedBarChart.stacked_bar_chart.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/StackedBarChart.html#stacked_bar_chart.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.StackedBarChart.stacked_bar_chart.draw" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sjvisualizer.StackedBarChart.stacked_bar_chart.draw_y_ticks">
+<span class="sig-name descname"><span class="pre">draw_y_ticks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/StackedBarChart.html#stacked_bar_chart.draw_y_ticks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.StackedBarChart.stacked_bar_chart.draw_y_ticks" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sjvisualizer.StackedBarChart.stacked_bar_chart.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/StackedBarChart.html#stacked_bar_chart.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.StackedBarChart.stacked_bar_chart.update" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sjvisualizer.StackedBarChart.stacked_bar_graph_bar">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sjvisualizer.StackedBarChart.</span></span><span class="sig-name descname"><span class="pre">stacked_bar_graph_bar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">canvas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_bars</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/StackedBarChart.html#stacked_bar_graph_bar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.StackedBarChart.stacked_bar_graph_bar" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sjvisualizer.StackedBarChart.stacked_bar_graph_bar.draw">
+<span class="sig-name descname"><span class="pre">draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/StackedBarChart.html#stacked_bar_graph_bar.draw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.StackedBarChart.stacked_bar_graph_bar.draw" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sjvisualizer.StackedBarChart.stacked_bar_graph_bar.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_max_value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sjvisualizer/StackedBarChart.html#stacked_bar_graph_bar.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#sjvisualizer.StackedBarChart.stacked_bar_graph_bar.update" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>

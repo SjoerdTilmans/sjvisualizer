@@ -33,6 +33,11 @@
    :undoc-members:
    :show-inheritance:
 
+.. automodule:: sjvisualizer.StackedBarChart
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 .. automodule:: sjvisualizer
    :members:
    :undoc-members:
