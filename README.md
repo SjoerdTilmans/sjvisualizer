@@ -55,6 +55,9 @@ if __name__ == "__main__":
     main()
 ```
 
+## Support my work
+If you like this project, please consider buying me a cup of coffee on [buymeacoffee](https://www.buymeacoffee.com/SjoerdTilmans).
+    
 ## Contributing
 Contributions are always welcome! Here are some ways to get involved:
 
