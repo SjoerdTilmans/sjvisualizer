@@ -8,7 +8,7 @@ More chart types to follow!
 
 There are two ways of learning sjvisualizer:
 - Find additional examples and full documentation on my [website](https://www.sjdataviz.com/software)
-- Or follow my course on [Udemy](https://www.udemy.com/course/mastering-data-visualization-and-animation-with-python/?referralCode=0F9CC9944C6DD1BA643B)
+- Or follow my course on [Udemy]([https://www.udemy.com/course/mastering-data-visualization-and-animation-with-python/?referralCode=0F9CC9944C6DD1BA643B](https://www.sjdataviz.com/course-link))
 
 If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
 
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     main()
 ```
 
-## Support my work
+## Support this project
 If you like this project, please consider buying me a cup of coffee on [buymeacoffee](https://www.buymeacoffee.com/SjoerdTilmans).
     
 ## Contributing
