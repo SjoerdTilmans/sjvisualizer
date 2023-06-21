@@ -22,7 +22,6 @@ sjvisualizer is now available on pypi! Simply use pip to install it:
 ```
 pip install sjvisualizer
 ```
-Replace <version> with the actual version number of the wheel file.
 
 ## Usage
 ```python
