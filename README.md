@@ -13,10 +13,10 @@ There are two ways of learning sjvisualizer:
 If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
 
 ## Installation
-To install sjvisualizer, you can download the latest wheel file from the dist folder of this repository and install it using pip:
+sjvisualizer is now available on pypi! Simply use pip to install it:
 
 ```
-pip install sjvisualizer-<version>-py3-none-any.whl
+pip install sjvisualizer
 ```
 Replace <version> with the actual version number of the wheel file.
 
