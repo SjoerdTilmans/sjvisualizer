@@ -3,7 +3,7 @@ sjvisualizer is a data visualization and animation library for Python.
 
 https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/91b54d89-78c2-4425-9e75-c942d2457fbf
 
-Please find the catalogue example [here](https://github.com/SjoerdTilmans/sjvisualizer/blob/main/Examples/Catalogue.py) to run the above example. It currently supports the following:
+Please find the catalogue example [here](https://github.com/SjoerdTilmans/sjvisualizer/blob/main/Examples/Catalogue.py) to run the above animation. sjvisualizer currently supports the following chart types:
 - Bar races
 - Animated pie charts
 - Animated stacked bar charts
