@@ -24,6 +24,11 @@ pip install sjvisualizer
 ```
 
 ## Usage
+sjvisualizer is a free and open-source data animation library, please include the following attribution in any publications you use it in.
+```
+Made with sjvisualizer, the open-source data animation library for Python
+```
+## Sample code
 ```python
 from sjvisualizer import Canvas
 from sjvisualizer import DataHandler
@@ -73,4 +78,4 @@ Please make sure to write clear commit messages.
 sjvisualizer is released under the MIT License. See the LICENSE file for more details.
 
 ## Contact
-If you have any questions or suggestions regarding sjvisualizer, please don't hesitate to contact us at info@sjdataviz.com.
+If you have any questions or suggestions regarding sjvisualizer, post it on my [forum](https://www.sjdataviz.com/howto-sjvisualizer).
