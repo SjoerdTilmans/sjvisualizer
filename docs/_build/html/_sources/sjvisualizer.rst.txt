@@ -1,44 +1,51 @@
 .. automodule:: sjvisualizer.Canvas
    :members:
    :undoc-members:
-   :show-inheritance:
 
 .. automodule:: sjvisualizer.BarRace
    :members:
    :undoc-members:
-   :show-inheritance:
   
 .. automodule:: sjvisualizer.PieRace
    :members:
    :undoc-members:
-   :show-inheritance:
+
+.. automodule:: sjvisualizer.LineChart
+   :members:
+   :undoc-members:
+  
+.. automodule:: sjvisualizer.Total
+   :members:
+   :undoc-members:
+
+.. automodule:: sjvisualizer.Legend
+   :members:
+   :undoc-members:
+
+.. automodule:: sjvisualizer.Axis
+   :members:
+   :undoc-members:
 
 .. automodule:: sjvisualizer.DataHandler
    :members:
    :undoc-members:
-   :show-inheritance:
 
 .. automodule:: sjvisualizer.Date
    :members:
    :undoc-members:
-   :show-inheritance:
 
 .. automodule:: sjvisualizer.StaticImage
    :members:
    :undoc-members:
-   :show-inheritance:
   
 .. automodule:: sjvisualizer.StaticText
    :members:
    :undoc-members:
-   :show-inheritance:
 
 .. automodule:: sjvisualizer.StackedBarChart
    :members:
    :undoc-members:
-   :show-inheritance:
 
 .. automodule:: sjvisualizer
    :members:
    :undoc-members:
-   :show-inheritance:

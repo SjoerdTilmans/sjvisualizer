@@ -14,7 +14,7 @@ import sjvisualizer
 project = 'sjvisualizer'
 copyright = '2023, Sjoerd Tilmans'
 author = 'Sjoerd Tilmans'
-release = '0.0.7'
+release = '0.0.8'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sjvisualizer.Canvas &mdash; sjvisualizer 0.0.3 documentation</title>
+  <title>sjvisualizer.Canvas &mdash; sjvisualizer 0.0.8 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -11,10 +11,8 @@
   <![endif]-->
   
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -25,11 +23,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> sjvisualizer
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            sjvisualizer
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -50,9 +52,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>sjvisualizer.Canvas</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sjvisualizer.Canvas</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -63,6 +65,8 @@
              
   <h1>Source code for sjvisualizer.Canvas</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">tkinter</span>
+<span class="kn">import</span> <span class="nn">sjvisualizer</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">import</span> <span class="nn">io</span>
 <span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">font</span>
@@ -129,12 +133,12 @@
 <span class="n">WIDTH</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">width</span>
 
 <div class="viewcode-block" id="canvas"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.Canvas.canvas">[docs]</a><span class="k">class</span> <span class="nc">canvas</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Canvas to which all the graphs will be drawn</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Canvas to which all the graphs will be drawn</span>
 
 <span class="sd">    :param bg: Background color in RGB, defaults to (255, 255, 255) (white)</span>
 <span class="sd">    :type bg: tuple of length 3 with integers&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bg</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">colors</span><span class="o">=</span><span class="p">{}):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -166,7 +170,7 @@
             <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s1">&#39;assets&#39;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="canvas.update"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.Canvas.canvas.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update function that gets called every frame of the animation.</span>
 
 <span class="sd">        :param time: time object that corresponds to the frame</span>
@@ -179,7 +183,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="canvas.add_sub_plot"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.Canvas.canvas.add_sub_plot">[docs]</a>    <span class="k">def</span> <span class="nf">add_sub_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub_plot</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function to add sub plots to this canvas</span>
 
 <span class="sd">        :param sub_plot: sub_plot object</span>
@@ -193,7 +197,7 @@
         <span class="n">decimal_places</span> <span class="o">=</span> <span class="n">decimals</span></div>
 
 <div class="viewcode-block" id="canvas.play"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.Canvas.canvas.play">[docs]</a>    <span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Main loop of the animation. This function will orchestrate the animation for each time step set in the pandas df</span>
 
 <span class="sd">        :param df: pandas data frame to be animated</span>
@@ -222,7 +226,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FPS: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">time_used</span><span class="p">,</span> <span class="s2">&quot;,.</span><span class="si">{}</span><span class="s2">f&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">decimal_places</span><span class="p">))))</span></div>
 
 <div class="viewcode-block" id="canvas.add_title"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.Canvas.canvas.add_title">[docs]</a>    <span class="k">def</span> <span class="nf">add_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function to add a title to your animation.</span>
 
 <span class="sd">        :param text: title to be displayed at the top of the visualization</span>
@@ -232,11 +236,11 @@
 <span class="sd">        :type color: tuple of length 3 with integers</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">title_font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">text_font</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">HEIGHT</span><span class="o">/</span><span class="mi">30</span><span class="o">/</span> <span class="n">SCALEFACTOR</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="n">WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="n">title_font</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">_from_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">))</span></div>
+        <span class="n">title_font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">text_font</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">/</span><span class="mi">30</span><span class="o">/</span> <span class="n">SCALEFACTOR</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">/</span><span class="mi">20</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="n">title_font</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">_from_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="canvas.add_sub_title"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.Canvas.canvas.add_sub_title">[docs]</a>    <span class="k">def</span> <span class="nf">add_sub_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function to add a sub title to your animation.</span>
 
 <span class="sd">        :param text: sub title to be displayed at the top of the visualization</span>
@@ -246,11 +250,11 @@
 <span class="sd">        :type color: tuple of length 3 with integers</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">title_font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">text_font</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">HEIGHT</span><span class="o">/</span><span class="mi">45</span><span class="o">/</span> <span class="n">SCALEFACTOR</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="n">WIDTH</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">HEIGHT</span><span class="o">/</span><span class="mi">11</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="n">title_font</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">_from_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">))</span></div>
+        <span class="n">title_font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">text_font</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">/</span><span class="mi">45</span><span class="o">/</span> <span class="n">SCALEFACTOR</span><span class="p">),</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">/</span><span class="mi">11</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="n">title_font</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">text</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">_from_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="canvas.add_time"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.Canvas.canvas.add_time">[docs]</a>    <span class="k">def</span> <span class="nf">add_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">time_indicator</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">)):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function to add a timestamp to the visualization</span>
 
 <span class="sd">        :param df: pandas dataframe that holds the timestamps as the index</span>
@@ -263,26 +267,26 @@
 <span class="sd">        :type color: tuple of length 3 with integers</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">sjvisualizer</span> <span class="kn">import</span> <span class="n">Date</span>
-        <span class="n">sub_plot</span> <span class="o">=</span> <span class="n">Date</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">canvas</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">HEIGHT</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span>
-                                       <span class="n">x_pos</span><span class="o">=</span><span class="n">WIDTH</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> <span class="n">y_pos</span><span class="o">=</span><span class="n">HEIGHT</span><span class="o">*</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">time_indicator</span><span class="o">=</span><span class="n">time_indicator</span><span class="p">,</span>
+        <span class="n">sub_plot</span> <span class="o">=</span> <span class="n">Date</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="n">canvas</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span>
+                                       <span class="n">x_pos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> <span class="n">y_pos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">*</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">time_indicator</span><span class="o">=</span><span class="n">time_indicator</span><span class="p">,</span>
                                        <span class="n">font_color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_sub_plot</span><span class="p">(</span><span class="n">sub_plot</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="canvas.add_logo"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.Canvas.canvas.add_logo">[docs]</a>    <span class="k">def</span> <span class="nf">add_logo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logo</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function to add a logo</span>
 
 <span class="sd">        :param logo: image name of your logo, absolute or relative path</span>
 <span class="sd">        :type str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">sjvisualizer</span> <span class="kn">import</span> <span class="n">StaticImage</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">StaticImage</span><span class="o">.</span><span class="n">static_image</span><span class="p">(</span><span class="n">canvas</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">WIDTH</span><span class="o">/</span><span class="mi">15</span><span class="p">),</span> <span class="n">height</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">WIDTH</span><span class="o">/</span><span class="mi">15</span><span class="p">),</span> <span class="n">x_pos</span><span class="o">=</span><span class="n">WIDTH</span><span class="o">*</span><span class="mf">0.95</span><span class="p">,</span>
-                                           <span class="n">y_pos</span><span class="o">=</span><span class="n">HEIGHT</span><span class="o">*</span><span class="mf">0.00</span><span class="p">,</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">StaticImage</span><span class="o">.</span><span class="n">static_image</span><span class="p">(</span><span class="n">canvas</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">15</span><span class="p">),</span> <span class="n">height</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">15</span><span class="p">),</span> <span class="n">x_pos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="o">*</span><span class="mf">0.95</span><span class="p">,</span>
+                                           <span class="n">y_pos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">*</span><span class="mf">0.00</span><span class="p">,</span>
                                            <span class="n">file</span><span class="o">=</span><span class="n">logo</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tk</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;ne&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_sub_plot</span><span class="p">(</span><span class="n">img</span><span class="p">)</span></div></div>
 
 <div class="viewcode-block" id="sub_plot"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.Canvas.sub_plot">[docs]</a><span class="k">class</span> <span class="nc">sub_plot</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Basic sub_plot class from which all chart types are inherited</span>
 
 <span class="sd">    :param canvas: tkinter canvas to draw the graph to</span>
@@ -303,8 +307,8 @@
 <span class="sd">    :param font_color: font color</span>
 <span class="sd">    :type font_color: tuple of length 3 with integers</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canvas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multi_color_df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">{},</span> <span class="n">root</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">display_percentages</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">display_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="n">display_value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">back_ground_color</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span> <span class="n">events</span><span class="o">=</span><span class="p">[],</span> <span class="n">time_indicator</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">number_of_bars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">x_ticks</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">y_ticks</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">log_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">only_show_latest_event</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">allow_decrease</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;Europe&quot;</span><span class="p">,</span> <span class="n">draw_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color_bar_color</span><span class="o">=</span><span class="p">[[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">canvas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">x_pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_pos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start_time</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multi_color_df</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">{},</span> <span class="n">root</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">display_percentages</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">display_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">,</span> <span class="n">display_value</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">back_ground_color</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span> <span class="n">events</span><span class="o">=</span><span class="p">{},</span> <span class="n">time_indicator</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">number_of_bars</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">x_ticks</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">y_ticks</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">log_scale</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">only_show_latest_event</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">allow_decrease</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;Europe&quot;</span><span class="p">,</span> <span class="n">draw_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">area</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color_bar_color</span><span class="o">=</span><span class="p">[[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">width</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
@@ -339,7 +343,15 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">allow_decrease</span> <span class="o">=</span> <span class="n">allow_decrease</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">canvas</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">tkinter</span><span class="o">.</span><span class="n">Canvas</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">canvas</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sjcanvas</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">sjvisualizer</span><span class="o">.</span><span class="n">Canvas</span><span class="o">.</span><span class="n">canvas</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">canvas</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sjcanvas</span> <span class="o">=</span> <span class="n">canvas</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="s2">&quot;Please set the canvas to a tkinter.Canvas or sjvisualizer.Canvas&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="n">colors</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">invert</span> <span class="o">=</span> <span class="n">invert</span>
@@ -486,7 +498,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Sjoerd Tilmans.</p>
+    <p>&#169; Copyright 2023, Sjoerd Tilmans.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

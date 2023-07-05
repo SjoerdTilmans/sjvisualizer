@@ -63,8 +63,8 @@
 
 
 \title{sjvisualizer}
-\date{May 03, 2023}
-\release{0.0.7}
+\date{Jul 05, 2023}
+\release{0.0.8}
 \author{Sjoerd Tilmans}
 \newcommand{\sphinxlogo}{\vbox{}}
 \renewcommand{\releasename}{Release}
@@ -116,9 +116,6 @@
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Canvas.}}\sphinxbfcode{\sphinxupquote{canvas}}}{\sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{bg}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}}{}
 \pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{object}}
-
 \sphinxAtStartPar
 Canvas to which all the graphs will be drawn
 \begin{quote}\begin{description}
@@ -332,11 +329,8 @@ Update function that gets called every frame of the animation.
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.Canvas.sub_plot}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Canvas.}}\sphinxbfcode{\sphinxupquote{sub\_plot}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{{[}{]}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Canvas.}}\sphinxbfcode{\sphinxupquote{sub\_plot}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
 \pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{object}}
-
 \sphinxAtStartPar
 Basic sub\_plot class from which all chart types are inherited
 \begin{quote}\begin{description}
@@ -422,10 +416,7 @@ Basic sub\_plot class from which all chart types are inherited
 \phantomsection\label{\detokenize{index:sjvisualizer.BarRace.bar}}
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.BarRace.}}\sphinxbfcode{\sphinxupquote{bar}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{color}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{target\_y}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{x}\DUrole{o,o}{=}\DUrole{default_value}{100}}, \sphinxparam{\DUrole{n,n}{size}\DUrole{o,o}{=}\DUrole{default_value}{10}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{radius}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{value}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{multi\_colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{color\_data}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{mode}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{decimal\_places}\DUrole{o,o}{=}\DUrole{default_value}{1}}, \sphinxparam{\DUrole{n,n}{font\_scale}\DUrole{o,o}{=}\DUrole{default_value}{1}}}{}
-\pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{object}}
-\index{delete() (sjvisualizer.BarRace.bar method)@\spxentry{delete()}\spxextra{sjvisualizer.BarRace.bar method}}
+\pysigstopsignatures\index{delete() (sjvisualizer.BarRace.bar method)@\spxentry{delete()}\spxextra{sjvisualizer.BarRace.bar method}}
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.BarRace.bar.delete}}
@@ -460,11 +451,8 @@ Bases: \sphinxcode{\sphinxupquote{object}}
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.BarRace.bar_race}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.BarRace.}}\sphinxbfcode{\sphinxupquote{bar\_race}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{{[}{]}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.BarRace.}}\sphinxbfcode{\sphinxupquote{bar\_race}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
 \pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{sub\_plot}}
-
 \sphinxAtStartPar
 Class to construct a bar race
 \begin{quote}\begin{description}
@@ -581,10 +569,7 @@ at the bottom of the visualization. Typically you want this square to match the 
 \phantomsection\label{\detokenize{index:sjvisualizer.BarRace.bar_stripes}}
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.BarRace.}}\sphinxbfcode{\sphinxupquote{bar\_stripes}}}{\sphinxparam{\DUrole{n,n}{canvas}}, \sphinxparam{\DUrole{n,n}{y\_min}}, \sphinxparam{\DUrole{n,n}{y\_max}}, \sphinxparam{\DUrole{n,n}{row}}, \sphinxparam{\DUrole{n,n}{x}}, \sphinxparam{\DUrole{n,n}{width}}, \sphinxparam{\DUrole{n,n}{height}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}}, \sphinxparam{\DUrole{n,n}{invert}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}}{}
-\pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{object}}
-\index{draw() (sjvisualizer.BarRace.bar\_stripes method)@\spxentry{draw()}\spxextra{sjvisualizer.BarRace.bar\_stripes method}}
+\pysigstopsignatures\index{draw() (sjvisualizer.BarRace.bar\_stripes method)@\spxentry{draw()}\spxextra{sjvisualizer.BarRace.bar\_stripes method}}
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.BarRace.bar_stripes.draw}}
@@ -611,10 +596,7 @@ Bases: \sphinxcode{\sphinxupquote{object}}
 \phantomsection\label{\detokenize{index:sjvisualizer.PieRace.pie}}
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.PieRace.}}\sphinxbfcode{\sphinxupquote{pie}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x1}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{y1}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{x2}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{y2}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{start}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{extent}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{color}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{load\_img}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{scale\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}}{}
-\pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{object}}
-\index{draw() (sjvisualizer.PieRace.pie method)@\spxentry{draw()}\spxextra{sjvisualizer.PieRace.pie method}}
+\pysigstopsignatures\index{draw() (sjvisualizer.PieRace.pie method)@\spxentry{draw()}\spxextra{sjvisualizer.PieRace.pie method}}
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.PieRace.pie.draw}}
@@ -640,11 +622,8 @@ Bases: \sphinxcode{\sphinxupquote{object}}
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.PieRace.pie_plot}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.PieRace.}}\sphinxbfcode{\sphinxupquote{pie\_plot}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{{[}{]}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.PieRace.}}\sphinxbfcode{\sphinxupquote{pie\_plot}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
 \pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{sub\_plot}}
-
 \sphinxAtStartPar
 Class to construct a pie chart race
 \begin{quote}\begin{description}
@@ -744,6 +723,431 @@ at the bottom of the visualization. Typically you want this square to match the 
 
 \end{fulllineitems}
 
+\phantomsection\label{\detokenize{index:module-sjvisualizer.LineChart}}\index{module@\spxentry{module}!sjvisualizer.LineChart@\spxentry{sjvisualizer.LineChart}}\index{sjvisualizer.LineChart@\spxentry{sjvisualizer.LineChart}!module@\spxentry{module}}\index{event (class in sjvisualizer.LineChart)@\spxentry{event}\spxextra{class in sjvisualizer.LineChart}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.LineChart.event}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.LineChart.}}\sphinxbfcode{\sphinxupquote{event}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_date}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{end\_date}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{color}\DUrole{o,o}{=}\DUrole{default_value}{(225, 225, 225)}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{font\_size}\DUrole{o,o}{=}\DUrole{default_value}{12}}, \sphinxparam{\DUrole{n,n}{text\_font}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Microsoft JhengHei UI\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{parent}\DUrole{o,o}{=}\DUrole{default_value}{None}}}{}
+\pysigstopsignatures\index{draw() (sjvisualizer.LineChart.event method)@\spxentry{draw()}\spxextra{sjvisualizer.LineChart.event method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.LineChart.event.draw}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{draw}}}{}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{update() (sjvisualizer.LineChart.event method)@\spxentry{update()}\spxextra{sjvisualizer.LineChart.event method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.LineChart.event.update}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{date}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{line (class in sjvisualizer.LineChart)@\spxentry{line}\spxextra{class in sjvisualizer.LineChart}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.LineChart.line}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.LineChart.}}\sphinxbfcode{\sphinxupquote{line}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{value}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{xaxis}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{yaxis}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{chart}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{False}}}{}
+\pysigstopsignatures\index{draw() (sjvisualizer.LineChart.line method)@\spxentry{draw()}\spxextra{sjvisualizer.LineChart.line method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.LineChart.line.draw}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{draw}}}{\sphinxparam{\DUrole{n,n}{value}}, \sphinxparam{\DUrole{n,n}{time}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{remove\_points() (sjvisualizer.LineChart.line method)@\spxentry{remove\_points()}\spxextra{sjvisualizer.LineChart.line method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.LineChart.line.remove_points}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{remove\_points}}}{}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{update() (sjvisualizer.LineChart.line method)@\spxentry{update()}\spxextra{sjvisualizer.LineChart.line method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.LineChart.line.update}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{value}}, \sphinxparam{\DUrole{n,n}{time}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{line\_chart (class in sjvisualizer.LineChart)@\spxentry{line\_chart}\spxextra{class in sjvisualizer.LineChart}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.LineChart.line_chart}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.LineChart.}}\sphinxbfcode{\sphinxupquote{line\_chart}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
+\pysigstopsignatures
+\sphinxAtStartPar
+Class to construct an animated area graph
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{canvas}} (\sphinxstyleliteralemphasis{\sphinxupquote{tkinter.Canvas}}) \textendash{} tkinter canvas to draw the graph to
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{width}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} width of the plot in pixels, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{height}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} height of the plot in pixels, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{x\_pos}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} the x location of the top left pixel in this plot, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{y\_pos}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} the y location of the top left pixel in this plot, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{df}} (\sphinxstyleliteralemphasis{\sphinxupquote{pandas.DataFrame}}) \textendash{} pandas dataframe that holds the data
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{colors}} \textendash{} dictionary that holds color information for each of the data categories. The key of the dict should
+
+\end{itemize}
+
+\end{description}\end{quote}
+\begin{description}
+\sphinxlineitem{corespond to the name of the data category (column). The value of the dict should be the RGB values of the color:}\begin{description}
+\sphinxlineitem{\{}\begin{description}
+\sphinxlineitem{“United States”: {[}}
+\sphinxAtStartPar
+23,
+60,
+225
+
+\end{description}
+
+\sphinxAtStartPar
+{]}
+
+\end{description}
+
+\sphinxAtStartPar
+\}, default is \{\}
+
+\end{description}
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ of }}\sphinxstyleliteralemphasis{\sphinxupquote{length 3 with integers}}) \textendash{} font color, default is (0,0,0)
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_size}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} font size, in pixels
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{draw\_points}} (\sphinxstyleliteralemphasis{\sphinxupquote{boolean}}) \textendash{} if set to True, the script will draw markers for each line, this may impact performance
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{time\_indicator}} (\sphinxstyleliteralemphasis{\sphinxupquote{str}}) \textendash{} format of the timestamp, “day”, “month”, “year”, default is “year”
+
+\end{itemize}
+
+\sphinxlineitem{Parem events}
+\sphinxAtStartPar
+dictionary to add additional context to the line chart. For example to indicate events in time. Example:
+
+\end{description}\end{quote}
+\begin{description}
+\sphinxlineitem{events = \{}
+\sphinxAtStartPar
+“\{EVENT NAME\}”: {[}“START DATE DD/MM/YYYY”, “END DATE DD/MM/YYYY”{]},
+“Event 1”: {[}“28/01/2017”, “28/01/2018”{]},
+“Event 2”: {[}“28/01/2019”, “28/01/2020”{]},
+“Last event”: {[}“28/05/2020”, “28/01/2021”{]}
+
+\end{description}
+
+\sphinxAtStartPar
+\}
+:type events: dict
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{draw\_all\_events}} (\sphinxstyleliteralemphasis{\sphinxupquote{boolean}}) \textendash{} by default only the label will be added to the most recent event. Set this value to True to keep the labels for all events
+
+\end{description}\end{quote}
+\index{draw() (sjvisualizer.LineChart.line\_chart method)@\spxentry{draw()}\spxextra{sjvisualizer.LineChart.line\_chart method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.LineChart.line_chart.draw}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{draw}}}{\sphinxparam{\DUrole{n,n}{time}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{update() (sjvisualizer.LineChart.line\_chart method)@\spxentry{update()}\spxextra{sjvisualizer.LineChart.line\_chart method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.LineChart.line_chart.update}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{time}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\phantomsection\label{\detokenize{index:module-sjvisualizer.Total}}\index{module@\spxentry{module}!sjvisualizer.Total@\spxentry{sjvisualizer.Total}}\index{sjvisualizer.Total@\spxentry{sjvisualizer.Total}!module@\spxentry{module}}\index{total (class in sjvisualizer.Total)@\spxentry{total}\spxextra{class in sjvisualizer.Total}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Total.total}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Total.}}\sphinxbfcode{\sphinxupquote{total}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
+\pysigstopsignatures\index{draw() (sjvisualizer.Total.total method)@\spxentry{draw()}\spxextra{sjvisualizer.Total.total method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Total.total.draw}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{draw}}}{\sphinxparam{\DUrole{n,n}{time}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{update() (sjvisualizer.Total.total method)@\spxentry{update()}\spxextra{sjvisualizer.Total.total method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Total.total.update}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{time}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\phantomsection\label{\detokenize{index:module-sjvisualizer.Legend}}\index{module@\spxentry{module}!sjvisualizer.Legend@\spxentry{sjvisualizer.Legend}}\index{sjvisualizer.Legend@\spxentry{sjvisualizer.Legend}!module@\spxentry{module}}\index{elem (class in sjvisualizer.Legend)@\spxentry{elem}\spxextra{class in sjvisualizer.Legend}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Legend.elem}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Legend.}}\sphinxbfcode{\sphinxupquote{elem}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{parent}\DUrole{o,o}{=}\DUrole{default_value}{None}}}{}
+\pysigstopsignatures\index{calc\_position() (sjvisualizer.Legend.elem method)@\spxentry{calc\_position()}\spxextra{sjvisualizer.Legend.elem method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Legend.elem.calc_position}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{calc\_position}}}{\sphinxparam{\DUrole{n,n}{target\_y}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{draw() (sjvisualizer.Legend.elem method)@\spxentry{draw()}\spxextra{sjvisualizer.Legend.elem method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Legend.elem.draw}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{draw}}}{}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{update() (sjvisualizer.Legend.elem method)@\spxentry{update()}\spxextra{sjvisualizer.Legend.elem method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Legend.elem.update}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{x}}, \sphinxparam{\DUrole{n,n}{y}}, \sphinxparam{\DUrole{n,n}{draw}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{legend (class in sjvisualizer.Legend)@\spxentry{legend}\spxextra{class in sjvisualizer.Legend}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Legend.legend}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Legend.}}\sphinxbfcode{\sphinxupquote{legend}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
+\pysigstopsignatures
+\sphinxAtStartPar
+Class to construct an animated area graph
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{canvas}} (\sphinxstyleliteralemphasis{\sphinxupquote{tkinter.Canvas}}) \textendash{} tkinter canvas to draw the graph to
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{width}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} width of the plot in pixels, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{height}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} height of the plot in pixels, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{x\_pos}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} the x location of the top left pixel in this plot, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{y\_pos}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} the y location of the top left pixel in this plot, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{df}} (\sphinxstyleliteralemphasis{\sphinxupquote{pandas.DataFrame}}) \textendash{} pandas dataframe that holds the data
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{colors}} \textendash{} dictionary that holds color information for each of the data categories. The key of the dict should
+
+\end{itemize}
+
+\end{description}\end{quote}
+\begin{description}
+\sphinxlineitem{corespond to the name of the data category (column). The value of the dict should be the RGB values of the color:}\begin{description}
+\sphinxlineitem{\{}\begin{description}
+\sphinxlineitem{“United States”: {[}}
+\sphinxAtStartPar
+23,
+60,
+225
+
+\end{description}
+
+\sphinxAtStartPar
+{]}
+
+\end{description}
+
+\sphinxAtStartPar
+\}, default is \{\}
+
+\end{description}
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ of }}\sphinxstyleliteralemphasis{\sphinxupquote{length 3 with integers}}) \textendash{} font color, default is (0,0,0)
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_size}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} font size, in pixels
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{sort}} (\sphinxstyleliteralemphasis{\sphinxupquote{boolean}}) \textendash{} should the elements of this graph be sorted based on the value? default is True
+
+\end{itemize}
+
+\end{description}\end{quote}
+\index{draw() (sjvisualizer.Legend.legend method)@\spxentry{draw()}\spxextra{sjvisualizer.Legend.legend method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Legend.legend.draw}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{draw}}}{\sphinxparam{\DUrole{n,n}{time}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{update() (sjvisualizer.Legend.legend method)@\spxentry{update()}\spxextra{sjvisualizer.Legend.legend method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Legend.legend.update}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{time}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\phantomsection\label{\detokenize{index:module-sjvisualizer.Axis}}\index{module@\spxentry{module}!sjvisualizer.Axis@\spxentry{sjvisualizer.Axis}}\index{sjvisualizer.Axis@\spxentry{sjvisualizer.Axis}!module@\spxentry{module}}\index{axis (class in sjvisualizer.Axis)@\spxentry{axis}\spxextra{class in sjvisualizer.Axis}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Axis.axis}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Axis.}}\sphinxbfcode{\sphinxupquote{axis}}}{\sphinxparam{\DUrole{n,n}{canvas}}, \sphinxparam{\DUrole{n,n}{x}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{y}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{length}\DUrole{o,o}{=}\DUrole{default_value}{1000}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{1000}}, \sphinxparam{\DUrole{n,n}{orientation}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}horizontal\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{n}\DUrole{o,o}{=}\DUrole{default_value}{3}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{tick\_length}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{is\_log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{is\_date}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{color}\DUrole{o,o}{=}\DUrole{default_value}{(50, 50, 50)}}, \sphinxparam{\DUrole{n,n}{font\_size}\DUrole{o,o}{=}\DUrole{default_value}{20}}, \sphinxparam{\DUrole{n,n}{text\_font}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Microsoft JhengHei UI\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{line\_tickness}\DUrole{o,o}{=}\DUrole{default_value}{3}}, \sphinxparam{\DUrole{n,n}{ticks\_only}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}}{}
+\pysigstopsignatures\index{calc\_positions() (sjvisualizer.Axis.axis method)@\spxentry{calc\_positions()}\spxextra{sjvisualizer.Axis.axis method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Axis.axis.calc_positions}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{calc\_positions}}}{\sphinxparam{\DUrole{n,n}{value}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{draw() (sjvisualizer.Axis.axis method)@\spxentry{draw()}\spxextra{sjvisualizer.Axis.axis method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Axis.axis.draw}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{draw}}}{\sphinxparam{\DUrole{n,n}{min}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{max}\DUrole{o,o}{=}\DUrole{default_value}{0}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{update() (sjvisualizer.Axis.axis method)@\spxentry{update()}\spxextra{sjvisualizer.Axis.axis method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Axis.axis.update}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{min}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{max}\DUrole{o,o}{=}\DUrole{default_value}{0}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{calculate\_nice\_ticks() (in module sjvisualizer.Axis)@\spxentry{calculate\_nice\_ticks()}\spxextra{in module sjvisualizer.Axis}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Axis.calculate_nice_ticks}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxcode{\sphinxupquote{sjvisualizer.Axis.}}\sphinxbfcode{\sphinxupquote{calculate\_nice\_ticks}}}{\sphinxparam{\DUrole{n,n}{min\_val}}, \sphinxparam{\DUrole{n,n}{max\_val}}, \sphinxparam{\DUrole{n,n}{num\_ticks}}, \sphinxparam{\DUrole{n,n}{is\_log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{tick (class in sjvisualizer.Axis)@\spxentry{tick}\spxextra{class in sjvisualizer.Axis}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Axis.tick}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Axis.}}\sphinxbfcode{\sphinxupquote{tick}}}{\sphinxparam{\DUrole{n,n}{canvas}}, \sphinxparam{\DUrole{n,n}{axis}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{length}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{label\_pos}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}}{}
+\pysigstopsignatures\index{draw() (sjvisualizer.Axis.tick method)@\spxentry{draw()}\spxextra{sjvisualizer.Axis.tick method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Axis.tick.draw}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{draw}}}{\sphinxparam{\DUrole{n,n}{value}\DUrole{o,o}{=}\DUrole{default_value}{0}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{update() (sjvisualizer.Axis.tick method)@\spxentry{update()}\spxextra{sjvisualizer.Axis.tick method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Axis.tick.update}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{value}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{draw}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{l}\DUrole{o,o}{=}\DUrole{default_value}{0}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
 \phantomsection\label{\detokenize{index:module-sjvisualizer.DataHandler}}\index{module@\spxentry{module}!sjvisualizer.DataHandler@\spxentry{sjvisualizer.DataHandler}}\index{sjvisualizer.DataHandler@\spxentry{sjvisualizer.DataHandler}!module@\spxentry{module}}\index{DataHandler (class in sjvisualizer.DataHandler)@\spxentry{DataHandler}\spxextra{class in sjvisualizer.DataHandler}}
 
 \begin{fulllineitems}
@@ -751,9 +1155,6 @@ at the bottom of the visualization. Typically you want this square to match the 
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.DataHandler.}}\sphinxbfcode{\sphinxupquote{DataHandler}}}{\sphinxparam{\DUrole{n,n}{excel\_file}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{number\_of\_frames}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}}{}
 \pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{object}}
-
 \sphinxAtStartPar
 Class to handle the data, and interpolate values between each data point
 \begin{quote}\begin{description}
@@ -779,9 +1180,6 @@ Class to handle the data, and interpolate values between each data point
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.DataHandler.}}\sphinxbfcode{\sphinxupquote{SizeCompareDataHandler}}}{\sphinxparam{\DUrole{n,n}{excel\_file}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{number\_of\_frames}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}}{}
 \pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{object}}
-
 \end{fulllineitems}
 
 \phantomsection\label{\detokenize{index:module-sjvisualizer.Date}}\index{module@\spxentry{module}!sjvisualizer.Date@\spxentry{sjvisualizer.Date}}\index{sjvisualizer.Date@\spxentry{sjvisualizer.Date}!module@\spxentry{module}}\index{date (class in sjvisualizer.Date)@\spxentry{date}\spxextra{class in sjvisualizer.Date}}
@@ -789,11 +1187,8 @@ Bases: \sphinxcode{\sphinxupquote{object}}
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.Date.date}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Date.}}\sphinxbfcode{\sphinxupquote{date}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{{[}{]}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Date.}}\sphinxbfcode{\sphinxupquote{date}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
 \pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{sub\_plot}}
-
 \sphinxAtStartPar
 Use this to add a timestamp to your visualization.
 \begin{quote}\begin{description}
@@ -859,11 +1254,8 @@ Use this to add a timestamp to your visualization.
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.StaticImage.static_image}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.StaticImage.}}\sphinxbfcode{\sphinxupquote{static\_image}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{{[}{]}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.StaticImage.}}\sphinxbfcode{\sphinxupquote{static\_image}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
 \pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{sub\_plot}}
-
 \sphinxAtStartPar
 Use this to add static images to your visualization.
 \begin{quote}\begin{description}
@@ -925,11 +1317,8 @@ Use this to add static images to your visualization.
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.StaticText.static_text}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.StaticText.}}\sphinxbfcode{\sphinxupquote{static\_text}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{{[}{]}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.StaticText.}}\sphinxbfcode{\sphinxupquote{static\_text}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
 \pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{sub\_plot}}
-
 \sphinxAtStartPar
 Class to add a static text to the visualization
 \begin{quote}\begin{description}
@@ -1005,10 +1394,7 @@ SE
 \phantomsection\label{\detokenize{index:sjvisualizer.StackedBarChart.bar_graph_y_tick}}
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.StackedBarChart.}}\sphinxbfcode{\sphinxupquote{bar\_graph\_y\_tick}}}{\sphinxparam{\DUrole{n,n}{canvas}}, \sphinxparam{\DUrole{n,n}{value}}, \sphinxparam{\DUrole{n,n}{max\_value}}, \sphinxparam{\DUrole{n,n}{width}}, \sphinxparam{\DUrole{n,n}{height}}, \sphinxparam{\DUrole{n,n}{x\_pos}}, \sphinxparam{\DUrole{n,n}{y\_pos}}, \sphinxparam{\DUrole{n,n}{unit}}, \sphinxparam{\DUrole{n,n}{font\_size}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}}{}
-\pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{object}}
-\index{draw() (sjvisualizer.StackedBarChart.bar\_graph\_y\_tick method)@\spxentry{draw()}\spxextra{sjvisualizer.StackedBarChart.bar\_graph\_y\_tick method}}
+\pysigstopsignatures\index{draw() (sjvisualizer.StackedBarChart.bar\_graph\_y\_tick method)@\spxentry{draw()}\spxextra{sjvisualizer.StackedBarChart.bar\_graph\_y\_tick method}}
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.StackedBarChart.bar_graph_y_tick.draw}}
@@ -1034,11 +1420,8 @@ Bases: \sphinxcode{\sphinxupquote{object}}
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.StackedBarChart.stacked_bar_chart}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.StackedBarChart.}}\sphinxbfcode{\sphinxupquote{stacked\_bar\_chart}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{{[}{]}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.StackedBarChart.}}\sphinxbfcode{\sphinxupquote{stacked\_bar\_chart}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
 \pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{sub\_plot}}
-
 \sphinxAtStartPar
 Class to construct an animated stack bar chart
 \begin{quote}\begin{description}
@@ -1147,10 +1530,7 @@ Class to construct an animated stack bar chart
 \phantomsection\label{\detokenize{index:sjvisualizer.StackedBarChart.stacked_bar_graph_bar}}
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.StackedBarChart.}}\sphinxbfcode{\sphinxupquote{stacked\_bar\_graph\_bar}}}{\sphinxparam{\DUrole{n,n}{canvas}}, \sphinxparam{\DUrole{n,n}{number}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}}, \sphinxparam{\DUrole{n,n}{data}}, \sphinxparam{\DUrole{n,n}{colors}}, \sphinxparam{\DUrole{n,n}{max\_value}}, \sphinxparam{\DUrole{n,n}{width}}, \sphinxparam{\DUrole{n,n}{height}}, \sphinxparam{\DUrole{n,n}{x\_pos}}, \sphinxparam{\DUrole{n,n}{y\_pos}}}{}
-\pysigstopsignatures
-\sphinxAtStartPar
-Bases: \sphinxcode{\sphinxupquote{object}}
-\index{draw() (sjvisualizer.StackedBarChart.stacked\_bar\_graph\_bar method)@\spxentry{draw()}\spxextra{sjvisualizer.StackedBarChart.stacked\_bar\_graph\_bar method}}
+\pysigstopsignatures\index{draw() (sjvisualizer.StackedBarChart.stacked\_bar\_graph\_bar method)@\spxentry{draw()}\spxextra{sjvisualizer.StackedBarChart.stacked\_bar\_graph\_bar method}}
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.StackedBarChart.stacked_bar_graph_bar.draw}}

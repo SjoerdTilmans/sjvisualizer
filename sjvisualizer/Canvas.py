@@ -1,4 +1,6 @@
 from tkinter import *
+import tkinter
+import sjvisualizer
 from PIL import Image
 import io
 from tkinter import font
@@ -239,7 +241,7 @@ class sub_plot():
     :param font_color: font color
     :type font_color: tuple of length 3 with integers
     """
-    def __init__(self, canvas=None, width=None, height=None, x_pos=None, y_pos=None, start_time=None, text=None, df=None, multi_color_df=None, anchor="c", sort=True, colors={}, root=None, display_percentages=True, display_label=True, title=None, invert=False, origin="s", display_value=True, font_color=(0,0,0), back_ground_color=(255,255,255), events=[], time_indicator="year", number_of_bars=None, unit="", x_ticks = 4, y_ticks = 4, log_scale=False, only_show_latest_event=True, allow_decrease=True, format="Europe", draw_points=True, area=True, color_bar_color=[[100, 100, 100], [255, 0, 0]], **kwargs):
+    def __init__(self, canvas=None, width=None, height=None, x_pos=None, y_pos=None, start_time=None, text=None, df=None, multi_color_df=None, anchor="c", sort=True, colors={}, root=None, display_percentages=True, display_label=True, title=None, invert=False, origin="s", display_value=True, font_color=(0,0,0), back_ground_color=(255,255,255), events={}, time_indicator="year", number_of_bars=None, unit="", x_ticks = 4, y_ticks = 4, log_scale=False, only_show_latest_event=True, allow_decrease=True, format="Europe", draw_points=True, area=True, color_bar_color=[[100, 100, 100], [255, 0, 0]], **kwargs):
         """
 
         """
@@ -275,7 +277,15 @@ class sub_plot():
 
         self.allow_decrease = allow_decrease
 
-        self.canvas = canvas
+
+        if isinstance(canvas, tkinter.Canvas):
+            self.canvas = canvas
+            self.sjcanvas = None
+        elif isinstance(canvas, sjvisualizer.Canvas.canvas):
+            self.canvas = canvas.canvas
+            self.sjcanvas = canvas
+        else:
+            raise "Please set the canvas to a tkinter.Canvas or sjvisualizer.Canvas"
         self.colors = colors
         self.root = root
         self.invert = invert

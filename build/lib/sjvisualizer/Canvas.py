@@ -1,4 +1,6 @@
 from tkinter import *
+import tkinter
+import sjvisualizer
 from PIL import Image
 import io
 from tkinter import font
@@ -168,8 +170,8 @@ class canvas():
         :type color: tuple of length 3 with integers
 
         """
-        title_font = font.Font(family=text_font, size=int(HEIGHT/30/ SCALEFACTOR), weight="bold")
-        self.canvas.create_text(WIDTH/2, HEIGHT/20, font=title_font, text=text, fill=_from_rgb(color))
+        title_font = font.Font(family=text_font, size=int(self.height/30/ SCALEFACTOR), weight="bold")
+        self.canvas.create_text(self.width/2, self.height/20, font=title_font, text=text, fill=_from_rgb(color))
 
     def add_sub_title(self, text, color=(0, 0, 0)):
         """
@@ -182,8 +184,8 @@ class canvas():
         :type color: tuple of length 3 with integers
 
         """
-        title_font = font.Font(family=text_font, size=int(HEIGHT/45/ SCALEFACTOR), weight="bold")
-        self.canvas.create_text(WIDTH/2, HEIGHT/11, font=title_font, text=text, fill=_from_rgb(color))
+        title_font = font.Font(family=text_font, size=int(self.height/45/ SCALEFACTOR), weight="bold")
+        self.canvas.create_text(self.width/2, self.height/11, font=title_font, text=text, fill=_from_rgb(color))
 
     def add_time(self, df, time_indicator="year", color=(150, 150, 150)):
         """
@@ -199,8 +201,8 @@ class canvas():
         :type color: tuple of length 3 with integers
         """
         from sjvisualizer import Date
-        sub_plot = Date.date(canvas=self.canvas, start_time=list(df.index)[0], width=0, height=HEIGHT/12,
-                                       x_pos=WIDTH/10, y_pos=HEIGHT*0.85, time_indicator=time_indicator,
+        sub_plot = Date.date(canvas=self.canvas, start_time=list(df.index)[0], width=0, height=self.height/12,
+                                       x_pos=self.width/10, y_pos=self.height*0.85, time_indicator=time_indicator,
                                        font_color=color)
         self.add_sub_plot(sub_plot)
 
@@ -212,8 +214,8 @@ class canvas():
         :type str
         """
         from sjvisualizer import StaticImage
-        img = StaticImage.static_image(canvas=self.canvas, width=int(WIDTH/15), height=int(WIDTH/15), x_pos=WIDTH*0.95,
-                                           y_pos=HEIGHT*0.00,
+        img = StaticImage.static_image(canvas=self.canvas, width=int(self.width/15), height=int(self.width/15), x_pos=self.width*0.95,
+                                           y_pos=self.height*0.00,
                                            file=logo, root=self.tk, anchor="ne")
         self.add_sub_plot(img)
 
@@ -239,7 +241,7 @@ class sub_plot():
     :param font_color: font color
     :type font_color: tuple of length 3 with integers
     """
-    def __init__(self, canvas=None, width=None, height=None, x_pos=None, y_pos=None, start_time=None, text=None, df=None, multi_color_df=None, anchor="c", sort=True, colors={}, root=None, display_percentages=True, display_label=True, title=None, invert=False, origin="s", display_value=True, font_color=(0,0,0), back_ground_color=(255,255,255), events=[], time_indicator="year", number_of_bars=None, unit="", x_ticks = 4, y_ticks = 4, log_scale=False, only_show_latest_event=True, allow_decrease=True, format="Europe", draw_points=True, area=True, color_bar_color=[[100, 100, 100], [255, 0, 0]], **kwargs):
+    def __init__(self, canvas=None, width=None, height=None, x_pos=None, y_pos=None, start_time=None, text=None, df=None, multi_color_df=None, anchor="c", sort=True, colors={}, root=None, display_percentages=True, display_label=True, title=None, invert=False, origin="s", display_value=True, font_color=(0,0,0), back_ground_color=(255,255,255), events={}, time_indicator="year", number_of_bars=None, unit="", x_ticks = 4, y_ticks = 4, log_scale=False, only_show_latest_event=True, allow_decrease=True, format="Europe", draw_points=True, area=True, color_bar_color=[[100, 100, 100], [255, 0, 0]], **kwargs):
         """
 
         """
@@ -275,7 +277,15 @@ class sub_plot():
 
         self.allow_decrease = allow_decrease
 
-        self.canvas = canvas
+
+        if isinstance(canvas, tkinter.Canvas):
+            self.canvas = canvas
+            self.sjcanvas = None
+        elif isinstance(canvas, sjvisualizer.Canvas.canvas):
+            self.canvas = canvas.canvas
+            self.sjcanvas = canvas
+        else:
+            raise "Please set the canvas to a tkinter.Canvas or sjvisualizer.Canvas"
         self.colors = colors
         self.root = root
         self.invert = invert

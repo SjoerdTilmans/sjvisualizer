@@ -14,7 +14,7 @@ class DataHandler():
     """
     def __init__(self, excel_file=None, number_of_frames=0, log_scale=False):
         self.excel_file = excel_file
-        self.number_of_frames = number_of_frames
+        self.number_of_frames = number_of_frames + 7
         self.log_scale = log_scale
 
         # try to find cached location of the file
