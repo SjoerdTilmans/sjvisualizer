@@ -7,6 +7,7 @@ Please find the catalogue example [here](https://github.com/SjoerdTilmans/sjvisu
 - Bar races
 - Animated pie charts
 - Animated stacked bar charts
+- Animated line charts
 
 More chart types to follow! 
 
