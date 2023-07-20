@@ -1,3 +1,4 @@
+[![Downloads](https://static.pepy.tech/badge/sjvisualizer)](https://pepy.tech/project/sjvisualizer)
 # sjvisualizer 📊
 sjvisualizer is a data visualization and animation library for Python. 
 
