@@ -122,6 +122,9 @@ class line_chart(cv.sub_plot):
             }
             :type events: dict
 
+            :param event_color: color of the event indication, default is (225,225,225)
+            :type event_color: tuple
+
             :param draw_all_events: by default only the label will be added to the most recent event. Set this value to True to keep the labels for all events
             :type draw_all_events: boolean
 
@@ -129,9 +132,12 @@ class line_chart(cv.sub_plot):
 
     def draw(self, time):
         if hasattr(self, "font_size"):
-            self.font_size = font_size / SCALEFACTOR
+            self.font_size = self.font_size / SCALEFACTOR
         else:
             self.font_size = self.height / 33 / SCALEFACTOR
+
+        if not hasattr(self, "event_color"):
+            self.event_color = (225,225,225)
 
         if not hasattr(self, "draw_points"):
             self.draw_points = True
@@ -180,7 +186,7 @@ class line_chart(cv.sub_plot):
 
         self.event_obj = []
         for name, dates in self.events.items():
-            self.event_obj.append(event(name=name, canvas=self.canvas, start_date=dates[0], end_date=dates[1], font_color=self.font_color, font_size=self.font_size, parent=self))
+            self.event_obj.append(event(name=name, canvas=self.canvas, start_date=dates[0], end_date=dates[1], font_color=self.font_color, font_size=self.font_size, parent=self, event_color=self.event_color))
 
     def update(self, time):
         self.max_time = time
@@ -195,10 +201,11 @@ class line_chart(cv.sub_plot):
             total_points = sum([len(line.points) for name, line in self.lines.items()])
 
         for name, d in data.items():
-            if MAX_POINTS < total_points:
-                self.lines[name].point_radius = self.lines[name].point_radius - 0.25
-            if self.lines[name].point_radius < 0:
-                self.lines[name].remove_points()
+            if self.draw_points:
+                if MAX_POINTS < total_points:
+                    self.lines[name].point_radius = self.lines[name].point_radius - 0.25
+                if self.lines[name].point_radius < 0:
+                    self.lines[name].remove_points()
             self.lines[name].update(d, time)
 
         for e in self.event_obj:
@@ -208,12 +215,12 @@ class line_chart(cv.sub_plot):
 
 class event():
 
-    def __init__(self, name=None, canvas=None, start_date=None, end_date=None, color=(225,225,225), font_color=(0,0,0), font_size=12, text_font="Microsoft JhengHei UI", parent=None):
+    def __init__(self, name=None, canvas=None, start_date=None, end_date=None, font_color=(0,0,0), font_size=12, text_font="Microsoft JhengHei UI", parent=None, event_color=(255, 255, 255)):
         self.name = name
         self.canvas = canvas
         self.start_date = datetime.datetime.strptime(start_date, "%d/%m/%Y")
         self.end_date = datetime.datetime.strptime(end_date, "%d/%m/%Y")
-        self.color = cv._from_rgb(color)
+        self.color = cv._from_rgb(event_color)
         self.font_color = font_color
         self.font_size = font_size
         self.text_font = text_font
@@ -227,7 +234,7 @@ class event():
 
     def draw(self):
         self.rect = self.canvas.create_rectangle(-1000, -1000, -1000, -1000, fill=self.color, outline="")
-        self.label = self.canvas.create_text(-1000, -1000, text=self.name, font=self.font, fill=cv._from_rgb(self.font_color), anchor="s")
+        self.label = self.canvas.create_text(-1000, -1000, text=self.name, font=self.font, fill=cv._from_rgb(self.font_color), anchor="se")
 
     def update(self, date):
         if date > self.start_date:
@@ -245,7 +252,7 @@ class event():
                 pos2 = self.parent.axis1.calc_positions((self.end_date - datetime.datetime(1800,1,1)).days) + self.parent.x_pos
 
             if self.draw_label:
-                self.canvas.coords(self.label, (pos1 + pos2) / 2, self.parent.y_pos - 3)
+                self.canvas.coords(self.label, (pos2 + pos2) / 2, self.parent.y_pos - 3)
             else:
                 self.canvas.itemconfig(self.label, text="")
 

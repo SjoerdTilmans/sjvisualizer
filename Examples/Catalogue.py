@@ -40,9 +40,15 @@ def main(fps = 60, duration = 0.35):
                                  width=int(width / 6), x_pos=int(height / 3 / 2 * 5.5), y_pos=int(width / 5) / 2, number_of_bars=25)
     canvas.add_sub_plot(stacked)
 
+    # creating events for the line chart
+    events = {
+        "Event 1": ["28/01/1998", "28/01/2000"],
+        "Event 2": ["28/01/2018", "28/01/2019"]
+    }
+
     # add a line chart
     line = LineChart.line_chart(canvas=canvas, df=df, title="Line chart", colors=colors, height=chart_height,
-                                 width=int(width / 6), x_pos=int(height/3/2), y_pos=int(width / 5) + 1.05*chart_height)
+                                 width=int(width / 6), x_pos=int(height/3/2), y_pos=int(width / 5) + 1.05*chart_height, events=events)
     canvas.add_sub_plot(line)
 
     # add time indication

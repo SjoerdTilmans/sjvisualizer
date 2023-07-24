@@ -421,5 +421,19 @@ def format_date(time, time_indicator, format="Europe"):
 
     return text
 
+def format_value(number, decimal=decimal_places):
+    units = ['k', 'm', 'b', 't']
+    unit_index = 0
+
+    while number >= 1000 and unit_index < len(units):
+        number /= 1000.0
+        unit_index += 1
+
+    formatted_number = "{:.3f}".format(number).rstrip('0').rstrip('.')
+    if unit_index > 0:
+        formatted_number += units[unit_index - 1]
+
+    return formatted_number
+
 def hex_to_rgb(h):
     return tuple(int(h.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4))

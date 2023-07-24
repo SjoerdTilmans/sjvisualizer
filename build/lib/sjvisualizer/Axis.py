@@ -126,6 +126,9 @@ class axis():
                     self.ticks[j].update(value=1, draw=False)
 
     def calc_positions(self, value):
+        if self.min == 0 and self.max == 0:
+            self.max = 0.1
+
         if not self.is_date:
             if not self.is_log_scale:
                 return self.length * (value - self.min) / (self.max - self.min)
@@ -157,7 +160,7 @@ class tick():
                 t = datetime.datetime(1800,1,1) + datetime.timedelta(days=value)
                 label = cv.format_date(t, self.axis.time_indicator)
             else:
-                label = str(value)
+                label = cv.format_value(value)
             if self.axis.orientation == "horizontal":
                 self.canvas.coords(self.line, self.axis.x + pos, self.axis.y - self.length - l, self.axis.x + pos, self.axis.y + 10)
                 self.canvas.itemconfig(self.text, text=label + self.axis.unit)
@@ -190,6 +193,9 @@ def calculate_nice_ticks(min_val, max_val, num_ticks, is_log_scale=False):
     if is_log_scale:
         min_val = math.log10(min_val)
         max_val = math.log10(max_val)
+
+    if min_val == max_val:
+        max_val = min_val + 0.1
 
     # Calculate the rough range
     rough_range = max_val - min_val
