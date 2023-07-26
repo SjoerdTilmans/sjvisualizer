@@ -8,3 +8,4 @@ from sjvisualizer import Axis
 from sjvisualizer import Legend
 from sjvisualizer import LineChart
 from sjvisualizer import Total
+from sjvisualizer import AreaChart

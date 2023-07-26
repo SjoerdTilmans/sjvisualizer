@@ -1,6 +1,7 @@
 LICENSE
 README.md
 setup.py
+sjvisualizer/AreaChart.py
 sjvisualizer/Axis.py
 sjvisualizer/BarRace.py
 sjvisualizer/Canvas.py

@@ -6,6 +6,7 @@ from sjvisualizer import Date
 from sjvisualizer import StackedBarChart
 from sjvisualizer import StaticImage
 from sjvisualizer import LineChart
+from sjvisualizer import AreaChart
 import time
 import json
 
@@ -51,13 +52,19 @@ def main(fps = 60, duration = 0.35):
                                  width=int(width / 6), x_pos=int(height/3/2), y_pos=int(width / 5) + 1.05*chart_height, events=events)
     canvas.add_sub_plot(line)
 
+    # add an area chart
+    area = AreaChart.area_chart(canvas=canvas, df=df, title="Area chart", colors=colors, height=chart_height,
+                                width=int(width / 6), x_pos=int(height / 3 * 2),
+                                y_pos=int(width / 5) + 1.05 * chart_height)
+    canvas.add_sub_plot(area)
+
     # add time indication
     date = Date.date(canvas=canvas.canvas, height=int(height / 20),
                                  width=int(width / 20), x_pos=int(height / 3 / 2 * 8), y_pos=int(width / 5), time_indicator="month", df=df)
     canvas.add_sub_plot(date)
 
     # adding a static image
-    img = StaticImage.static_image(canvas=canvas.canvas, file="assets/Made with SJvisualzer.png", width=height/15, height=height/15, x_pos=width/3*2, y_pos=height/1.4)
+    img = StaticImage.static_image(canvas=canvas.canvas, file="assets/Made with SJvisualzer.png", width=height/20, height=height/20, x_pos=width/3*2.25, y_pos=height/1.4)
     canvas.add_sub_plot(img)
 
     # save colors for next run

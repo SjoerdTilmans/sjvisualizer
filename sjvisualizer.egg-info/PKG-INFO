@@ -1,7 +1,8 @@
 Metadata-Version: 2.1
 Name: sjvisualizer
-Version: 0.0.9
+Version: 0.0.10
 Summary: Package to animate your data
+Home-page: https://www.sjdataviz.com/
 Author: Sjoerd Tilmans
 Author-email: info@sjdataviz.com
 Classifier: Programming Language :: Python :: 3

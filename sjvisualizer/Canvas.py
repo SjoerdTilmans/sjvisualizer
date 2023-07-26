@@ -146,6 +146,8 @@ class canvas():
                 if not sub.df is None:
                     df = sub.df
 
+        self._add_sj_logo()
+
         for i, date_time in enumerate(df.index):
             start = time.time()
 
@@ -154,7 +156,7 @@ class canvas():
                 time.sleep(1)
 
             while time.time() - start < 1 / fps:
-                pass
+                time.sleep(0.0001)
 
             time_used = time.time() - start
             print("FPS: {}".format(format(1/time_used, ",.{}f".format(decimal_places))))
@@ -217,6 +219,15 @@ class canvas():
         img = StaticImage.static_image(canvas=self.canvas, width=int(self.width/15), height=int(self.width/15), x_pos=self.width*0.95,
                                            y_pos=self.height*0.00,
                                            file=logo, root=self.tk, anchor="ne")
+        self.add_sub_plot(img)
+
+    def _add_sj_logo(self):
+        from sjvisualizer import StaticImage
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "Made with SJvisualzer.png")
+        img = StaticImage.static_image(canvas=self.canvas, width=int(self.width / 45), height=int(self.width / 45),
+                                       x_pos=self.width * 0.95,
+                                       y_pos=self.height * 0.95,
+                                       file=path, root=self.tk, anchor="se")
         self.add_sub_plot(img)
 
 class sub_plot():
