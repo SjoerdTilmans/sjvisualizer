@@ -20,3 +20,4 @@ sjvisualizer.egg-info/SOURCES.txt
 sjvisualizer.egg-info/dependency_links.txt
 sjvisualizer.egg-info/requires.txt
 sjvisualizer.egg-info/top_level.txt
+sjvisualizer/assets/Made with SJvisualzer.png

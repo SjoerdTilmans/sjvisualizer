@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="sjvisualizer",
-    version="0.0.10",
+    version="0.0.11",
     author="Sjoerd Tilmans",
     author_email="info@sjdataviz.com",
     description="Package to animate your data",
@@ -16,7 +16,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires = ["pandas>=2.0", "screeninfo>=0.7", "Pillow>9", "openpyxl>3"],
     package_data={
-        'my_package': ['assets/*'],
+        'sjvisualizer': ['assets/*'],
     },
     classifiers=[
         "Programming Language :: Python :: 3",

@@ -156,7 +156,7 @@ class canvas():
                 time.sleep(1)
 
             while time.time() - start < 1 / fps:
-                pass
+                time.sleep(0.0001)
 
             time_used = time.time() - start
             print("FPS: {}".format(format(1/time_used, ",.{}f".format(decimal_places))))
