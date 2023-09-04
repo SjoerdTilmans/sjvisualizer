@@ -103,7 +103,7 @@ class date(cv.sub_plot):
             text = str(time.year)
         elif self.time_indicator == "month":
             text = str(f"{time.year} {months[time.month]}")
-        elif self.time_indicator == "day":
+        elif self.time_indicator == "days":
             if self.format == "USA":
                 text = str(f"{months[time.month]} {time.day} {time.year}")
             else:
@@ -120,7 +120,7 @@ class date(cv.sub_plot):
             text = str(time.year)
         elif self.time_indicator == "month":
             text = str(f"{months[time.month]} {time.year}")
-        elif self.time_indicator == "day":
+        elif self.time_indicator == "days":
             if self.format == "USA":
                 text = str(f"{months[time.month]} {time.day} {time.year}")
             else:
