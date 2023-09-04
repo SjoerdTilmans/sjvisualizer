@@ -86,7 +86,7 @@ class total(sub_plot):
 
         total = self._get_data_for_frame(time).sum()
         self.font = font.Font(family=self.text_font, size=int(self.font_size))
-        self.text = self.canvas.create_text(self.x_pos, self.y_pos, text=self.prefix + format(total, ",.{}f".format(self.decimal_places)), font=self.font, fill=cv._from_rgb(self.font_color))
+        self.text = self.canvas.create_text(self.x_pos, self.y_pos, text=self.prefix + format(total, f",.{self.decimal_places}f"), font=self.font, fill=cv._from_rgb(self.font_color))
         if "$" in self.unit:
             self.unit = self.unit.replace("$", "")
             self.money = "$"
@@ -96,4 +96,4 @@ class total(sub_plot):
 
     def update(self, time):
         total = self._get_data_for_frame(time).sum()
-        self.canvas.itemconfig(self.text, text=self.prefix + self.money + format(total, ",.{}f".format(self.decimal_places)) + self.unit)
+        self.canvas.itemconfig(self.text, text=self.prefix + self.money + format(total, f",.{self.decimal_places}f") + self.unit)

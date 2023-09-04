@@ -211,7 +211,7 @@ class pie():
         if self.load_img:
             try:
                 self.imgs = {}
-                print("Loading images for {}".format(self.name))
+                print(f"Loading images for {self.name}")
                 for i in range(int(self.size/7.5/min_slice_image*min_slice), int(self.size/7.5) + 1):
                     self.imgs[i] = load_image(os.path.join("assets", self.name.replace("*", "") + ".png"), i, i, root, name)
             except:
@@ -271,7 +271,7 @@ class pie():
                                     self.size / 2 + self.size / 10) * x_dir, int((self.y1 + self.y2) / 2 - (
                                     self.size / 2 + self.size / 10) * y_dir) + self.size / 30 + 15),
                                                              text=format(self.extent / 360 * 100,
-                                                                         ",.{}f".format(decimal_places)) + "%",
+                                                                         f",.{decimal_places}f") + "%",
                                                              font=self.font2, fill="grey")
                     else:
                         self.text2 = self.canvas.create_text(
@@ -356,7 +356,7 @@ class pie():
 
                         if self.display_percentages:
                             if self.extent > min_slice_percentage_display * 360:
-                                self.canvas.itemconfig(self.text2, text=format(self.extent/360*100, ",.{}f".format(decimal_places)) + "%")
+                                self.canvas.itemconfig(self.text2, text=format(self.extent/360*100, f",.{decimal_places}f") + "%")
                                 self.canvas.coords(self.text2, ((self.x1 + self.x2) / 2 + (
                                             self.size / 2 + self.size / 12 + len(self.name) * (15 + self.size / 30) * self.size / 7500 + (
                                                 15 + self.size / 50)) * x_dir,

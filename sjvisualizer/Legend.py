@@ -158,7 +158,7 @@ class legend(cv.sub_plot):
         if self.orientation == "vertical":
             self.positions = [self.y_pos + (i + 0.5) * self.height / (self.n) for i in range(self.n)]
         else:
-            raise "{} orientation is not supported".format(self.orientation)
+            raise f"{self.orientation} orientation is not supported"
 
 class elem():
 
@@ -183,7 +183,7 @@ class elem():
         try:
             self.img = cv.load_image(os.path.join("assets", self.name.replace("*", "") + ".png"), 4*int(self.parent.font_size), 4*int(self.parent.font_size), self.parent.root, name)
         except:
-            print("No image for {}".format(self.name))
+            print(f"No image for {self.name}")
             self.img = None
 
         if isinstance(colors, dict):

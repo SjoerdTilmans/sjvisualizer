@@ -102,12 +102,12 @@ class date(cv.sub_plot):
         if self.time_indicator == "year":
             text = str(time.year)
         elif self.time_indicator == "month":
-            text = str("{} {}".format(months[time.month], time.year))
+            text = str(f"{time.year} {months[time.month]}")
         elif self.time_indicator == "day":
             if self.format == "USA":
-                text = str("{} {} {}".format(months[time.month], time.day, time.year))
+                text = str(f"{months[time.month]} {time.day} {time.year}")
             else:
-                text = str("{} {} {}".format(time.day, months[time.month], time.year))
+                text = str(f"{time.day} {months[time.month]} {time.year}")
 
         if self.anchor == "se":
             position = (self.x_pos - self.width/2, self.y_pos - self.height/2)
@@ -119,12 +119,12 @@ class date(cv.sub_plot):
         if self.time_indicator == "year":
             text = str(time.year)
         elif self.time_indicator == "month":
-            text = str("{} {}".format(months[time.month], time.year))
+            text = str(f"{months[time.month]} {time.year}")
         elif self.time_indicator == "day":
             if self.format == "USA":
-                text = str("{} {} {}".format(months[time.month], time.day, time.year))
+                text = str(f"{months[time.month]} {time.day} {time.year}")
             else:
-                text = str("{} {} {}".format(time.day, months[time.month], time.year))
+                text = str(f"{time.day} {months[time.month]} {time.year}")
 
         self.canvas.itemconfig(self.obj_id, text=self.prefix + text)
         self.canvas.tag_raise(self.obj_id)

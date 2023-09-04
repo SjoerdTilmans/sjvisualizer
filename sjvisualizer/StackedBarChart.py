@@ -120,9 +120,9 @@ class stacked_bar_chart(sub_plot):
         if self.time_indicator == "year":
             text = str(time.year)
         elif self.time_indicator == "month":
-            text = str("{} {}".format(months[time.month], time.year))
+            text = str(f"{months[time.month]} {time.year}")
         elif self.time_indicator == "day":
-            text = str("{} {} {}".format(time.day, months[time.month], time.year))
+            text = str(f"{time.day} {months[time.month]} {time.year}")
 
         self.font_size = int(10 + self.height/50 / SCALEFACTOR)
         self.font = font.Font(family=text_font, size=self.font_size, weight="bold")
@@ -172,9 +172,9 @@ class stacked_bar_chart(sub_plot):
         if self.time_indicator == "year":
             text = str(time.year)
         elif self.time_indicator == "month":
-            text = str("{} {}".format(months[time.month], time.year))
+            text = str(f"{months[time.month]} {time.year}")
         elif self.time_indicator == "day":
-            text = str("{} {} {}".format(time.day, months[time.month], time.year))
+            text = str(f"{time.day} {months[time.month]} {time.year}")
 
         self.canvas.coords(self.end_text, self.x_pos + self.width * time_fraction - (int(self.height/400)+1)/2, self.y_pos + self.height + self.end_size + self.font_size)
         self.canvas.itemconfig(self.end_text, text="")
@@ -318,7 +318,7 @@ class bar_graph_y_tick():
             self.line = self.canvas.create_line(self.x_pos, self.y_pos + self.height - self.value / max_value * self.height, self.x_pos + self.width, self.y_pos + self.height - self.value / max_value * self.height, fill="", dash=(3, 1))
             self.text = self.canvas.create_text(self.x_pos,
                                                 self.y_pos + self.height - self.value / max_value * self.height,
-                                                text=format(self.value, ",.{}f".format(decimal_places)) + self.unit, anchor="e", fill=_from_rgb(self.font_color), font=self.font)
+                                                text=format(self.value, f",.{decimal_places}f") + self.unit, anchor="e", fill=_from_rgb(self.font_color), font=self.font)
 
     def update(self, max_value, fraction):
         if self.value < max_value:

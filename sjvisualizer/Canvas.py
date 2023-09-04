@@ -159,7 +159,7 @@ class canvas():
                 time.sleep(0.0001)
 
             time_used = time.time() - start
-            print("FPS: {}".format(format(1/time_used, ",.{}f".format(decimal_places))))
+            print(f'FPS: {format(1/time_used, f",.{decimal_places}f")}')
 
     def add_title(self, text, color=(0, 0, 0)):
         """
@@ -381,9 +381,9 @@ def format_date(time, time_indicator):
     if time_indicator == "year":
         return str(time.year)
     elif time_indicator == "month":
-        return str("{} {}".format(months[time.month], time.year))
+        return str(f"{months[time.month]} {time.year}")
     elif time_indicator == "day":
-        return str("{} {} {}".format(time.day, months[time.month], time.year))
+        return str(f"{time.day} {months[time.month]} {time.year}")
     return None
 
 def _from_rgb(rgb):
@@ -423,12 +423,12 @@ def format_date(time, time_indicator, format="Europe"):
     if time_indicator == "year":
         text = str(time.year)
     elif time_indicator == "month":
-        text = str("{} {}".format(months[time.month], time.year))
+        text = str(f"{months[time.month]} {time.year}")
     elif time_indicator == "day":
         if format == "USA":
-            text = str("{} {} {}".format(months[time.month], time.day, time.year))
+            text = str(f"{months[time.month]} {time.day} {time.year}")
         else:
-            text = str("{} {} {}".format(time.day, months[time.month], time.year))
+            text = str(f"{time.day} {months[time.month]} {time.year}")
 
     return text
 
@@ -440,7 +440,7 @@ def format_value(number, decimal=decimal_places):
         number /= 1000.0
         unit_index += 1
 
-    formatted_number = "{:.3f}".format(number).rstrip('0').rstrip('.')
+    formatted_number = f"{number:.3f}".rstrip('0').rstrip('.')
     if unit_index > 0:
         formatted_number += units[unit_index - 1]
 
