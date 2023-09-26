@@ -10,13 +10,13 @@ Please find the catalogue example [here](https://github.com/SjoerdTilmans/sjvisu
 - Animated stacked bar charts
 - Animated line charts
 
-More chart types to follow! 
+More chart types to follow! If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
 
 ## Roadmap
 
 ![Roadmap](https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/e8ad74b3-8a46-48bb-97da-7368baea850f)
 
-If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
+If you like this project, please concider supporting me using PayPal [PayPal](https://www.paypal.com/donate/?hosted_button_id=YMN9G93CTNLD2).
 
 ## Learn sjvisualizer
 
@@ -72,7 +72,7 @@ if __name__ == "__main__":
 ```
 
 ## Support this project
-If you like this project, please consider buying me a cup of coffee on [buymeacoffee](https://www.buymeacoffee.com/SjoerdTilmans).
+If you like this project, please concider supporting me using PayPal [PayPal](https://www.paypal.com/donate/?hosted_button_id=YMN9G93CTNLD2).
     
 ## Contributing
 Contributions are always welcome! Here are some ways to get involved:
