@@ -15,6 +15,7 @@ More chart types to follow!
 ## Roadmap
 
 ![Roadmap](https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/e8ad74b3-8a46-48bb-97da-7368baea850f)
+
 If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
 
 ## Learn sjvisualizer
