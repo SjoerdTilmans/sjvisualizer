@@ -12,11 +12,16 @@ Please find the catalogue example [here](https://github.com/SjoerdTilmans/sjvisu
 
 More chart types to follow! 
 
+## Roadmap
+
+![Roadmap](https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/e8ad74b3-8a46-48bb-97da-7368baea850f)
+If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
+
+## Learn sjvisualizer
+
 There are two ways of learning sjvisualizer:
 - Find additional examples and full documentation on my [website](https://www.sjdataviz.com/software)
 - Or follow my course on [Udemy](https://www.sjdataviz.com/course-link)
-
-If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
 
 ## Installation
 sjvisualizer is now available on pypi! Simply use pip to install it:
