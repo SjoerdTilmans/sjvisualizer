@@ -70,9 +70,6 @@ def main(fps = 60, duration = 0.35):
 if __name__ == "__main__":
     main()
 ```
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=SjoerdTilmans/sjvisualizer&type=Date)](https://star-history.com/#SjoerdTilmans/sjvisualizer&Date)
 
 ## Support this project
 If you like this project, please consider buying me a cup of coffee on [buymeacoffee](https://www.buymeacoffee.com/SjoerdTilmans).
