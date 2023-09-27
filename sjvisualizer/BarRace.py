@@ -315,7 +315,7 @@ class bar():
             else:
                 img = cv.load_image(os.path.join("assets", self.name.replace("*", "") + ".png"), int(1.15*self.size), int(1.15*self.size), root, name)
         except:
-            print("No image for {}".format(self.name))
+            print(f"No image for {self.name}")
             img = None
 
         if not self.color:
@@ -367,22 +367,19 @@ class bar():
                 self.draw_in_bar = True
                 self.frame_in_bar = 0
                 self.frame_not_in_bar = 0
-                self.value = self.canvas.create_text(self.x + width - self.size*0.25, target_y + (self.size)/3, text=str(self.money) + format(value, ",.{}f".format(self.decimal_places)) + str(self.unit), anchor="ne", font=self.font, fill=cv._from_rgb((255,255,255)))
+                self.value = self.canvas.create_text(self.x + width - self.size*0.25, target_y + (self.size)/3, text=str(self.money) + format(value, f",.{self.decimal_places}f") + str(self.unit), anchor="ne", font=self.font, fill=cv._from_rgb((255,255,255)))
             else:
                 self.draw_in_bar = False
                 self.frame_not_in_bar = 0
                 self.frame_in_bar = 0
                 if self.img:
-                    self.value = self.canvas.create_text(self.x + width + 0.5 * self.size + self.image_obj.width(), self.y + (self.size) / 3,
-                                                         text=str(self.money) + format(value, ",.{}f".format(
-                                                             self.decimal_places)) + str(self.unit), anchor="nw", font=self.font,
+                    self.value = self.canvas.create_text(self.x + width + 0.5 * self.size + self.image_obj.width(), self.y + (self.size) / 3, anchor="nw", font=self.font,
+                                                         text=str(self.money) + format(value, f",.{self.decimal_places}f") + str(self.unit), 
                                                          fill=cv._from_rgb(self.font_color))
                 else:
-                    self.value = self.canvas.create_text(self.x + width + 0.25 * self.size, self.y + (self.size) / 3,
-                                                         text=str(self.money) + format(value, ",.{}f".format(
-                                                             self.decimal_places)) + str(self.unit), anchor="nw",
-                                                         font=self.font,
-                                                         fill=cv._from_rgb(self.font_color))
+                    self.value = self.canvas.create_text(self.x + width + 0.25 * self.size, self.y + (self.size) / 3, anchor="nw",
+                                                         text=str(self.money) + format(value, f",.{self.decimal_places}f") + str(self.unit), 
+                                                         font=self.font, fill=cv._from_rgb(self.font_color))
 
         self.text = self.canvas.create_text(self.x - 10, self.y + (self.size) / 3, text=self.name, anchor="ne",
                                             font=self.font, fill=cv._from_rgb(self.font_color))
@@ -460,7 +457,7 @@ class bar():
             self.v = self.v + self.a
             self.y = self.y + self.v
 
-            self.last_frame = str(self.money) + format(value, ",.{}f".format(self.decimal_places)) + str(self.unit) + str(self.x + width + self.size*1.5)
+            self.last_frame = str(self.money) + format(value, f",.{self.decimal_places}f") + str(self.unit) + str(self.x + width + self.size*1.5)
 
             self.canvas.coords(self.text, self.x - 10, self.y + (self.size)/3 + (1 - self.font_scale) * self.size / 2)
 
@@ -478,7 +475,7 @@ class bar():
                     self.canvas.itemconfig(self.value, fill=cv._from_rgb(self.font_color), anchor="nw")
 
                 if not self.last_value == value:
-                    self.canvas.itemconfig(self.value, text=str(self.money) + format(value, ",.{}f".format(self.decimal_places)) + str(self.unit))
+                    self.canvas.itemconfig(self.value, text=str(self.money) + format(value, f",.{self.decimal_places}f") + str(self.unit))
 
             if abs(target_y - self.y) > 1 or not self.last_width == width:
                 if not self.has_multi_color_data:
@@ -574,7 +571,7 @@ class bar_stripes():
                 self.lines["text"].append(self.canvas.create_text(x_pos, self.y_min, text="", fill="", anchor="s", font=self.font))
             else:
                 self.lines["lines"].append(self.canvas.create_line(x_pos, self.y_min, x_pos, self.y_max, fill=self.color))
-                self.lines["text"].append(self.canvas.create_text(x_pos, self.y_min, text=format(value, ",.{}f".format(decimal_places)), fill=self.color, anchor="s", font=self.font))
+                self.lines["text"].append(self.canvas.create_text(x_pos, self.y_min, text=format(value, f",.{decimal_places}f"), fill=self.color, anchor="s", font=self.font))
 
     def update(self, row):
         if self.invert:
@@ -607,7 +604,7 @@ class bar_stripes():
                 self.canvas.itemconfig(self.lines["text"][i-1], fill="")
             else:
                 self.canvas.itemconfig(self.lines["lines"][i-1], fill=self.color)
-                self.canvas.itemconfig(self.lines["text"][i-1], text=format(value, ",.{}f".format(decimal_places)), fill=self.color)
+                self.canvas.itemconfig(self.lines["text"][i-1], text=format(value, f",.{decimal_places}f"), fill=self.color)
 
             self.canvas.coords(self.lines["lines"][i-1], x_pos, self.y_min, x_pos, self.y_max)
             self.canvas.coords(self.lines["text"][i-1], x_pos, self.y_min)

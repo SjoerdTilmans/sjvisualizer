@@ -19,13 +19,13 @@ class DataHandler():
 
         # try to find cached location of the file
         try:
-            self.cache_location = os.path.join("_pandas_cache","{}{}.xlsx".format(self.excel_file.split(".")[0].split("/")[1], int(self.number_of_frames)))
+            self.cache_location = os.path.join("_pandas_cache",f'{self.excel_file.split(".")[0].split("/")[1]}{int(self.number_of_frames)}.xlsx')
         except:
             self.cache_location = None
 
         # making sure last modified date of the cached file is always more recent than the last modified date of the data file
         if self.cache_location and os.path.isfile(self.cache_location) and os.path.getmtime(self.cache_location) > os.path.getmtime(excel_file):
-            print("Loading cashed data frame {}".format(self.cache_location))
+            print(f"Loading cashed data frame {self.cache_location}")
             self._load_file()
         else:
             print("loading new data frame")
@@ -52,7 +52,7 @@ class DataHandler():
         print("Perparing data")
 
         for i, (index, row) in enumerate(self.df.iterrows()):
-            print("Working on {}/{}".format(i, length))
+            print(f"Working on {i}/{length}")
             if i > 0:
                 print(time)
                 print(index)
