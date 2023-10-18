@@ -113,7 +113,7 @@ class date(cv.sub_plot):
             position = (self.x_pos - self.width/2, self.y_pos - self.height/2)
         else:
             position = (self.x_pos + self.width/2, self.y_pos + self.height/2)
-        self.obj_id = self.canvas.create_text(*position, text=self.prefix + text, font=font.Font(family=text_font, size=int(self.height*0.65/ SCALEFACTOR), weight="bold"), fill=cv._from_rgb(self.font_color), anchor=self.anchor)
+        self.obj_id = self.canvas.create_text(*position, text=self.prefix + text, font=font.Font(family=text_font, size=int(self.height*0.65/ SCALEFACTOR)), fill=cv._from_rgb(self.font_color), anchor=self.anchor)
 
     def update(self, time):
         if self.time_indicator == "year":

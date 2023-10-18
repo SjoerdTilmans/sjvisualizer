@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: sjvisualizer
-Version: 0.0.11
+Version: 0.0.12
 Summary: Package to animate your data
 Home-page: https://www.sjdataviz.com/
 Author: Sjoerd Tilmans
@@ -24,13 +24,19 @@ Please find the catalogue example [here](https://github.com/SjoerdTilmans/sjvisu
 - Animated stacked bar charts
 - Animated line charts
 
-More chart types to follow! 
+More chart types to follow! If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
+
+## Roadmap
+
+![Roadmap](https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/e8ad74b3-8a46-48bb-97da-7368baea850f)
+
+If you like this project, please concider supporting me using PayPal [PayPal](https://www.paypal.com/donate/?hosted_button_id=YMN9G93CTNLD2).
+
+## Learn sjvisualizer
 
 There are two ways of learning sjvisualizer:
 - Find additional examples and full documentation on my [website](https://www.sjdataviz.com/software)
 - Or follow my course on [Udemy](https://www.sjdataviz.com/course-link)
-
-If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
 
 ## Installation
 sjvisualizer is now available on pypi! Simply use pip to install it:
@@ -78,12 +84,9 @@ def main(fps = 60, duration = 0.35):
 if __name__ == "__main__":
     main()
 ```
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=SjoerdTilmans/sjvisualizer&type=Date)](https://star-history.com/#SjoerdTilmans/sjvisualizer&Date)
 
 ## Support this project
-If you like this project, please consider buying me a cup of coffee on [buymeacoffee](https://www.buymeacoffee.com/SjoerdTilmans).
+If you like this project, please concider supporting me using PayPal [PayPal](https://www.paypal.com/donate/?hosted_button_id=YMN9G93CTNLD2).
     
 ## Contributing
 Contributions are always welcome! Here are some ways to get involved:

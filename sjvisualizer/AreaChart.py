@@ -127,6 +127,12 @@ class area_chart(cv.sub_plot):
 
         :param event_color: color of the event indication, default is (225,225,225)
         :type event_color: tuple
+
+        :param display_values: display the value of the data category at the end of the legend? default is False
+        :type display_values: boolean
+
+        :param unit: unit of the values visualized, default is ""
+        :type unit: str
         """
 
     def draw(self, time):
@@ -144,12 +150,18 @@ class area_chart(cv.sub_plot):
         if not hasattr(self, "y_ticks"):
             self.y_ticks = 3
 
+        if not hasattr(self, "external_legend"):
+            self.external_legend = True
+
         # making room for legend
         if self.sjcanvas:
             self.x_pos = self.x_pos - self.width/10
 
         if not hasattr(self, "event_color"):
             self.event_color = (225,225,225)
+
+        if not hasattr(self, "display_values"):
+            self.display_values = False
 
         if not hasattr(self, "events"):
             self.events = {}
@@ -159,25 +171,32 @@ class area_chart(cv.sub_plot):
 
         data = self._get_data_for_frame(time)
 
-        self.axis1 = Axis.axis(canvas=self.canvas, orientation="horizontal", n=self.x_ticks, x=self.x_pos, y=self.y_pos+self.height, length=self.width, allow_decrease=False, is_date=True, time_indicator="year", font_size=self.font_size, color=self.font_color)
+        self.axis1 = Axis.axis(canvas=self.canvas, orientation="horizontal", n=self.x_ticks, x=self.x_pos, y=self.y_pos+self.height, length=self.width, allow_decrease=False, is_date=True, time_indicator=self.time_indicator, font_size=self.font_size, color=self.font_color)
 
         self.min_time = time
         self.axis1.draw(min=self.min_time, max=self.min_time)
 
-        self.axis2 = Axis.axis(canvas=self.canvas, orientation="vertical", n=self.y_ticks, x=self.x_pos, y=self.y_pos+self.height, length=self.height, width=self.width, allow_decrease=False, is_date=False, font_size=self.font_size, color=self.font_color, ticks_only=False, time_indicator=self.time_indicator)
+        self.axis2 = Axis.axis(canvas=self.canvas, orientation="vertical", n=self.y_ticks, x=self.x_pos, y=self.y_pos+self.height, length=self.height, width=self.width, allow_decrease=False, is_date=False, font_size=self.font_size, color=self.font_color, ticks_only=False, time_indicator=self.time_indicator, unit=self.unit)
         self.axis2.draw(min=min(data), max=max(data))
 
         self.areas = {}
 
         for name, d in data.items():
-            self.areas[name] = area(name=name, canvas=self.canvas, value=d, time=time, font_color=self.font_color, colors=self.colors, xaxis=self.axis1, yaxis=self.axis2, draw_points=self.draw_points, chart=self)
+            self.areas[name] = area(name=name, canvas=self.canvas, value=d, time=time, font_color=self.font_color, colors=self.colors, xaxis=self.axis1, yaxis=self.axis2, draw_points=self.draw_points, chart=self, outline_color=self.font_color)
 
         if self.sjcanvas:
             if len(self.df.columns) > 10:
                 n_y = 10
             else:
                 n_y = len(self.df.columns)
-            self.legend = Legend.legend(canvas=self.canvas, height=self.height, width=500, x_pos=self.x_pos + self.width + 5*self.font_size, y_pos=self.y_pos, df=self.df, colors=self.colors, n=10, font_size=self.font_size, font_color=self.font_color)
+            if self.external_legend:
+                self.legend = Legend.legend(canvas=self.canvas, height=self.height, width=500, x_pos=self.x_pos + self.width + 5*self.font_size, y_pos=self.y_pos, df=self.df, colors=self.colors, n=10, font_size=self.font_size, font_color=self.font_color, display_values=self.display_values, unit=self.unit)
+            else:
+                self.legend = Legend.legend(canvas=self.canvas, height=self.height, width=500,
+                                           x_pos=self.x_pos + 5 * self.font_size, y_pos=self.y_pos,
+                                           df=self.df, colors=self.colors, n=10, font_size=self.font_size,
+                                           font_color=self.font_color, display_values=self.display_values,
+                                           unit=self.unit)
             self.sjcanvas.add_sub_plot(self.legend)
 
         self.event_obj = []
@@ -204,7 +223,7 @@ class area_chart(cv.sub_plot):
 
 class area():
 
-    def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors=None, time=None, xaxis=None, yaxis=None, chart=None, draw_points=False):
+    def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors=None, time=None, xaxis=None, yaxis=None, chart=None, draw_points=False, outline_color=(0,0,0)):
         self.name = name
         self.canvas = canvas
         self.unite = unit
@@ -214,6 +233,8 @@ class area():
         self.chart = chart
         self.draw_points = draw_points
         self.point_radius = 5
+        self.colors = colors
+        self.outline_color = outline_color
 
         self.x_values = []
         self.y_values = []
@@ -222,14 +243,9 @@ class area():
             if name in colors:
                 self.color = cv._from_rgb(colors[name])
             else:
-                color = tuple((random.randint(min_color, max_color), random.randint(min_color, max_color),
-                               random.randint(min_color + 30, max_color)))
-                self.color = cv._from_rgb(color)
-                colors[name] = color
+                self._set_color()
         else:
-            color = tuple((random.randint(min_color, max_color), random.randint(min_color, max_color),
-                           random.randint(min_color + 30, max_color)))
-            self.color = cv._from_rgb(color)
+            self._set_color()
 
         self.draw(value, time)
 
@@ -261,6 +277,17 @@ class area():
         coords.append(self.xaxis.y)
 
         if not self.area:
-            self.area = self.canvas.create_polygon(*coords, width=2, fill=self.color, outline="black")
+            self.area = self.canvas.create_polygon(*coords, width=1, fill=self.color, outline=cv._from_rgb(self.outline_color))
         else:
             self.canvas.coords(self.area, *coords)
+
+    def _set_color(self):
+        if self.chart.sjcanvas and self.chart.sjcanvas.color_palette:
+            color = self.chart.sjcanvas.color_palette[0]
+            self.chart.sjcanvas.color_palette.pop(0)
+        else:
+            color = tuple((random.randint(min_color, max_color), random.randint(min_color, max_color),
+                           random.randint(min_color + 30, max_color)))
+
+        self.color = cv._from_rgb(color)
+        self.colors[self.name] = color

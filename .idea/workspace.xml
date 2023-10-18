@@ -20,7 +20,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
   </component>
-  <component name="RunManager" selected="Python.Catalogue (1)">
+  <component name="RunManager" selected="Python.Catalogue">
     <configuration name="Catalogue (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="sjvisualizer" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -128,8 +128,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Catalogue (1)" />
         <item itemvalue="Python.Catalogue" />
+        <item itemvalue="Python.Catalogue (1)" />
         <item itemvalue="Python.line_dev" />
         <item itemvalue="Python.smoke_test" />
         <item itemvalue="Python.bar_example_advanced" />

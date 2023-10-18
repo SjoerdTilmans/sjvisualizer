@@ -48,7 +48,7 @@ else: # if OS can't be detected
 min_slice = 0.03
 min_slice_image = 0.055
 min_slice_percentage_display = 0.055
-decimal_places = 1
+decimal_places = 0
 text_font = "Microsoft JhengHei UI"
 min_color = 20
 max_color = 225
@@ -109,11 +109,18 @@ class bar_race(cv.sub_plot):
     :param font_color: font color, default is (0,0,0)
     :type font_color: tuple of length 3 with integers
 
-    :param sort: should the values of this plot be softed? True/False, default is True
+    :param sort: should the elements of this graph be sorted based on the value? default is True
     :type sort: boolean
 
     :param number_of_bars: number of bars to display in the animation, default is 10 unless you have less than 10 data categories
     :type number_of_bars: int
+
+    :param shift: number of pixels to shift the vertical stripe down which is used to hide the bars that fall outside of the top X. This can be used if a background image is used to avoid an ugly white bar covering the background image.
+    :type shift: int
+
+    :param font_scale: increase or decrease the font_size. To reduce the font size by 25% set this value to 0.75.
+    :type font_scale: float
+
     """
     def draw(self, time):
         self.distance = self.height / (self.number_of_bars+(self.number_of_bars+1)*0.5)
@@ -175,26 +182,21 @@ class bar_race(cv.sub_plot):
                 fraction = value / data.iloc[self.number_of_bars]
                 self.current_max = data.iloc[self.number_of_bars]
 
-            if name in self.colors:
-                color = self.colors[name]
-            else:
-                color = None
-
             if fraction > 0.0000001 and bar_number < self.number_of_bars and not name == "Other":
-                self.bars[name] = bar(name=name, canvas=self.canvas, x=self.x_pos + self.width/5, target_y=current_height, color=color, root=self.root, size=int(self.distance), width=fraction*self.width*0.75, radius=0, value=value, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places, font_scale=self.font_scale)
+                self.bars[name] = bar(name=name, canvas=self.canvas, x=self.x_pos + self.width/5, target_y=current_height, root=self.root, size=int(self.distance), width=fraction*self.width*0.75, radius=0, value=value, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places, font_scale=self.font_scale, graph=self)
                 current_height = current_height + 3 * self.distance / 2
                 bar_number = bar_number + 1
             else:
                 if self.origin == "n":
                     self.bars[name] = bar(name=name, canvas=self.canvas, x=self.x_pos + self.width / 5,
-                                          target_y=-500, color=color, root=self.root,
-                                          size=int(self.distance), width=fraction*self.width*0.75, radius=0, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places, font_scale=self.font_scale)
+                                          target_y=-500, root=self.root,
+                                          size=int(self.distance), width=fraction*self.width*0.75, radius=0, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places, font_scale=self.font_scale, graph=self)
                 elif self.origin == "s":
                     self.bars[name] = bar(name=name, canvas=self.canvas, x=self.x_pos + self.width / 5,
-                                          target_y=self.distance/2 + self.y_pos + (self.number_of_bars) * 3 * self.distance / 2 + self.shift, color=color, root=self.root,
-                                          size=int(self.distance), width=fraction*self.width*0.75, radius=0, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places, font_scale=self.font_scale)
+                                          target_y=self.distance/2 + self.y_pos + (self.number_of_bars) * 3 * self.distance / 2 + self.shift, root=self.root,
+                                          size=int(self.distance), width=fraction*self.width*0.75, radius=0, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places, font_scale=self.font_scale, graph=self)
 
-        self.rec = self.canvas.create_rectangle(self.x_pos - 145, self.y_pos + self.height + self.shift, self.x_pos + self.width, self.y_pos + self.height + 1.35 * self.distance + self.shift, fill = cv._from_rgb(self.back_ground_color), outline="")
+        self.rec = self.canvas.create_rectangle(self.x_pos - 0, self.y_pos + self.height + self.shift, self.x_pos + self.width, self.y_pos + self.height + 1.35 * self.distance + self.shift, fill = cv._from_rgb(self.back_ground_color), outline="")
 
 
     def update(self, time):
@@ -264,7 +266,7 @@ class bar_race(cv.sub_plot):
 
 class bar():
 
-    def __init__(self, name=None, canvas=None, color=None, root=None, target_y=0, x=100, size=10, width=0, radius=0, value=0, unit=None, display_value=True, multi_colors=None, color_data=None, font_color=(0,0,0), mode=None, colors=None, decimal_places=decimal_places, font_scale=1):
+    def __init__(self, name=None, canvas=None, root=None, target_y=0, x=100, size=10, width=0, radius=0, value=0, unit=None, display_value=True, multi_colors=None, color_data=None, font_color=(0,0,0), mode=None, colors=None, decimal_places=decimal_places, font_scale=1, graph=None):
         self.mass = 2
         self.stiffness = 0.2 * size / 100
         self.damping = 0.6
@@ -286,10 +288,11 @@ class bar():
         self.radius = radius
         self.colors = colors
         self.font_scale = font_scale
+        self.colors = colors
+        self.graph = graph
 
         self.name = name
         self.canvas = canvas
-        self.color = color
         self.root = root
         self.x = x
 
@@ -318,18 +321,28 @@ class bar():
             print("No image for {}".format(self.name))
             img = None
 
-        if not self.color:
-            color = tuple((random.randint(min_color, max_color), random.randint(min_color, max_color), random.randint(min_color + 30, max_color)))
-            self.color = cv._from_rgb(color)
-
-            if colors:
-                colors[name] = color
+        if isinstance(colors, dict):
+            if name in colors:
+                self.color = cv._from_rgb(colors[name])
+            else:
+                self._set_color()
         else:
-            self.color = cv._from_rgb(tuple(color))
+            self._set_color()
 
         self.image_obj = img
 
         self.draw(target_y=target_y, width=width, img=img, value=value, color_data=color_data)
+
+    def _set_color(self):
+        if self.graph.sjcanvas and self.graph.sjcanvas.color_palette:
+            color = self.graph.sjcanvas.color_palette[0]
+            self.graph.sjcanvas.color_palette.pop(0)
+        else:
+            color = tuple((random.randint(min_color, max_color), random.randint(min_color, max_color),
+                           random.randint(min_color + 30, max_color)))
+
+        self.color = cv._from_rgb(color)
+        self.colors[self.name] = color
 
     def draw(self, target_y=0, width=0, img=None, value=0, color_data=None):
         self.last_width = width
@@ -531,7 +544,7 @@ class bar_stripes():
 
     def __init__(self, canvas, y_min, y_max, row, x, width, height, number_of_bars, invert, allow_decrease=True):
         self.N = 2
-        self.color = cv._from_rgb((50, 50, 50))
+        self.color = cv._from_rgb((75, 75, 75))
         self.canvas = canvas
         self.number_of_bars = number_of_bars
         self.invert = invert
@@ -541,7 +554,7 @@ class bar_stripes():
         self.y_min = y_min
         self.y_max = y_max
 
-        self.font = font.Font(family=text_font, size=int(height/40/SCALEFACTOR), weight="bold")
+        self.font = font.Font(family=text_font, size=int(height/40/SCALEFACTOR/1.25), weight="bold")
 
         self.width = width
 

@@ -107,6 +107,12 @@ class legend(cv.sub_plot):
 
         :param sort: should the elements of this graph be sorted based on the value? default is True
         :type sort: boolean
+
+        :param display_values: display the value of the data category at the end of the legend? default is False
+        :type display_values: boolean
+
+        :param unit: unit of the values visualized, default is ""
+        :type unit: str
         """
 
     def draw(self, time):
@@ -117,9 +123,12 @@ class legend(cv.sub_plot):
 
         if not hasattr(self, "n"):
             if len(self.df.columns) > 10:
-                n = 10
+                self.n = 10
             else:
-                n = len(self.df.columns)
+                self.n = len(self.df.columns)
+
+        if not hasattr(self, "display_values"):
+            self.display_values = False
 
         if not hasattr(self, "orientation"):
             self.orientation = "vertical"
@@ -137,10 +146,10 @@ class legend(cv.sub_plot):
 
         for i, (name, d) in enumerate(data.items()):
             if i < self.n:
-                self.elems[name] = elem(name=name, canvas=self.canvas, font_color=self.font_color, font=self.font, parent=self, colors=self.colors, y=self.positions[i])
+                self.elems[name] = elem(name=name, canvas=self.canvas, font_color=self.font_color, font=self.font, parent=self, colors=self.colors, y=self.positions[i], display_values=self.display_values, unit=self.unit)
             else:
                 self.elems[name] = elem(name=name, canvas=self.canvas, font_color=self.font_color, font=self.font,
-                                        parent=self, colors=self.colors)
+                                        parent=self, colors=self.colors, display_values=self.display_values, unit=self.unit)
 
     def update(self, time):
         if self.sort:
@@ -150,9 +159,9 @@ class legend(cv.sub_plot):
 
         for i, (name, d) in enumerate(data.items()):
             if i < self.n:
-                self.elems[name].update(self.x_pos, self.positions[i], True)
+                self.elems[name].update(self.x_pos, self.positions[i], True, value=d)
             else:
-                self.elems[name].update(0, 0, False)
+                self.elems[name].update(0, 0, False, value=d)
 
     def _get_positions(self):
         if self.orientation == "vertical":
@@ -162,13 +171,14 @@ class legend(cv.sub_plot):
 
 class elem():
 
-    def __init__(self, name=None, canvas=None, y=0, unit=None, font_color=(0,0,0), colors=None, font=None, parent=None):
+    def __init__(self, name=None, canvas=None, y=0, unit="", font_color=(0,0,0), colors=None, font=None, parent=None, display_values=False):
         self.name = name
         self.canvas = canvas
-        self.unite = unit
+        self.unit = unit
         self.font_color = font_color
         self.font = font
         self.parent = parent
+        self.display_values = display_values
 
         # dynamic constants
         self.m = 2
@@ -206,7 +216,7 @@ class elem():
         if self.img:
             self.image_on_canvas = self.canvas.create_image(400, 400, image=self.img, anchor="w")
 
-    def update(self, x, y, draw):
+    def update(self, x, y, draw, value=0):
         if draw and self.shape:
             self.calc_position(y)
             self.canvas.coords(self.label, x, self.y)
@@ -214,12 +224,16 @@ class elem():
                 text_box = self.canvas.bbox(self.label)
                 self.canvas.coords(self.image_on_canvas, text_box[2] + self.parent.font_size, self.y)
             self.canvas.coords(self.shape, x - 3 * self.parent.font_size, self.y - self.parent.font_size, x - self.parent.font_size, self.y + self.parent.font_size)
+
+            if self.display_values:
+                self.canvas.itemconfig(self.label, text="{}, {}{}".format(self.name, cv.format_value(value, decimal=1), self.unit))
+
         elif draw and not self.shape:
             self.y = y
             self.v_y = 0
             self.a_y = 0
             self.draw()
-            self.update(x, y, draw)
+            self.update(x, y, draw, value)
         else:
             self.canvas.delete(self.label)
             self.canvas.delete(self.shape)

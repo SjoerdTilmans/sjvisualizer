@@ -103,10 +103,14 @@ class static_text(cv.sub_plot):
         :param font_color: font color, default is (0,0,0)
         :type font_color: tuple of length 3 with integers
 
-
+        :param angle: rotation of the text by number of degrees
+        :type angle: float
         """
 
     def draw(self, *args, **kwargs):
+        if not hasattr(self, "angle"):
+            self.angle = 0
+
         if hasattr(self, "align"):
             if self.align == "left":
                 self.font = font.Font(family=text_font, size=int(0.65 * self.height / SCALEFACTOR), underline=UNDERLINE,
@@ -124,7 +128,7 @@ class static_text(cv.sub_plot):
 
         else:
             self.font = font.Font(family=text_font, size=int(0.65*self.height/ SCALEFACTOR), underline=UNDERLINE, weight="bold")
-            self.text = self.canvas.create_text(self.width/2 + self.x_pos, self.height/2 + self.y_pos, text=self.text, font=self.font, fill=cv._from_rgb(self.font_color), anchor=self.anchor)
+            self.text = self.canvas.create_text(self.width/2 + self.x_pos, self.height/2 + self.y_pos, text=self.text, font=self.font, fill=cv._from_rgb(self.font_color), anchor=self.anchor, angle=self.angle)
 
     def update(self, *args, **kwargs):
         self.canvas.tag_raise(self.text)

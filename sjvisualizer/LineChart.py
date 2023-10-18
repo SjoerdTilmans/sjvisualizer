@@ -128,6 +128,9 @@ class line_chart(cv.sub_plot):
             :param draw_all_events: by default only the label will be added to the most recent event. Set this value to True to keep the labels for all events
             :type draw_all_events: boolean
 
+            :param line_width: width of the line
+            :type line_width: int
+
             """
 
     def draw(self, time):
@@ -150,6 +153,9 @@ class line_chart(cv.sub_plot):
 
         if not hasattr(self, "default_min_value"):
             self.default_min_value = 0
+
+        if not hasattr(self, "line_width"):
+            self.line_width = None
 
         if not hasattr(self, "x_ticks"):
             self.default_min_value = 3
@@ -174,7 +180,7 @@ class line_chart(cv.sub_plot):
         self.lines = {}
 
         for name, d in data.items():
-            self.lines[name] = line(name=name, canvas=self.canvas, value=d, time=time, font_color=self.font_color, colors=self.colors, xaxis=self.axis1, yaxis=self.axis2, draw_points=self.draw_points, chart=self)
+            self.lines[name] = line(name=name, canvas=self.canvas, value=d, time=time, font_color=self.font_color, colors=self.colors, xaxis=self.axis1, yaxis=self.axis2, draw_points=self.draw_points, chart=self, line_width=self.line_width)
 
         if self.sjcanvas:
             if len(self.df.columns) > 10:
@@ -234,7 +240,7 @@ class event():
 
     def draw(self):
         self.rect = self.canvas.create_rectangle(-1000, -1000, -1000, -1000, fill=self.color, outline="")
-        self.label = self.canvas.create_text(-1000, -1000, text=self.name, font=self.font, fill=cv._from_rgb(self.font_color), anchor="se")
+        self.label = self.canvas.create_text(-1000, -1000, text=self.name, font=self.font, fill=cv._from_rgb(self.font_color), anchor="s")
 
     def update(self, date):
         if date > self.start_date:
@@ -242,26 +248,44 @@ class event():
                 self.drawn = True
                 for e in self.parent.event_obj:
                     e.draw_label = False
-                self.draw_label = True
+                if self.end_date > self.parent.min_time:
+                    self.draw_label = True
 
             pos1 = self.parent.axis1.calc_positions((self.start_date - datetime.datetime(1800,1,1)).days) + self.parent.x_pos
+            if pos1 < self.parent.x_pos:
+                pos1 = self.parent.x_pos
+
             if self.end_date > date:
                 pos2 = self.parent.axis1.calc_positions(
                     (date - datetime.datetime(1800, 1, 1)).days) + self.parent.x_pos
             else:
                 pos2 = self.parent.axis1.calc_positions((self.end_date - datetime.datetime(1800,1,1)).days) + self.parent.x_pos
 
+            if pos2 < self.parent.x_pos:
+                pos2 = self.parent.x_pos
+
             if self.draw_label:
-                self.canvas.coords(self.label, (pos2 + pos2) / 2, self.parent.y_pos - 3)
+                x_pos = self._calc_label_x_pos(pos1, pos2)
+                self.canvas.coords(self.label, x_pos, self.parent.y_pos - 3)
             else:
                 self.canvas.itemconfig(self.label, text="")
 
             self.canvas.coords(self.rect, pos1, self.parent.y_pos, pos2, self.parent.y_pos + self.parent.height)
 
+    def _calc_label_x_pos(self, pos1, pos2):
+        text_width = self.canvas.bbox(self.label)[2] - self.canvas.bbox(self.label)[0]
+        if (pos1 + pos2) / 2 + text_width/2 > self.parent.y_pos + self.parent.width:
+            self.canvas.itemconfig(self.label, anchor="se")
+            return self.parent.y_pos + self.parent.width
+        elif (pos1 + pos2) / 2 - text_width/2 < self.parent.y_pos:
+            self.canvas.itemconfig(self.label, anchor="sw")
+            return self.parent.y_pos
+        self.canvas.itemconfig(self.label, anchor="s")
+        return (pos1 + pos2) / 2
 
 class line():
 
-    def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors=None, time=None, xaxis=None, yaxis=None, chart=None, draw_points=False):
+    def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors=None, time=None, xaxis=None, yaxis=None, chart=None, draw_points=False, line_width=None):
         self.name = name
         self.canvas = canvas
         self.unite = unit
@@ -271,7 +295,11 @@ class line():
         self.chart = chart
         self.draw_points = draw_points
         self.point_radius = int(2 + self.chart.height/150)
-        self.line_width = int(1 + self.chart.height/200)
+        if not line_width:
+            self.line_width = int(1 + self.chart.height/200)
+        else:
+            self.line_width = line_width
+        self.colors = colors
 
         self.x_values = []
         self.y_values = []
@@ -280,16 +308,22 @@ class line():
             if name in colors:
                 self.color = cv._from_rgb(colors[name])
             else:
-                color = tuple((random.randint(min_color, max_color), random.randint(min_color, max_color),
-                               random.randint(min_color + 30, max_color)))
-                self.color = cv._from_rgb(color)
-                colors[name] = color
+                self._set_color()
+        else:
+            self._set_color()
+
+        self.draw(value, time)
+
+    def _set_color(self):
+        if self.chart.sjcanvas and self.chart.sjcanvas.color_palette:
+            color = self.chart.sjcanvas.color_palette[0]
+            self.chart.sjcanvas.color_palette.pop(0)
         else:
             color = tuple((random.randint(min_color, max_color), random.randint(min_color, max_color),
                            random.randint(min_color + 30, max_color)))
-            self.color = cv._from_rgb(color)
 
-        self.draw(value, time)
+        self.color = cv._from_rgb(color)
+        self.colors[self.name] = color
 
     def draw(self, value, time):
         self.x_values.append((time - datetime.datetime(1800,1,1)).days)

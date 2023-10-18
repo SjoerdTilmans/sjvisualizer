@@ -127,10 +127,13 @@ class pie_plot(sub_plot):
         for i, (name, value) in enumerate(data.items()):
             if not name == "Other" and not name == "Others":
                 fraction = value/data.sum()
-                if name in self.colors:
-                    color = self.colors[name]
+                if isinstance(self.colors, dict):
+                    if name in self.colors:
+                        color = self.colors[name]
+                    else:
+                        color = self._set_color(name)
                 else:
-                    color = None
+                    color = self._set_color(name)
 
                 if i < 200:
                     load_img = True
@@ -150,6 +153,18 @@ class pie_plot(sub_plot):
                                         fill=_from_rgb(self.back_ground_color), outline="")
 
 
+    def _set_color(self, name):
+        if self.sjcanvas and self.sjcanvas.color_palette:
+            color = self.sjcanvas.color_palette[0]
+            self.sjcanvas.color_palette.pop(0)
+        else:
+            color = tuple((random.randint(min_color, max_color), random.randint(min_color, max_color),
+                           random.randint(min_color + 30, max_color)))
+
+        self.color = cv._from_rgb(color)
+        self.colors[name] = color
+
+        return color
 
     def update(self, time):
         if self.sort:

@@ -104,7 +104,11 @@ class axis():
             if self.min_date == self.max_date:
                 tick_values = []
             else:
-                tick_values = calculate_nice_ticks(self.min_date, self.max_date, self.n, is_log_scale=self.is_log_scale)
+                if self.time_indicator == "year":
+                    tick_values = calculate_nice_ticks(self.min_date, self.max_date, self.n,
+                                                       is_log_scale=self.is_log_scale, time_indicator=True)
+                else:
+                    tick_values = calculate_nice_ticks(self.min_date, self.max_date, self.n, is_log_scale=self.is_log_scale)
 
                 spacing = tick_values[1] - tick_values[0]
                 number_of_ticks = len(tick_values)
@@ -115,10 +119,10 @@ class axis():
                     tick_values.append(tick_values[-1] + spacing)
 
                 for i, v in enumerate(tick_values):
-                    if v < self.max_date:
+                    if v < self.max_date and v > self.min_date:
                         self.ticks[i].update(value=v, draw=True)
                     else:
-                        self.ticks[i].update(value=1, draw=True)
+                        self.ticks[i].update(value=1, draw=False)
                 if not "i" in locals():
                     i = 0
 
@@ -189,49 +193,104 @@ class tick():
             self.canvas.itemconfig(self.text, text="")
 
 
-def calculate_nice_ticks(min_val, max_val, num_ticks, is_log_scale=False):
-    if is_log_scale:
-        min_val = math.log10(min_val)
-        max_val = math.log10(max_val)
+def calculate_nice_ticks(min_val, max_val, num_ticks, is_log_scale=False, time_indicator=False):
+    if not time_indicator:
+        if is_log_scale:
+            min_val = math.log10(min_val)
+            max_val = math.log10(max_val)
 
-    if min_val == max_val:
-        max_val = min_val + 0.1
+        if min_val == max_val:
+            max_val = min_val + 0.1
 
-    # Calculate the rough range
-    rough_range = max_val - min_val
+        # Calculate the rough range
+        rough_range = max_val - min_val
 
-    # Calculate the rough tick increment
-    rough_tick_incr = rough_range / num_ticks
+        # Calculate the rough tick increment
+        rough_tick_incr = rough_range / num_ticks
 
-    # Calculate the exponent of the rough tick increment in base 10
-    exponent = math.floor(math.log10(rough_tick_incr))
+        # Calculate the exponent of the rough tick increment in base 10
+        exponent = math.floor(math.log10(rough_tick_incr))
 
-    # Calculate the nice tick increment
-    nice_tick_incr = 10 ** exponent
-    if rough_tick_incr / nice_tick_incr < 1.5:
-        nice_tick_incr *= 1
-    elif rough_tick_incr / nice_tick_incr < 3:
-        nice_tick_incr *= 2
+        # Calculate the nice tick increment
+        nice_tick_incr = 10 ** exponent
+        if rough_tick_incr / nice_tick_incr < 1.5:
+            nice_tick_incr *= 1
+        elif rough_tick_incr / nice_tick_incr < 3:
+            nice_tick_incr *= 2
+        else:
+            nice_tick_incr *= 5
+
+        # Calculate the nice minimum value
+        nice_min_val = nice_tick_incr * math.floor(min_val / nice_tick_incr)
+
+        # Calculate the number of ticks needed to cover the range
+        num_ticks = math.ceil((max_val - nice_min_val) / nice_tick_incr)
+
+        # Calculate the adjusted maximum value
+        nice_max_val = nice_min_val + num_ticks * nice_tick_incr
+
+        # Generate the nice tick values
+        tick_values = []
+        current_val = nice_min_val
+        while current_val <= nice_max_val:
+            tick_values.append(current_val)
+            current_val += nice_tick_incr
+
+        if is_log_scale:
+            tick_values = [10 ** val for val in tick_values]
+
+        return tick_values
+
+    # if time indicator is set to year
     else:
-        nice_tick_incr *= 5
+        if min_val == max_val:
+            max_val = min_val + 0.1
 
-    # Calculate the nice minimum value
-    nice_min_val = nice_tick_incr * math.floor(min_val / nice_tick_incr)
+        dt = (max_val - min_val)/365.242199
+        if is_log_scale:
+            min_val = math.log10(min_val)
+            max_val = math.log10(max_val)
 
-    # Calculate the number of ticks needed to cover the range
-    num_ticks = math.ceil((max_val - nice_min_val) / nice_tick_incr)
+        # Calculate the rough range
+        rough_range = dt
 
-    # Calculate the adjusted maximum value
-    nice_max_val = nice_min_val + num_ticks * nice_tick_incr
+        # Calculate the rough tick increment
+        rough_tick_incr = rough_range / num_ticks
 
-    # Generate the nice tick values
-    tick_values = []
-    current_val = nice_min_val
-    while current_val <= nice_max_val:
-        tick_values.append(current_val)
-        current_val += nice_tick_incr
+        # Calculate the exponent of the rough tick increment in base 10
+        exponent = math.floor(math.log10(rough_tick_incr))
 
-    if is_log_scale:
-        tick_values = [10 ** val for val in tick_values]
+        # Calculate the nice tick increment
+        nice_tick_incr = 10 ** exponent
+        if rough_tick_incr / nice_tick_incr < 1.5:
+            nice_tick_incr *= 1
+        elif rough_tick_incr / nice_tick_incr < 3:
+            nice_tick_incr *= 2
+        else:
+            nice_tick_incr *= 5
 
-    return tick_values
+        if nice_tick_incr < 1:
+            nice_tick_incr = 1
+
+        # Calculate the nice minimum value
+        nice_min_val = 0
+
+        # Calculate the number of ticks needed to cover the range
+        num_ticks = math.ceil((dt - nice_min_val) / nice_tick_incr)
+
+        # Calculate the adjusted maximum value
+        nice_max_val = nice_min_val + num_ticks * nice_tick_incr
+
+        # Generate the nice tick values
+        tick_values = []
+        current_val = nice_min_val
+        while current_val <= nice_max_val:
+            # get the year from the number of days
+            # date = datetime.datetime(1800,1,1) + datetime.timedelta(days=current_val * 365.242199 + min_val)
+            tick_values.append(current_val * 365.242199 + min_val)
+            current_val += nice_tick_incr
+
+        if is_log_scale:
+            tick_values = [10 ** val for val in tick_values]
+
+        return tick_values

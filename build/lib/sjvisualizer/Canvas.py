@@ -1,7 +1,12 @@
 from tkinter import *
 import tkinter
 import sjvisualizer
-from PIL import Image
+from PIL import Image, ImageGrab
+# import pyautogui
+# from mss import mss
+import numpy as np
+# import cv2
+import time
 import io
 from tkinter import font
 import datetime
@@ -34,7 +39,31 @@ months = {
     12: "Dec",
 }
 
-random_colors = [(102,155,188),(168,198,134),(243,167,18),(41,51,92),(228,87,46),(255,155,113),(255,253,130),(45,48,71),(237,33,124),(27,153,139),(245,213,71),(219,48,105),(20,70,160),(0,0,200),(0,200,0),(200,0,0),(66,217,200),(44,140,153),(50,103,113),(40,70,75),(147,22,33),(208,227,127),(221,185,103),(209,96,61),(34,29,35),(97,87,113),(81,70,99),(77,83,130),(202,207,133),(140,186,128),(101,142,156)]
+color_palette = [
+    (31, 119, 180), (255, 127, 14), (44, 160, 44), (214, 39, 40), (148, 103, 189),
+    (140, 86, 75), (227, 119, 194), (127, 127, 127), (188, 189, 34), (23, 190, 207),
+    (188, 18, 86), (206, 162, 98), (139, 85, 35), (204, 121, 167), (75, 75, 75),
+    (102, 194, 165), (210, 245, 60), (77, 172, 38), (196, 58, 250), (141, 68, 172),
+    (255, 166, 254), (241, 167, 254), (69, 177, 58), (177, 69, 124), (91, 69, 177),
+    (168, 113, 170), (44, 227, 219), (94, 95, 67), (164, 131, 22), (78, 43, 15),
+    (229, 114, 12), (78, 15, 98), (152, 61, 98), (250, 190, 190), (38, 252, 79),
+    (208, 97, 71), (229, 82, 49), (78, 147, 58), (107, 15, 98), (221, 119, 207),
+    (115, 75, 177), (82, 22, 228), (65, 59, 83), (132, 172, 91), (119, 77, 52),
+    (154, 187, 252), (207, 148, 64), (178, 250, 168), (141, 196, 133), (250, 215, 160),
+    (229, 81, 69), (119, 215, 246), (162, 38, 98), (205, 215, 169), (98, 162, 125),
+    (106, 207, 89), (248, 86, 169), (249, 79, 133), (240, 224, 89), (105, 222, 99),
+    (248, 249, 48), (50, 148, 66), (229, 81, 201), (162, 132, 76), (121, 129, 65),
+    (229, 111, 111), (189, 100, 179), (79, 114, 129), (209, 63, 42), (129, 41, 159),
+    (129, 92, 41), (158, 116, 45), (55, 162, 192), (79, 141, 76), (110, 129, 59),
+    (114, 79, 159), (159, 41, 68), (179, 127, 94), (63, 92, 40), (255, 89, 71),
+    (41, 197, 149), (41, 159, 151), (100, 118, 121), (179, 79, 141), (69, 116, 161),
+    (208, 73, 152), (209, 191, 66), (189, 130, 61), (161, 60, 60), (60, 104, 173),
+    (200, 57, 49), (179, 169, 53), (78, 73, 58), (166, 58, 250), (122, 122, 121),
+    (61, 116, 79), (48, 77, 52), (133, 163, 125), (132, 173, 144), (165, 100, 99),
+    (189, 102, 185), (174, 60, 60), (99, 138, 159), (117, 102, 129), (164, 127, 39),
+    (56, 83, 119), (138, 60, 60), (124, 127, 53), (114, 133, 59), (60, 138, 60),
+    (152, 84, 152), (93, 138, 60), (84, 82, 63)
+]
 
 if platform.system() == "Windows":
     SCALEFACTOR = ctypes.windll.shcore.GetScaleFactorForDevice(0) / 100
@@ -61,6 +90,7 @@ MIN_BUBBLE_DISTANCE = 0
 MIN_BUBBLE_FONT = 10
 BUBBLE_TOP = 20 # number of bubbles to display
 format_str = '%d-%m-%Y'  # The format
+FRAMES_PER_VIDEO_WRITE = 10
 
 monitor = get_monitors()[0]
 HEIGHT = monitor.height
@@ -86,6 +116,8 @@ class canvas():
             height = HEIGHT
         else:
             height = height
+
+        self.color_palette = color_palette
 
         self.canvas = Canvas(self.tk, width=width, height=height, bg=_from_rgb(bg))
         self.canvas.config(highlightthickness=0)
@@ -130,7 +162,7 @@ class canvas():
         global decimal_places
         decimal_places = decimals
 
-    def play(self, df=None, fps=30):
+    def play(self, df=None, fps=30, record=False, width=WIDTH, height=HEIGHT, file_name="output.mp4"):
         """
         Main loop of the animation. This function will orchestrate the animation for each time step set in the pandas df
 
@@ -140,26 +172,62 @@ class canvas():
         :param fps: frame rate of the animation, defaults to 30 frames per second
         :type fps: int
 
+        :param record: if set to True, the screen will be recorded, this will severely impact performance on high resolution screens
+        :type record: boolean
+
+        :param width: if record is set to True, this is the width of the window being recorded. Defaults to full screen.
+        :type width: int
+
+        :param height: if record is set to True, this is the height of the window being recorded. Defaults to full screen.
+        :type height: int
+
+        :param file_name: if record is set to True, this is the name of the output file. Defaults to output.mp4.
+        :type file_name: str
+
         """
         if not df:
             for sub in self.sub_canvas:
                 if not sub.df is None:
                     df = sub.df
 
+        # prepare empty list to store animation frames
+        if record:
+            self.frames = []
+            fourc = cv2.VideoWriter_fourcc(*"mp4v")
+            capture_video = cv2.VideoWriter(file_name, fourc, fps, (width, height))
+
         self._add_sj_logo()
 
+        # main loop of the animation
         for i, date_time in enumerate(df.index):
             start = time.time()
-
             self.update(date_time)
             if i == 0:
                 time.sleep(1)
+
+            # grab a screenshot for each of the frames
+            if record and i > 1:
+                img = ImageGrab.grab(bbox=(0, 0, width, height))
+
+                self.frames.append(img)
+
+                if len(self.frames) > FRAMES_PER_VIDEO_WRITE:
+                    for f in self.frames:
+                        img_np = np.array(f)
+                        img_final = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
+                        capture_video.write(img_final)
+                    self.frames = []
 
             while time.time() - start < 1 / fps:
                 time.sleep(0.0001)
 
             time_used = time.time() - start
             print("FPS: {}".format(format(1/time_used, ",.{}f".format(decimal_places))))
+
+        if record:
+            time.sleep(1)
+            self.tk.destroy()
+            cv2.destroyAllWindows()
 
     def add_title(self, text, color=(0, 0, 0)):
         """
@@ -432,7 +500,7 @@ def format_date(time, time_indicator, format="Europe"):
 
     return text
 
-def format_value(number, decimal=decimal_places):
+def format_value(number, decimal=3):
     units = ['k', 'm', 'b', 't']
     unit_index = 0
 
@@ -440,7 +508,7 @@ def format_value(number, decimal=decimal_places):
         number /= 1000.0
         unit_index += 1
 
-    formatted_number = "{:.3f}".format(number).rstrip('0').rstrip('.')
+    formatted_number = "{:.1f}".format(number).rstrip('.')
     if unit_index > 0:
         formatted_number += units[unit_index - 1]
 

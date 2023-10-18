@@ -49,7 +49,7 @@ class DataHandler():
 
         length = len(self.df)
 
-        print("Perparing data")
+        print("Preping data")
 
         for i, (index, row) in enumerate(self.df.iterrows()):
             print("Working on {}/{}".format(i, length))
@@ -77,16 +77,16 @@ class DataHandler():
 
         print("Interpolating")
         try:
-            temp_df = temp_df.interpolate(method='time')
-            temp_df = temp_df.ffill()
+            temp_df = temp_df.interpolate(method='time', limit_area='inside')
+            # temp_df = temp_df.ffill()
         except:
-            temp_df = temp_df.interpolate()
-            temp_df = temp_df.ffill()
+            temp_df = temp_df.interpolate(limit_area='inside')
+            # temp_df = temp_df.ffill()
 
         dt = datetime.timedelta(seconds=i)
 
         print("Appending values")
-        for i in range(1, 60*10):
+        for i in range(1, 60*3):
             time = temp_df.tail(1).index[0] + dt
             temp_df = pd.concat([temp_df, pd.DataFrame([list(row)], index=[time], columns=self.df.columns)])
 
