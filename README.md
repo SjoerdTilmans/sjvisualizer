@@ -14,7 +14,7 @@ More chart types to follow! If you find sjvisualizer useful, please consider sta
 
 ## Roadmap
 
-![Roadmap](https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/e8ad74b3-8a46-48bb-97da-7368baea850f)
+![Purple Colorful Modern Roadmap Timeline Infographic (1)](https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/a45ab7f0-ea16-4230-be56-d2fdb2af3bc3)
 
 If you like this project, please concider supporting me using PayPal [PayPal](https://www.paypal.com/donate/?hosted_button_id=YMN9G93CTNLD2).
 
