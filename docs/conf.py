@@ -14,7 +14,7 @@ import sjvisualizer
 project = 'sjvisualizer'
 copyright = '2023, Sjoerd Tilmans'
 author = 'Sjoerd Tilmans'
-release = '0.0.8'
+release = '0.0.13'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -23,8 +23,6 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.napoleon', 'sphinx.ext.viewcode'
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
-
-
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

@@ -196,6 +196,8 @@ class elem():
             print("No image for {}".format(self.name))
             self.img = None
 
+        self.img = None
+
         if isinstance(colors, dict):
             if name in colors:
                 self.color = cv._from_rgb(colors[name])
@@ -227,6 +229,9 @@ class elem():
 
             if self.display_values:
                 self.canvas.itemconfig(self.label, text="{}, {}{}".format(self.name, cv.format_value(value, decimal=1), self.unit))
+
+            self.canvas.tag_raise(self.label)
+            self.canvas.tag_raise(self.shape)
 
         elif draw and not self.shape:
             self.y = y

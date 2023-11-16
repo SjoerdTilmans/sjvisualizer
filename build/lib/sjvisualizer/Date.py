@@ -107,7 +107,12 @@ class date(cv.sub_plot):
             if self.format == "USA":
                 text = str("{} {} {}".format(months[time.month], time.day, time.year))
             else:
-                text = str("{} {} {}".format(time.day, months[time.month], time.year))
+                if len(str(time.day)) == 1:
+                    days = "0" + str(time.day)
+                else:
+                    days = str(time.day)
+
+                text = str("{} {} {}".format(days, months[time.month], time.year))
 
         if self.anchor == "se":
             position = (self.x_pos - self.width/2, self.y_pos - self.height/2)
@@ -124,7 +129,12 @@ class date(cv.sub_plot):
             if self.format == "USA":
                 text = str("{} {} {}".format(months[time.month], time.day, time.year))
             else:
-                text = str("{} {} {}".format(time.day, months[time.month], time.year))
+                if len(str(time.day)) == 1:
+                    days = "0" + str(time.day)
+                else:
+                    days = str(time.day)
+
+                text = str("{} {} {}".format(days, months[time.month], time.year))
 
         self.canvas.itemconfig(self.obj_id, text=self.prefix + text)
         self.canvas.tag_raise(self.obj_id)

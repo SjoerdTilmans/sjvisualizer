@@ -15,6 +15,7 @@ sjvisualizer/StaticImage.py
 sjvisualizer/StaticText.py
 sjvisualizer/Total.py
 sjvisualizer/__init__.py
+sjvisualizer/plot.py
 sjvisualizer.egg-info/PKG-INFO
 sjvisualizer.egg-info/SOURCES.txt
 sjvisualizer.egg-info/dependency_links.txt

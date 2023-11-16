@@ -19,7 +19,7 @@ months = {
 }
 
 class axis():
-    def __init__(self, canvas, x=0, y=0, length=1000, width=1000, orientation="horizontal", n=3, allow_decrease=False, tick_length=0, is_log_scale=False, is_date=False, color=(50,50,50), font_size=20, text_font="Microsoft JhengHei UI", time_indicator="year", line_tickness=3, ticks_only=True, unit=""):
+    def __init__(self, canvas, x=0, y=0, length=1000, width=1000, orientation="horizontal", n=3, allow_decrease=False, tick_length=0, is_log_scale=False, is_date=False, color=(50,50,50), font_size=20, text_font="Microsoft JhengHei UI", time_indicator="year", line_tickness=3, ticks_only=True, unit="", tick_prefix=""):
         self.canvas = canvas
         self.x = x
         self.y = y
@@ -37,13 +37,14 @@ class axis():
         self.ticks_only = ticks_only
         self.width = width
         self.unit = unit
+        self.tick_prefix = tick_prefix
 
         self.min = None
         self.max = None
 
         self.ticks = []
         for i in range(self.n * 3):
-            self.ticks.append(tick(self.canvas, axis=self, length=tick_length))
+            self.ticks.append(tick(self.canvas, axis=self, length=tick_length, tick_prefix=self.tick_prefix))
 
     def draw(self, min=0, max=0):
         self.min = min
@@ -89,6 +90,8 @@ class axis():
                 if v < self.min or v > self.max:
                     self.ticks[i].update(value=1, draw=False)
                 else:
+                    if abs(v) < 0.00001:
+                        v = 0
                     if v == 0:
                         self.ticks[i].update(value=v, draw=True, l=self.width)
                     else:
@@ -146,11 +149,12 @@ class axis():
 
 class tick():
 
-    def __init__(self, canvas, axis=None, length=0, label_pos="s"):
+    def __init__(self, canvas, axis=None, length=0, label_pos="s", tick_prefix=""):
         self.canvas = canvas
         self.axis = axis
         self.length = length
         self.label_pos = label_pos
+        self.tick_prefix = tick_prefix
         self.font = font.Font(family=self.axis.text_font, size=int(self.axis.font_size))
 
     def draw(self, value=0):
@@ -167,7 +171,7 @@ class tick():
                 label = cv.format_value(value)
             if self.axis.orientation == "horizontal":
                 self.canvas.coords(self.line, self.axis.x + pos, self.axis.y - self.length - l, self.axis.x + pos, self.axis.y + 10)
-                self.canvas.itemconfig(self.text, text=label + self.axis.unit)
+                self.canvas.itemconfig(self.text, text=self.tick_prefix + label + self.axis.unit)
                 if self.label_pos == "s":
                     self.canvas.coords(self.text, self.axis.x + pos, self.axis.y + 11)
                 elif self.label_pos == "n":
@@ -179,9 +183,9 @@ class tick():
                     self.canvas.coords(self.line, self.axis.x - 10, self.axis.y - pos, self.axis.x + self.length + l, self.axis.y - pos)
                 else:
                     self.canvas.coords(self.line, self.axis.x - 10, self.axis.y - pos, self.axis.x + self.length, self.axis.y - pos)
-                self.canvas.itemconfig(self.text, text=label + self.axis.unit)
+                self.canvas.itemconfig(self.text, text=self.tick_prefix + label + self.axis.unit)
                 if self.label_pos == "s" or self.label_pos == "w":
-                    self.canvas.coords(self.text, self.axis.x - 11, self.axis.y - pos)
+                    self.canvas.coords(self.text, self.axis.x - 15, self.axis.y - pos)
                     self.canvas.itemconfig(self.text, anchor="e")
                 elif self.label_pos == "e":
                     self.canvas.coords(self.text, self.axis.x + self.length + 1, self.axis.y - pos)

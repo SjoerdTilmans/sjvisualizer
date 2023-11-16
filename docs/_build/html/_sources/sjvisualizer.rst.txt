@@ -1,3 +1,7 @@
+.. automodule:: sjvisualizer.plot
+   :members:
+   :undoc-members:
+
 .. automodule:: sjvisualizer.Canvas
    :members:
    :undoc-members:

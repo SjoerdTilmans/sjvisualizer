@@ -5,7 +5,7 @@ from PIL import Image, ImageGrab
 # import pyautogui
 # from mss import mss
 import numpy as np
-# import cv2
+import cv2
 import time
 import io
 from tkinter import font
@@ -254,7 +254,7 @@ class canvas():
         :type color: tuple of length 3 with integers
 
         """
-        title_font = font.Font(family=text_font, size=int(self.height/45/ SCALEFACTOR), weight="bold")
+        title_font = font.Font(family=text_font, size=int(self.height/45/ SCALEFACTOR))
         self.canvas.create_text(self.width/2, self.height/11, font=title_font, text=text, fill=_from_rgb(color))
 
     def add_time(self, df, time_indicator="year", color=(150, 150, 150)):
@@ -272,8 +272,8 @@ class canvas():
         """
         from sjvisualizer import Date
         sub_plot = Date.date(canvas=self.canvas, start_time=list(df.index)[0], width=0, height=self.height/12,
-                                       x_pos=self.width/10, y_pos=self.height*0.85, time_indicator=time_indicator,
-                                       font_color=color)
+                                       x_pos=self.width/20, y_pos=self.height*0.9, time_indicator=time_indicator,
+                                       font_color=color, anchor="w")
         self.add_sub_plot(sub_plot)
 
     def add_logo(self, logo):
@@ -509,6 +509,12 @@ def format_value(number, decimal=3):
         unit_index += 1
 
     formatted_number = "{:.1f}".format(number).rstrip('.')
+
+    formatted_number = formatted_number.rstrip('0')
+
+    if formatted_number.endswith('.'):
+        formatted_number = formatted_number[:-1]
+
     if unit_index > 0:
         formatted_number += units[unit_index - 1]
 

@@ -163,6 +163,18 @@ class line_chart(cv.sub_plot):
         if not hasattr(self, "y_ticks"):
             self.default_min_value = 3
 
+        if not hasattr(self, "external_legend"):
+            self.external_legend = True
+
+        if not hasattr(self, "display_values"):
+            self.display_values = False
+
+        if not hasattr(self, "tick_prefix"):
+            self.tick_prefix = ""
+
+        if not hasattr(self, "draw_legend"):
+            self.draw_legend = False
+
         # making room for legend
         if self.sjcanvas:
             self.x_pos = self.x_pos - self.width / 10
@@ -174,7 +186,7 @@ class line_chart(cv.sub_plot):
         self.min_time = time
         self.axis1.draw(min=self.min_time, max=self.min_time)
 
-        self.axis2 = Axis.axis(canvas=self.canvas, n=self.y_ticks, orientation="vertical", x=self.x_pos, y=self.y_pos+self.height, length=self.height, width=self.width, allow_decrease=False, is_date=False, font_size=self.font_size, color=self.font_color, ticks_only=False, unit=self.unit)
+        self.axis2 = Axis.axis(canvas=self.canvas, n=self.y_ticks, orientation="vertical", x=self.x_pos, y=self.y_pos+self.height, length=self.height, width=self.width, allow_decrease=False, is_date=False, font_size=self.font_size, color=self.font_color, ticks_only=False, unit=self.unit, tick_prefix=self.tick_prefix)
         self.axis2.draw(min=min(data), max=max(data))
 
         self.lines = {}
@@ -187,8 +199,21 @@ class line_chart(cv.sub_plot):
                 n_y = 10
             else:
                 n_y = len(self.df.columns)
-            self.legend = Legend.legend(canvas=self.canvas, height=self.height, width=500, x_pos=self.x_pos + self.width + 5*self.font_size, y_pos=self.y_pos, df=self.df, colors=self.colors, n=10, font_size=self.font_size, font_color=self.font_color)
-            self.sjcanvas.add_sub_plot(self.legend)
+            if self.external_legend and self.draw_legend:
+                self.legend = Legend.legend(canvas=self.canvas, height=self.height, width=500,
+                                            x_pos=self.x_pos + self.width + 5 * self.font_size, y_pos=self.y_pos,
+                                            df=self.df, colors=self.colors, n=10, font_size=self.font_size,
+                                            font_color=self.font_color, display_values=self.display_values,
+                                            unit=self.unit)
+            elif self.draw_legend:
+                self.legend = Legend.legend(canvas=self.canvas, height=self.height/3*2, width=500,
+                                            x_pos=self.x_pos + 5 * self.font_size, y_pos=self.y_pos - 50,
+                                            df=self.df, colors=self.colors, n=10, font_size=self.font_size/3*2,
+                                            font_color=self.font_color, display_values=self.display_values,
+                                            unit=self.unit, sort=True)
+
+            if self.draw_legend:
+                self.sjcanvas.add_sub_plot(self.legend)
 
         self.event_obj = []
         for name, dates in self.events.items():
@@ -285,7 +310,7 @@ class event():
 
 class line():
 
-    def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors=None, time=None, xaxis=None, yaxis=None, chart=None, draw_points=False, line_width=None):
+    def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors=None, time=None, xaxis=None, yaxis=None, chart=None, draw_points=False, line_width=None, label_at_end=True):
         self.name = name
         self.canvas = canvas
         self.unite = unit
@@ -295,6 +320,7 @@ class line():
         self.chart = chart
         self.draw_points = draw_points
         self.point_radius = int(2 + self.chart.height/150)
+        self.label_at_end = label_at_end
         if not line_width:
             self.line_width = int(1 + self.chart.height/200)
         else:
@@ -326,22 +352,29 @@ class line():
         self.colors[self.name] = color
 
     def draw(self, value, time):
-        self.x_values.append((time - datetime.datetime(1800,1,1)).days)
-        self.y_values.append(value)
+        if value:
+            self.x_values.append((time - datetime.datetime(1800,1,1)).days)
+            self.y_values.append(value)
 
         self.line = None
 
         self.points = []
 
+        if self.label_at_end:
+            self.font = font.Font(family=self.xaxis.text_font, size=int(self.xaxis.font_size*0.85))
+            self.line_label = self.canvas.create_text(-10000, -10000, text=self.name, font=self.font, fill=self.color, anchor="w")
+
     def update(self, value, time):
-        if time.hour == 0 and time.minute == 0 and time.second == 0:
+        if time.hour == 0 and time.minute == 0 and time.second == 0 and value:
             self.x_values.append((time - datetime.datetime(1800,1,1)).days)
             self.y_values.append(value)
 
         x_values_to_draw = self.x_values.copy()
-        x_values_to_draw.append((time - datetime.datetime(1800,1,1)).days)
         y_values_to_draw = self.y_values.copy()
-        y_values_to_draw.append(value)
+
+        if value:
+            y_values_to_draw.append(value)
+            x_values_to_draw.append((time - datetime.datetime(1800, 1, 1)).days)
 
         coords = []
 
@@ -355,10 +388,19 @@ class line():
                 except IndexError:
                     self.points.append(self.canvas.create_oval(coords[-2] - self.point_radius, coords[-1] - self.point_radius, coords[-2] + self.point_radius, coords[-1] + self.point_radius, fill=self.color))
 
+        if len(coords) == 2:
+            coords = coords + coords
+
         if not self.line:
-            self.line = self.canvas.create_line(*coords, width=self.line_width, fill=self.color)
+            if coords:
+                self.line = self.canvas.create_line(*coords, width=self.line_width, fill=self.color)
         else:
             self.canvas.coords(self.line, *coords)
+
+        if self.label_at_end and value:
+            self.canvas.coords(self.line_label, coords[-2] + 5, coords[-1])
+        elif self.label_at_end:
+            self.canvas.coords(self.line_label, -1000, -1000)
 
     def remove_points(self):
         for p in self.points:

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sjvisualizer.PieRace &mdash; sjvisualizer 0.0.8 documentation</title>
+  <title>sjvisualizer.PieRace &mdash; sjvisualizer 0.0.13 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -193,10 +193,13 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Other&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Others&quot;</span><span class="p">:</span>
                 <span class="n">fraction</span> <span class="o">=</span> <span class="n">value</span><span class="o">/</span><span class="n">data</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">:</span>
-                    <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">:</span>
+                        <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_color</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">color</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set_color</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">200</span><span class="p">:</span>
                     <span class="n">load_img</span> <span class="o">=</span> <span class="kc">True</span>
@@ -216,6 +219,18 @@
                                         <span class="n">fill</span><span class="o">=</span><span class="n">_from_rgb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">back_ground_color</span><span class="p">),</span> <span class="n">outline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
 
 
+    <span class="k">def</span> <span class="nf">_set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sjcanvas</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sjcanvas</span><span class="o">.</span><span class="n">color_palette</span><span class="p">:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sjcanvas</span><span class="o">.</span><span class="n">color_palette</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sjcanvas</span><span class="o">.</span><span class="n">color_palette</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">((</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">min_color</span><span class="p">,</span> <span class="n">max_color</span><span class="p">),</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">min_color</span><span class="p">,</span> <span class="n">max_color</span><span class="p">),</span>
+                           <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">min_color</span> <span class="o">+</span> <span class="mi">30</span><span class="p">,</span> <span class="n">max_color</span><span class="p">)))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">_from_rgb</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span>
+
+        <span class="k">return</span> <span class="n">color</span>
 
 <div class="viewcode-block" id="pie_plot.update"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.PieRace.pie_plot.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">:</span>

@@ -136,11 +136,11 @@ class SizeCompareDataHandler():
         if self.area:
             for i, v in enumerate(value_array):
                 if i > 0:
-                    value_array[i] = v + value_array[i-1]
+                    value_array[i] = float(v) + value_array[i-1]
         else:
             for i, v in enumerate(value_array):
                 if i > 0:
-                    value_array[i] = v + 0.75*value_array[i-1]
+                    value_array[i] = float(v) + 0.75*value_array[i-1]
 
         for i in range(len(value_array) - 1):
             smooth_array = smooth_array + list(value_array[i] + (value_array[i+1] - value_array[i]) * (1 - sigma))
