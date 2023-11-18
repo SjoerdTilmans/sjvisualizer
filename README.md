@@ -1,16 +1,90 @@
 [![Downloads](https://static.pepy.tech/badge/sjvisualizer)](https://pepy.tech/project/sjvisualizer)
 # sjvisualizer 📊
-sjvisualizer is a data visualization and animation library for Python. 
+sjvisualizer is a data visualization and animation library for Python for time-series data. 
 
-https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/a9a01f5b-50f4-411f-8e7c-dcd4a805501b
+Like this project? Please consider starring ⭐ the project on GitHub!
 
-Please find the catalogue example [here](https://github.com/SjoerdTilmans/sjvisualizer/blob/main/Examples/Catalogue.py) to run the above animation. sjvisualizer currently supports the following chart types:
-- Bar races
-- Animated pie charts
-- Animated stacked bar charts
-- Animated line charts
+Or buying me a coffee. It will make my day! [Buy me a Coffee](https://www.buymeacoffee.com/sjoerdtilmans)
 
-More chart types to follow! If you find sjvisualizer useful, please consider starring ⭐ the project on GitHub!
+## Installation
+sjvisualizer is now available on pypi! Simply use pip to install it:
+
+```
+pip install sjvisualizer
+```
+
+## Basic examples
+Using sjvisualizer, you can create a basic data animation with one simple line of code.
+
+### Bar Race
+
+```python
+from sjvisualizer import plot as plt
+
+plt.bar(excel="data/DesktopOS.xlsx", 
+        title="Desktop Operating System Market Share", 
+        unit="%")
+```
+
+### Pie Race
+
+```python
+from sjvisualizer import plot as plt
+
+plt.pie(excel="data/browsers.xlsx", 
+        title="Desktop Browser Market Share", 
+        unit="%")
+```
+
+### Animated Line Chart
+
+```python
+from sjvisualizer import plot as plt
+
+colors = {
+    "United States": [
+        23,
+        60,
+        154
+    ],
+	"Russia": [
+        255,
+        50,
+        50
+    ]
+}
+
+plt.line(excel="data/military budget.xlsx",
+        title="Military Budget of Selected Countries",
+        sub_title="in millions of US$",
+        colors=colors)
+```
+
+### Animated Area Chart
+
+```python
+from sjvisualizer import plot as plt
+
+colors = {
+    "United States": [
+        23,
+        60,
+        154
+    ],
+	"Russia": [
+        255,
+        50,
+        50
+    ]
+}
+
+plt.stacked_area(excel="data/Nuclear.xlsx",
+        title="Nuclear Warheads by Country",
+        colors=colors)
+```
+
+## More advanced animations
+Using sjvisualizer, you can also mix and match chart types and positions like in the following example:
 
 ## Roadmap
 
@@ -20,56 +94,17 @@ If you like this project, please concider supporting me using PayPal [PayPal](ht
 
 ## Learn sjvisualizer
 
-There are two ways of learning sjvisualizer:
+Want to learn more about sjvisualizer:
 - Find additional examples and full documentation on my [website](https://www.sjdataviz.com/software)
 - Or follow my course on [Udemy](https://www.sjdataviz.com/course-link)
 
-## Installation
-sjvisualizer is now available on pypi! Simply use pip to install it:
-
-```
-pip install sjvisualizer
-```
 
 ## Usage
 sjvisualizer is a free and open-source data animation library, please include the following attribution in any publications you use it in.
 ```
 Made with sjvisualizer, the open-source data animation library for Python
 ```
-## Sample code
-```python
-from sjvisualizer import Canvas
-from sjvisualizer import DataHandler
-from sjvisualizer import PieRace
-import time
-import json
 
-def main(fps = 60, duration = 0.35):
-
-    number_of_frames = duration*60*fps
-
-    # load data from Excel file
-    df = DataHandler.DataHandler(excel_file="<Path to EXCEL DATA FILE>", number_of_frames=number_of_frames).df
-
-    # create canvas object, we will use this to draw our elements to
-    canvas = Canvas.canvas()
-
-    # add bar chart
-    bar_chart = PieRace.pie_plot(canvas=canvas.canvas, df=df)
-    canvas.add_sub_plot(bar_chart)
-
-    # add static text
-    canvas.add_title("TITLE", color=(0,132,255))
-    canvas.add_sub_title("SUB-TITLE", color=(0,132,255))
-
-    # add time indication
-    canvas.add_time(df=df, time_indicator="month")
-
-    canvas.play(fps=fps)
-
-if __name__ == "__main__":
-    main()
-```
 
 ## Support this project
 If you like this project, please concider supporting me using PayPal [PayPal](https://www.paypal.com/donate/?hosted_button_id=YMN9G93CTNLD2).
