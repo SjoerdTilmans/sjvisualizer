@@ -99,18 +99,18 @@ plt.stacked_area(excel="data/Nuclear.xlsx",
 ## More advanced animations
 Using sjvisualizer, you can also mix and match chart types and positions like in the following example:
 
+## Learn sjvisualizer
+
+Want to learn more about sjvisualizer:
+- Find additional examples and full documentation on my [website](https://www.sjdataviz.com/software)
+- Or follow my course on [Udemy](https://www.sjdataviz.com/course-link)
+
 ## Roadmap
 
 ![Purple Colorful Modern Roadmap Timeline Infographic (1)](https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/542e02ec-113c-4fb7-a46a-fc3b65abddd2)
 
 
 If you like this project, please concider supporting me using PayPal [PayPal](https://www.paypal.com/donate/?hosted_button_id=YMN9G93CTNLD2).
-
-## Learn sjvisualizer
-
-Want to learn more about sjvisualizer:
-- Find additional examples and full documentation on my [website](https://www.sjdataviz.com/software)
-- Or follow my course on [Udemy](https://www.sjdataviz.com/course-link)
 
 
 ## Usage

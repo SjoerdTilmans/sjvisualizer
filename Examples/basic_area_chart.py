@@ -15,6 +15,5 @@ colors = {
 
 plt.stacked_area(excel="data/Nuclear.xlsx",
         title="Nuclear Warheads by Country",
-        record=True,
-        output_video="Nuclear Warheads by Country.mp4",
-        colors=colors)
+        colors=colors,
+        duration=0.5)

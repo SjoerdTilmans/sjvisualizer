@@ -26,7 +26,7 @@
       <recent name="C:\Users\Sjoerd Tilmans\OneDrive\Documenten\GitHub\sjvisualizer\Examples" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.basic_line_chart">
+  <component name="RunManager" selected="Python.basic_area_chart">
     <configuration name="basic_area_chart" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="sjvisualizer" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -134,11 +134,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.basic_line_chart" />
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.basic_area_chart" />
         <item itemvalue="Python.basic_pie_race" />
         <item itemvalue="Python.basic_bar_race" />
+        <item itemvalue="Python.basic_line_chart" />
+        <item itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
