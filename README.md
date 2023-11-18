@@ -18,6 +18,10 @@ Using sjvisualizer, you can create a basic data animation with one simple line o
 
 ### Bar Race
 
+
+https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/9340572c-56f8-4abd-97c5-e8ed674a6751
+
+
 ```python
 from sjvisualizer import plot as plt
 
@@ -28,6 +32,10 @@ plt.bar(excel="data/DesktopOS.xlsx",
 
 ### Pie Race
 
+
+https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/5db0d056-578e-4070-b1ba-713e590acd3d
+
+
 ```python
 from sjvisualizer import plot as plt
 
@@ -37,7 +45,7 @@ plt.pie(excel="data/browsers.xlsx",
 ```
 
 ### Animated Line Chart
-
+https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/deae9c3c-8a90-4e64-a036-39fd636746a7
 ```python
 from sjvisualizer import plot as plt
 
@@ -61,6 +69,11 @@ plt.line(excel="data/military budget.xlsx",
 ```
 
 ### Animated Area Chart
+
+
+https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/6304bb63-1076-4da8-b044-595f763d3546
+
+
 
 ```python
 from sjvisualizer import plot as plt
