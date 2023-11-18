@@ -101,7 +101,8 @@ Using sjvisualizer, you can also mix and match chart types and positions like in
 
 ## Roadmap
 
-![Purple Colorful Modern Roadmap Timeline Infographic (1)](https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/a45ab7f0-ea16-4230-be56-d2fdb2af3bc3)
+![Purple Colorful Modern Roadmap Timeline Infographic (1)](https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/542e02ec-113c-4fb7-a46a-fc3b65abddd2)
+
 
 If you like this project, please concider supporting me using PayPal [PayPal](https://www.paypal.com/donate/?hosted_button_id=YMN9G93CTNLD2).
 
