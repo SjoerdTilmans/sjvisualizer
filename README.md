@@ -99,6 +99,10 @@ plt.stacked_area(excel="data/Nuclear.xlsx",
 ## More advanced animations
 Using sjvisualizer, you can also mix and match chart types and positions like in the following example:
 
+
+https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/420ed4a0-5bfb-436a-8f61-4e77c640f78f
+
+
 ## Learn sjvisualizer
 
 Want to learn more about sjvisualizer:
