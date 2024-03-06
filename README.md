@@ -131,7 +131,7 @@ If you like this project, please concider supporting me using PayPal [PayPal](ht
 Contributions are always welcome! A couple of ideas to contribute:
 - Improve documentation of this project. I have been thinking of setting up a readthedocs page.
 - Add additional example scripts. If you do so, please includy any data files and image files so that the example is fully running
-- Add new chart types. I have uploaded an example skeleton of new chart types in Empty.py, this is a setup that should server as a good starting point. (https://github.com/SjoerdTilmans/sjvisualizer/blob/main/sjvisualizer/Empty.py)
+- Add new chart types. I have uploaded an example skeleton of new chart types in Empty.py, this is a setup that should serve as a good starting point. (https://github.com/SjoerdTilmans/sjvisualizer/blob/main/sjvisualizer/Empty.py)
 
 Before making any changes, please create your own development branch here on GitHub. Once ready submit a pull request and set me as reviewer!
 
