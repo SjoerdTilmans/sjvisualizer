@@ -128,12 +128,12 @@ Made with sjvisualizer, the open-source data animation library for Python
 If you like this project, please concider supporting me using PayPal [PayPal](https://www.paypal.com/donate/?hosted_button_id=YMN9G93CTNLD2).
     
 ## Contributing
-Contributions are always welcome! Here are some ways to get involved:
+Contributions are always welcome! A couple of ideas to contribute:
+- Improve documentation of this project. I have been thinking of setting up a readthedocs page.
+- Add additional example scripts. If you do so, please includy any data files and image files so that the example is fully running
+- Add new chart types. I have uploaded an example skeleton of new chart types in Empty.py, this is a setup that should server as a good starting point. (https://github.com/SjoerdTilmans/sjvisualizer/blob/main/sjvisualizer/Empty.py)
 
-Create an issue to report a bug or suggest a new feature.
-Fork the repository and create a new branch to work on.
-Submit a pull request to request a merge of your changes.
-Please make sure to write clear commit messages.
+Before making any changes, please create your own development branch here on GitHub. Once ready submit a pull request and set me as reviewer!
 
 ## License
 sjvisualizer is released under the MIT License. See the LICENSE file for more details.
