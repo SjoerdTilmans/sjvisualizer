@@ -63,8 +63,8 @@
 
 
 \title{sjvisualizer}
-\date{Jul 05, 2023}
-\release{0.0.8}
+\date{Nov 22, 2023}
+\release{0.0.13}
 \author{Sjoerd Tilmans}
 \newcommand{\sphinxlogo}{\vbox{}}
 \renewcommand{\releasename}{Release}
@@ -100,6 +100,398 @@
 \DUrole{xref,std,std-ref}{search}
 
 \end{itemize}
+\phantomsection\label{\detokenize{index:module-sjvisualizer.plot}}\index{module@\spxentry{module}!sjvisualizer.plot@\spxentry{sjvisualizer.plot}}\index{sjvisualizer.plot@\spxentry{sjvisualizer.plot}!module@\spxentry{module}}\index{bar() (in module sjvisualizer.plot)@\spxentry{bar()}\spxextra{in module sjvisualizer.plot}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.plot.bar}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxcode{\sphinxupquote{sjvisualizer.plot.}}\sphinxbfcode{\sphinxupquote{bar}}}{\sphinxparam{\DUrole{n,n}{excel}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sub\_title}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{duration}\DUrole{o,o}{=}\DUrole{default_value}{1}}, \sphinxparam{\DUrole{n,n}{fps}\DUrole{o,o}{=}\DUrole{default_value}{60}}, \sphinxparam{\DUrole{n,n}{record}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{output\_video}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}output.mp4\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{background\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{n}\DUrole{o,o}{=}\DUrole{default_value}{8}}}{}
+\pysigstopsignatures
+\sphinxAtStartPar
+Function to create a bar chart race
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{excel}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} excel file containing the data
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{title}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} title on top of the animation
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{sub\_title}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} sub\sphinxhyphen{}title to provide extra context, displayed just under the main title
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{duration}} (\sphinxstyleliteralemphasis{\sphinxupquote{integer}}) \textendash{} length of the animation
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{fps}} (\sphinxstyleliteralemphasis{\sphinxupquote{integer}}) \textendash{} number of frames per second
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{record}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} should the animation be saved as an mp4? Defaults to False. If set to True, the render speed on screen is reduced, however, the playback speed of the video is correct.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{output\_video}} \textendash{} name of the saved video.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{unit}} \textendash{} unit to be displayed in the graph
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{time\_indicator}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}day\textquotesingle{}}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}month\textquotesingle{}}}\sphinxstyleliteralemphasis{\sphinxupquote{, or }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}year\textquotesingle{}}}) \textendash{} should the time format show year, month or day
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ (}}\sphinxstyleliteralemphasis{\sphinxupquote{R}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{G}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{B}}\sphinxstyleliteralemphasis{\sphinxupquote{)}}) \textendash{} color of the texts rendered to the screen. In RGB colors.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{background\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ (}}\sphinxstyleliteralemphasis{\sphinxupquote{R}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{G}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{B}}\sphinxstyleliteralemphasis{\sphinxupquote{)}}) \textendash{} color of the background. In RGB colors.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{colors}} (\sphinxstyleliteralemphasis{\sphinxupquote{dict}}) \textendash{} 
+\sphinxAtStartPar
+dictionary that holds color information for each of the data categories. The key of the dict should
+corespond to the name of the data category (column). The value of the dict should be the RGB values of the color:
+\begin{quote}
+\begin{description}
+\sphinxlineitem{\{}\begin{description}
+\sphinxlineitem{“United States”: {[}}
+\sphinxAtStartPar
+23,
+60,
+225
+
+\end{description}
+
+\sphinxAtStartPar
+{]}
+
+\end{description}
+
+\sphinxAtStartPar
+\}, default is \{\}
+\end{quote}
+
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{n}} (\sphinxstyleliteralemphasis{\sphinxupquote{integer}}) \textendash{} number of bars to display
+
+\end{itemize}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{line() (in module sjvisualizer.plot)@\spxentry{line()}\spxextra{in module sjvisualizer.plot}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.plot.line}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxcode{\sphinxupquote{sjvisualizer.plot.}}\sphinxbfcode{\sphinxupquote{line}}}{\sphinxparam{\DUrole{n,n}{excel}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sub\_title}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{duration}\DUrole{o,o}{=}\DUrole{default_value}{1}}, \sphinxparam{\DUrole{n,n}{fps}\DUrole{o,o}{=}\DUrole{default_value}{60}}, \sphinxparam{\DUrole{n,n}{record}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{output\_video}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}output.mp4\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{background\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}}{}
+\pysigstopsignatures
+\sphinxAtStartPar
+Function to create a bar chart race
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{excel}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} excel file containing the data
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{title}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} title on top of the animation
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{sub\_title}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} sub\sphinxhyphen{}title to provide extra context, displayed just under the main title
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{duration}} (\sphinxstyleliteralemphasis{\sphinxupquote{integer}}) \textendash{} length of the animation
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{fps}} (\sphinxstyleliteralemphasis{\sphinxupquote{integer}}) \textendash{} number of frames per second
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{record}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} should the animation be saved as an mp4? Defaults to False. If set to True, the render speed on screen is reduced, however, the playback speed of the video is correct.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{output\_video}} \textendash{} name of the saved video.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{unit}} \textendash{} unit to be displayed in the graph
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{time\_indicator}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}day\textquotesingle{}}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}month\textquotesingle{}}}\sphinxstyleliteralemphasis{\sphinxupquote{, or }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}year\textquotesingle{}}}) \textendash{} should the time format show year, month or day
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ (}}\sphinxstyleliteralemphasis{\sphinxupquote{R}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{G}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{B}}\sphinxstyleliteralemphasis{\sphinxupquote{)}}) \textendash{} color of the texts rendered to the screen. In RGB colors.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{background\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ (}}\sphinxstyleliteralemphasis{\sphinxupquote{R}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{G}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{B}}\sphinxstyleliteralemphasis{\sphinxupquote{)}}) \textendash{} color of the background. In RGB colors.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{colors}} (\sphinxstyleliteralemphasis{\sphinxupquote{dict}}) \textendash{} 
+\sphinxAtStartPar
+dictionary that holds color information for each of the data categories. The key of the dict should
+corespond to the name of the data category (column). The value of the dict should be the RGB values of the color:
+\begin{quote}
+\begin{description}
+\sphinxlineitem{\{}\begin{description}
+\sphinxlineitem{“United States”: {[}}
+\sphinxAtStartPar
+23,
+60,
+225
+
+\end{description}
+
+\sphinxAtStartPar
+{]}
+
+\end{description}
+
+\sphinxAtStartPar
+\}, default is \{\}
+\end{quote}
+
+
+\end{itemize}
+
+\sphinxlineitem{Parem events}
+\sphinxAtStartPar
+dictionary to add additional context to the line chart. For example to indicate events in time. Example:
+events = \{
+\begin{quote}
+
+\sphinxAtStartPar
+“\{EVENT NAME\}”: {[}“START DATE DD/MM/YYYY”, “END DATE DD/MM/YYYY”{]},
+“Event 1”: {[}“28/01/2017”, “28/01/2018”{]},
+“Event 2”: {[}“28/01/2019”, “28/01/2020”{]},
+“Last event”: {[}“28/05/2020”, “28/01/2021”{]}
+\end{quote}
+
+\sphinxAtStartPar
+\}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{pie() (in module sjvisualizer.plot)@\spxentry{pie()}\spxextra{in module sjvisualizer.plot}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.plot.pie}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxcode{\sphinxupquote{sjvisualizer.plot.}}\sphinxbfcode{\sphinxupquote{pie}}}{\sphinxparam{\DUrole{n,n}{excel}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sub\_title}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{duration}\DUrole{o,o}{=}\DUrole{default_value}{1}}, \sphinxparam{\DUrole{n,n}{fps}\DUrole{o,o}{=}\DUrole{default_value}{60}}, \sphinxparam{\DUrole{n,n}{record}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{output\_video}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}output.mp4\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{background\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}}{}
+\pysigstopsignatures
+\sphinxAtStartPar
+Function to create a bar chart race
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{excel}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} excel file containing the data
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{title}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} title on top of the animation
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{sub\_title}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} sub\sphinxhyphen{}title to provide extra context, displayed just under the main title
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{duration}} (\sphinxstyleliteralemphasis{\sphinxupquote{integer}}) \textendash{} length of the animation
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{fps}} (\sphinxstyleliteralemphasis{\sphinxupquote{integer}}) \textendash{} number of frames per second
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{record}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} should the animation be saved as an mp4? Defaults to False. If set to True, the render speed on screen is reduced, however, the playback speed of the video is correct.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{output\_video}} \textendash{} name of the saved video.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{unit}} \textendash{} unit to be displayed in the graph
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{time\_indicator}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}day\textquotesingle{}}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}month\textquotesingle{}}}\sphinxstyleliteralemphasis{\sphinxupquote{, or }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}year\textquotesingle{}}}) \textendash{} should the time format show year, month or day
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ (}}\sphinxstyleliteralemphasis{\sphinxupquote{R}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{G}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{B}}\sphinxstyleliteralemphasis{\sphinxupquote{)}}) \textendash{} color of the texts rendered to the screen. In RGB colors.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{background\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ (}}\sphinxstyleliteralemphasis{\sphinxupquote{R}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{G}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{B}}\sphinxstyleliteralemphasis{\sphinxupquote{)}}) \textendash{} color of the background. In RGB colors.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{colors}} (\sphinxstyleliteralemphasis{\sphinxupquote{dict}}) \textendash{} 
+\sphinxAtStartPar
+dictionary that holds color information for each of the data categories. The key of the dict should
+corespond to the name of the data category (column). The value of the dict should be the RGB values of the color:
+\begin{quote}
+\begin{description}
+\sphinxlineitem{\{}\begin{description}
+\sphinxlineitem{“United States”: {[}}
+\sphinxAtStartPar
+23,
+60,
+225
+
+\end{description}
+
+\sphinxAtStartPar
+{]}
+
+\end{description}
+
+\sphinxAtStartPar
+\}, default is \{\}
+\end{quote}
+
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{sort}} (\sphinxstyleliteralemphasis{\sphinxupquote{boolean}}) \textendash{} should the data be sorted by descending order?
+
+\end{itemize}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{stacked\_area() (in module sjvisualizer.plot)@\spxentry{stacked\_area()}\spxextra{in module sjvisualizer.plot}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.plot.stacked_area}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxcode{\sphinxupquote{sjvisualizer.plot.}}\sphinxbfcode{\sphinxupquote{stacked\_area}}}{\sphinxparam{\DUrole{n,n}{excel}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sub\_title}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{duration}\DUrole{o,o}{=}\DUrole{default_value}{1}}, \sphinxparam{\DUrole{n,n}{fps}\DUrole{o,o}{=}\DUrole{default_value}{60}}, \sphinxparam{\DUrole{n,n}{record}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{output\_video}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}output.mp4\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{background\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}}{}
+\pysigstopsignatures
+\sphinxAtStartPar
+Function to create a bar chart race
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{excel}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} excel file containing the data
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{title}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} title on top of the animation
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{sub\_title}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} sub\sphinxhyphen{}title to provide extra context, displayed just under the main title
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{duration}} (\sphinxstyleliteralemphasis{\sphinxupquote{integer}}) \textendash{} length of the animation
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{fps}} (\sphinxstyleliteralemphasis{\sphinxupquote{integer}}) \textendash{} number of frames per second
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{record}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} should the animation be saved as an mp4? Defaults to False. If set to True, the render speed on screen is reduced, however, the playback speed of the video is correct.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{output\_video}} \textendash{} name of the saved video.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{unit}} \textendash{} unit to be displayed in the graph
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{time\_indicator}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}day\textquotesingle{}}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}month\textquotesingle{}}}\sphinxstyleliteralemphasis{\sphinxupquote{, or }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}year\textquotesingle{}}}) \textendash{} should the time format show year, month or day
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ (}}\sphinxstyleliteralemphasis{\sphinxupquote{R}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{G}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{B}}\sphinxstyleliteralemphasis{\sphinxupquote{)}}) \textendash{} color of the texts rendered to the screen. In RGB colors.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{background\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ (}}\sphinxstyleliteralemphasis{\sphinxupquote{R}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{G}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{B}}\sphinxstyleliteralemphasis{\sphinxupquote{)}}) \textendash{} color of the background. In RGB colors.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{colors}} (\sphinxstyleliteralemphasis{\sphinxupquote{dict}}) \textendash{} 
+\sphinxAtStartPar
+dictionary that holds color information for each of the data categories. The key of the dict should
+corespond to the name of the data category (column). The value of the dict should be the RGB values of the color:
+\begin{quote}
+\begin{description}
+\sphinxlineitem{\{}\begin{description}
+\sphinxlineitem{“United States”: {[}}
+\sphinxAtStartPar
+23,
+60,
+225
+
+\end{description}
+
+\sphinxAtStartPar
+{]}
+
+\end{description}
+
+\sphinxAtStartPar
+\}, default is \{\}
+\end{quote}
+
+
+\end{itemize}
+
+\sphinxlineitem{Parem events}
+\sphinxAtStartPar
+dictionary to add additional context to the line chart. For example to indicate events in time. Example:
+events = \{
+\begin{quote}
+
+\sphinxAtStartPar
+“\{EVENT NAME\}”: {[}“START DATE DD/MM/YYYY”, “END DATE DD/MM/YYYY”{]},
+“Event 1”: {[}“28/01/2017”, “28/01/2018”{]},
+“Event 2”: {[}“28/01/2019”, “28/01/2020”{]},
+“Last event”: {[}“28/05/2020”, “28/01/2021”{]}
+\end{quote}
+
+\sphinxAtStartPar
+\}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
 \phantomsection\label{\detokenize{index:module-sjvisualizer.Canvas}}\index{module@\spxentry{module}!sjvisualizer.Canvas@\spxentry{sjvisualizer.Canvas}}\index{sjvisualizer.Canvas@\spxentry{sjvisualizer.Canvas}!module@\spxentry{module}}\index{calc\_spacing() (in module sjvisualizer.Canvas)@\spxentry{calc\_spacing()}\spxextra{in module sjvisualizer.Canvas}}
 
 \begin{fulllineitems}
@@ -247,7 +639,7 @@ Helper function to add a title to your animation.
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.Canvas.canvas.play}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{play}}}{\sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{fps}\DUrole{o,o}{=}\DUrole{default_value}{30}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{play}}}{\sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{fps}\DUrole{o,o}{=}\DUrole{default_value}{30}}, \sphinxparam{\DUrole{n,n}{record}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{2560}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{1440}}, \sphinxparam{\DUrole{n,n}{file\_name}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}output.mp4\textquotesingle{}}}}{}
 \pysigstopsignatures
 \sphinxAtStartPar
 Main loop of the animation. This function will orchestrate the animation for each time step set in the pandas df
@@ -260,6 +652,22 @@ Main loop of the animation. This function will orchestrate the animation for eac
 \item {} 
 \sphinxAtStartPar
 \sphinxstyleliteralstrong{\sphinxupquote{fps}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} frame rate of the animation, defaults to 30 frames per second
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{record}} (\sphinxstyleliteralemphasis{\sphinxupquote{boolean}}) \textendash{} if set to True, the screen will be recorded, this will severely impact performance on high resolution screens
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{width}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} if record is set to True, this is the width of the window being recorded. Defaults to full screen.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{height}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} if record is set to True, this is the height of the window being recorded. Defaults to full screen.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{file\_name}} (\sphinxstyleliteralemphasis{\sphinxupquote{str}}) \textendash{} if record is set to True, this is the name of the output file. Defaults to output.mp4.
 
 \end{itemize}
 
@@ -303,6 +711,15 @@ Update function that gets called every frame of the animation.
 \phantomsection\label{\detokenize{index:sjvisualizer.Canvas.format_date}}
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxcode{\sphinxupquote{sjvisualizer.Canvas.}}\sphinxbfcode{\sphinxupquote{format\_date}}}{\sphinxparam{\DUrole{n,n}{time}}, \sphinxparam{\DUrole{n,n}{time\_indicator}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{format\_value() (in module sjvisualizer.Canvas)@\spxentry{format\_value()}\spxextra{in module sjvisualizer.Canvas}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.Canvas.format_value}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxcode{\sphinxupquote{sjvisualizer.Canvas.}}\sphinxbfcode{\sphinxupquote{format\_value}}}{\sphinxparam{\DUrole{n,n}{number}}, \sphinxparam{\DUrole{n,n}{decimal}\DUrole{o,o}{=}\DUrole{default_value}{3}}}{}
 \pysigstopsignatures
 \end{fulllineitems}
 
@@ -415,7 +832,7 @@ Basic sub\_plot class from which all chart types are inherited
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.BarRace.bar}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.BarRace.}}\sphinxbfcode{\sphinxupquote{bar}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{color}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{target\_y}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{x}\DUrole{o,o}{=}\DUrole{default_value}{100}}, \sphinxparam{\DUrole{n,n}{size}\DUrole{o,o}{=}\DUrole{default_value}{10}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{radius}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{value}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{multi\_colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{color\_data}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{mode}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{decimal\_places}\DUrole{o,o}{=}\DUrole{default_value}{1}}, \sphinxparam{\DUrole{n,n}{font\_scale}\DUrole{o,o}{=}\DUrole{default_value}{1}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.BarRace.}}\sphinxbfcode{\sphinxupquote{bar}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{target\_y}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{x}\DUrole{o,o}{=}\DUrole{default_value}{100}}, \sphinxparam{\DUrole{n,n}{size}\DUrole{o,o}{=}\DUrole{default_value}{10}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{radius}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{value}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{multi\_colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{color\_data}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{mode}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{decimal\_places}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{font\_scale}\DUrole{o,o}{=}\DUrole{default_value}{1}}, \sphinxparam{\DUrole{n,n}{graph}\DUrole{o,o}{=}\DUrole{default_value}{None}}}{}
 \pysigstopsignatures\index{delete() (sjvisualizer.BarRace.bar method)@\spxentry{delete()}\spxextra{sjvisualizer.BarRace.bar method}}
 
 \begin{fulllineitems}
@@ -533,11 +950,19 @@ at the bottom of the visualization. Typically you want this square to match the 
 
 \item {} 
 \sphinxAtStartPar
-\sphinxstyleliteralstrong{\sphinxupquote{sort}} (\sphinxstyleliteralemphasis{\sphinxupquote{boolean}}) \textendash{} should the values of this plot be softed? True/False, default is True
+\sphinxstyleliteralstrong{\sphinxupquote{sort}} (\sphinxstyleliteralemphasis{\sphinxupquote{boolean}}) \textendash{} should the elements of this graph be sorted based on the value? default is True
 
 \item {} 
 \sphinxAtStartPar
 \sphinxstyleliteralstrong{\sphinxupquote{number\_of\_bars}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} number of bars to display in the animation, default is 10 unless you have less than 10 data categories
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{shift}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} number of pixels to shift the vertical stripe down which is used to hide the bars that fall outside of the top X. This can be used if a background image is used to avoid an ugly white bar covering the background image.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_scale}} (\sphinxstyleliteralemphasis{\sphinxupquote{float}}) \textendash{} increase or decrease the font\_size. To reduce the font size by 25\% set this value to 0.75.
 
 \end{itemize}
 
@@ -728,7 +1153,7 @@ at the bottom of the visualization. Typically you want this square to match the 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.LineChart.event}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.LineChart.}}\sphinxbfcode{\sphinxupquote{event}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_date}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{end\_date}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{color}\DUrole{o,o}{=}\DUrole{default_value}{(225, 225, 225)}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{font\_size}\DUrole{o,o}{=}\DUrole{default_value}{12}}, \sphinxparam{\DUrole{n,n}{text\_font}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Microsoft JhengHei UI\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{parent}\DUrole{o,o}{=}\DUrole{default_value}{None}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.LineChart.}}\sphinxbfcode{\sphinxupquote{event}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_date}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{end\_date}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{font\_size}\DUrole{o,o}{=}\DUrole{default_value}{12}}, \sphinxparam{\DUrole{n,n}{text\_font}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Microsoft JhengHei UI\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{parent}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{event\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}}{}
 \pysigstopsignatures\index{draw() (sjvisualizer.LineChart.event method)@\spxentry{draw()}\spxextra{sjvisualizer.LineChart.event method}}
 
 \begin{fulllineitems}
@@ -755,7 +1180,7 @@ at the bottom of the visualization. Typically you want this square to match the 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.LineChart.line}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.LineChart.}}\sphinxbfcode{\sphinxupquote{line}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{value}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{xaxis}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{yaxis}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{chart}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{False}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.LineChart.}}\sphinxbfcode{\sphinxupquote{line}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{value}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{xaxis}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{yaxis}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{chart}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{line\_width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{label\_at\_end}\DUrole{o,o}{=}\DUrole{default_value}{True}}}{}
 \pysigstopsignatures\index{draw() (sjvisualizer.LineChart.line method)@\spxentry{draw()}\spxextra{sjvisualizer.LineChart.line method}}
 
 \begin{fulllineitems}
@@ -887,9 +1312,20 @@ dictionary to add additional context to the line chart. For example to indicate 
 \}
 :type events: dict
 \begin{quote}\begin{description}
-\sphinxlineitem{Parameters}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{event\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}) \textendash{} color of the event indication, default is (225,225,225)
+
+\item {} 
 \sphinxAtStartPar
 \sphinxstyleliteralstrong{\sphinxupquote{draw\_all\_events}} (\sphinxstyleliteralemphasis{\sphinxupquote{boolean}}) \textendash{} by default only the label will be added to the most recent event. Set this value to True to keep the labels for all events
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{line\_width}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} width of the line
+
+\end{itemize}
 
 \end{description}\end{quote}
 \index{draw() (sjvisualizer.LineChart.line\_chart method)@\spxentry{draw()}\spxextra{sjvisualizer.LineChart.line\_chart method}}
@@ -945,7 +1381,7 @@ dictionary to add additional context to the line chart. For example to indicate 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.Legend.elem}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Legend.}}\sphinxbfcode{\sphinxupquote{elem}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{parent}\DUrole{o,o}{=}\DUrole{default_value}{None}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Legend.}}\sphinxbfcode{\sphinxupquote{elem}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{parent}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_values}\DUrole{o,o}{=}\DUrole{default_value}{False}}}{}
 \pysigstopsignatures\index{calc\_position() (sjvisualizer.Legend.elem method)@\spxentry{calc\_position()}\spxextra{sjvisualizer.Legend.elem method}}
 
 \begin{fulllineitems}
@@ -969,7 +1405,7 @@ dictionary to add additional context to the line chart. For example to indicate 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.Legend.elem.update}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{x}}, \sphinxparam{\DUrole{n,n}{y}}, \sphinxparam{\DUrole{n,n}{draw}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{x}}, \sphinxparam{\DUrole{n,n}{y}}, \sphinxparam{\DUrole{n,n}{draw}}, \sphinxparam{\DUrole{n,n}{value}\DUrole{o,o}{=}\DUrole{default_value}{0}}}{}
 \pysigstopsignatures
 \end{fulllineitems}
 
@@ -1052,6 +1488,14 @@ Class to construct an animated area graph
 \sphinxAtStartPar
 \sphinxstyleliteralstrong{\sphinxupquote{sort}} (\sphinxstyleliteralemphasis{\sphinxupquote{boolean}}) \textendash{} should the elements of this graph be sorted based on the value? default is True
 
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{display\_values}} (\sphinxstyleliteralemphasis{\sphinxupquote{boolean}}) \textendash{} display the value of the data category at the end of the legend? default is False
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{unit}} (\sphinxstyleliteralemphasis{\sphinxupquote{str}}) \textendash{} unit of the values visualized, default is “”
+
 \end{itemize}
 
 \end{description}\end{quote}
@@ -1081,7 +1525,7 @@ Class to construct an animated area graph
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.Axis.axis}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Axis.}}\sphinxbfcode{\sphinxupquote{axis}}}{\sphinxparam{\DUrole{n,n}{canvas}}, \sphinxparam{\DUrole{n,n}{x}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{y}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{length}\DUrole{o,o}{=}\DUrole{default_value}{1000}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{1000}}, \sphinxparam{\DUrole{n,n}{orientation}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}horizontal\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{n}\DUrole{o,o}{=}\DUrole{default_value}{3}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{tick\_length}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{is\_log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{is\_date}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{color}\DUrole{o,o}{=}\DUrole{default_value}{(50, 50, 50)}}, \sphinxparam{\DUrole{n,n}{font\_size}\DUrole{o,o}{=}\DUrole{default_value}{20}}, \sphinxparam{\DUrole{n,n}{text\_font}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Microsoft JhengHei UI\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{line\_tickness}\DUrole{o,o}{=}\DUrole{default_value}{3}}, \sphinxparam{\DUrole{n,n}{ticks\_only}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Axis.}}\sphinxbfcode{\sphinxupquote{axis}}}{\sphinxparam{\DUrole{n,n}{canvas}}, \sphinxparam{\DUrole{n,n}{x}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{y}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{length}\DUrole{o,o}{=}\DUrole{default_value}{1000}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{1000}}, \sphinxparam{\DUrole{n,n}{orientation}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}horizontal\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{n}\DUrole{o,o}{=}\DUrole{default_value}{3}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{tick\_length}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{is\_log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{is\_date}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{color}\DUrole{o,o}{=}\DUrole{default_value}{(50, 50, 50)}}, \sphinxparam{\DUrole{n,n}{font\_size}\DUrole{o,o}{=}\DUrole{default_value}{20}}, \sphinxparam{\DUrole{n,n}{text\_font}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Microsoft JhengHei UI\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{line\_tickness}\DUrole{o,o}{=}\DUrole{default_value}{3}}, \sphinxparam{\DUrole{n,n}{ticks\_only}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{tick\_prefix}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}}{}
 \pysigstopsignatures\index{calc\_positions() (sjvisualizer.Axis.axis method)@\spxentry{calc\_positions()}\spxextra{sjvisualizer.Axis.axis method}}
 
 \begin{fulllineitems}
@@ -1117,7 +1561,7 @@ Class to construct an animated area graph
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.Axis.calculate_nice_ticks}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxcode{\sphinxupquote{sjvisualizer.Axis.}}\sphinxbfcode{\sphinxupquote{calculate\_nice\_ticks}}}{\sphinxparam{\DUrole{n,n}{min\_val}}, \sphinxparam{\DUrole{n,n}{max\_val}}, \sphinxparam{\DUrole{n,n}{num\_ticks}}, \sphinxparam{\DUrole{n,n}{is\_log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}}{}
+\pysiglinewithargsret{\sphinxcode{\sphinxupquote{sjvisualizer.Axis.}}\sphinxbfcode{\sphinxupquote{calculate\_nice\_ticks}}}{\sphinxparam{\DUrole{n,n}{min\_val}}, \sphinxparam{\DUrole{n,n}{max\_val}}, \sphinxparam{\DUrole{n,n}{num\_ticks}}, \sphinxparam{\DUrole{n,n}{is\_log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{False}}}{}
 \pysigstopsignatures
 \end{fulllineitems}
 
@@ -1126,7 +1570,7 @@ Class to construct an animated area graph
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.Axis.tick}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Axis.}}\sphinxbfcode{\sphinxupquote{tick}}}{\sphinxparam{\DUrole{n,n}{canvas}}, \sphinxparam{\DUrole{n,n}{axis}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{length}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{label\_pos}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.Axis.}}\sphinxbfcode{\sphinxupquote{tick}}}{\sphinxparam{\DUrole{n,n}{canvas}}, \sphinxparam{\DUrole{n,n}{axis}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{length}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{label\_pos}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{tick\_prefix}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}}{}
 \pysigstopsignatures\index{draw() (sjvisualizer.Axis.tick method)@\spxentry{draw()}\spxextra{sjvisualizer.Axis.tick method}}
 
 \begin{fulllineitems}
@@ -1363,6 +1807,10 @@ SE
 \item {} 
 \sphinxAtStartPar
 \sphinxstyleliteralstrong{\sphinxupquote{font\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ of }}\sphinxstyleliteralemphasis{\sphinxupquote{length 3 with integers}}) \textendash{} font color, default is (0,0,0)
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{angle}} (\sphinxstyleliteralemphasis{\sphinxupquote{float}}) \textendash{} rotation of the text by number of degrees
 
 \end{itemize}
 
