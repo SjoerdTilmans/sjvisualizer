@@ -17,6 +17,10 @@
 .. automodule:: sjvisualizer.LineChart
    :members:
    :undoc-members:
+ 
+.. automodule:: sjvisualizer.WorldMap
+   :members:
+   :undoc-members:
   
 .. automodule:: sjvisualizer.Total
    :members:

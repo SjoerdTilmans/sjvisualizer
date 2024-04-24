@@ -65,7 +65,7 @@
              
   <h1>Source code for sjvisualizer.plot</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">sjvisualizer</span> <span class="kn">import</span> <span class="n">DataHandler</span><span class="p">,</span> <span class="n">Canvas</span>
-<span class="kn">from</span> <span class="nn">sjvisualizer</span> <span class="kn">import</span> <span class="n">BarRace</span><span class="p">,</span> <span class="n">PieRace</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">,</span> <span class="n">AreaChart</span>
+<span class="kn">from</span> <span class="nn">sjvisualizer</span> <span class="kn">import</span> <span class="n">BarRace</span><span class="p">,</span> <span class="n">PieRace</span><span class="p">,</span> <span class="n">LineChart</span><span class="p">,</span> <span class="n">AreaChart</span><span class="p">,</span> <span class="n">WorldMap</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
 <div class="viewcode-block" id="bar"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.plot.bar">[docs]</a><span class="k">def</span> <span class="nf">bar</span><span class="p">(</span><span class="n">excel</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">sub_title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_video</span><span class="o">=</span><span class="s2">&quot;output.mp4&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">time_indicator</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">background_color</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">colors</span><span class="o">=</span><span class="p">{},</span> <span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
@@ -131,6 +131,82 @@
     <span class="c1"># creating the bar_race</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">BarRace</span><span class="o">.</span><span class="n">bar_race</span><span class="p">(</span><span class="n">canvas</span><span class="o">=</span><span class="n">canvas</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">number_of_bars</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="n">font_color</span><span class="p">,</span> <span class="n">back_ground_color</span><span class="o">=</span><span class="n">background_color</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">)</span>
     <span class="n">canvas</span><span class="o">.</span><span class="n">add_sub_plot</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+    <span class="c1"># adding title</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">add_title</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">font_color</span><span class="p">)</span>
+
+    <span class="c1"># adding sub-title</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">add_sub_title</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">sub_title</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">font_color</span><span class="p">)</span>
+
+    <span class="c1"># adding time indicator</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">add_time</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">time_indicator</span><span class="o">=</span><span class="n">time_indicator</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">font_color</span><span class="p">)</span>
+
+    <span class="c1"># play the animation</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">fps</span><span class="o">=</span><span class="n">fps</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="n">record</span><span class="p">,</span> <span class="n">file_name</span><span class="o">=</span><span class="n">output_video</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="world_map"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.plot.world_map">[docs]</a><span class="k">def</span> <span class="nf">world_map</span><span class="p">(</span><span class="n">excel</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">sub_title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fps</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">output_video</span><span class="o">=</span><span class="s2">&quot;output.mp4&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">time_indicator</span><span class="o">=</span><span class="s2">&quot;year&quot;</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">background_color</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">colors</span><span class="o">=</span><span class="p">{},</span> <span class="n">color_bar_color</span><span class="o">=</span><span class="p">[[</span><span class="mi">210</span><span class="p">,</span><span class="mi">210</span><span class="p">,</span><span class="mi">210</span><span class="p">],</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">10</span><span class="p">]]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Function to create a bar chart race</span>
+
+<span class="sd">        :param excel: excel file containing the data</span>
+<span class="sd">        :type excel: string</span>
+
+<span class="sd">        :param title: title on top of the animation</span>
+<span class="sd">        :type title: string</span>
+
+<span class="sd">        :param sub_title: sub-title to provide extra context, displayed just under the main title</span>
+<span class="sd">        :type sub_title: string</span>
+
+<span class="sd">        :param duration: length of the animation</span>
+<span class="sd">        :type duration: integer</span>
+
+<span class="sd">        :param fps: number of frames per second</span>
+<span class="sd">        :type fps: integer</span>
+
+<span class="sd">        :param record: should the animation be saved as an mp4? Defaults to False. If set to True, the render speed on screen is reduced, however, the playback speed of the video is correct.</span>
+<span class="sd">        :type record: boolean</span>
+
+<span class="sd">        :param output_video: name of the saved video.</span>
+<span class="sd">        :type record: string</span>
+
+<span class="sd">        :param unit: unit to be displayed in the graph</span>
+<span class="sd">        :type record: string</span>
+
+<span class="sd">        :param time_indicator: should the time format show year, month or day</span>
+<span class="sd">        :type time_indicator: string, &#39;day&#39;, &#39;month&#39;, or &#39;year&#39;</span>
+
+<span class="sd">        :param font_color: color of the texts rendered to the screen. In RGB colors.</span>
+<span class="sd">        :type font_color: tuple (R, G, B)</span>
+
+<span class="sd">        :param background_color: color of the background. In RGB colors.</span>
+<span class="sd">        :type background_color: tuple (R, G, B)</span>
+
+<span class="sd">        :param colors: dictionary that holds color information for each of the data categories. The key of the dict should</span>
+<span class="sd">            corespond to the name of the data category (column). The value of the dict should be the RGB values of the color:</span>
+<span class="sd">                {</span>
+<span class="sd">                    &quot;United States&quot;: [</span>
+<span class="sd">                        23,</span>
+<span class="sd">                        60,</span>
+<span class="sd">                        225</span>
+<span class="sd">                    ]</span>
+<span class="sd">                }, default is {}</span>
+<span class="sd">        :type colors: dict</span>
+
+<span class="sd">        :param color_bar_color: list that holds start and end color of color bar in RGB values, example: color_bar_color=[[210,210,210], [100,40,10]]</span>
+<span class="sd">        :type color_bar_color: list[lists]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">excel</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="s2">&quot;Please provide a valid Excel file&quot;</span><span class="p">)</span>
+
+    <span class="c1"># creating the dataframe</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">DataHandler</span><span class="o">.</span><span class="n">DataHandler</span><span class="p">(</span><span class="n">excel_file</span><span class="o">=</span><span class="n">excel</span><span class="p">,</span> <span class="n">number_of_frames</span><span class="o">=</span><span class="n">fps</span><span class="o">*</span><span class="n">duration</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">df</span>
+
+    <span class="c1"># creating the canvas</span>
+    <span class="n">canvas</span> <span class="o">=</span> <span class="n">Canvas</span><span class="o">.</span><span class="n">canvas</span><span class="p">(</span><span class="n">bg</span><span class="o">=</span><span class="n">background_color</span><span class="p">)</span>
+
+    <span class="c1"># creating the bar_race</span>
+    <span class="nb">map</span> <span class="o">=</span> <span class="n">WorldMap</span><span class="o">.</span><span class="n">world_map</span><span class="p">(</span><span class="n">canvas</span><span class="o">=</span><span class="n">canvas</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="n">font_color</span><span class="p">,</span> <span class="n">back_ground_color</span><span class="o">=</span><span class="n">background_color</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span> <span class="n">color_bar_color</span><span class="o">=</span><span class="n">color_bar_color</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">add_sub_plot</span><span class="p">(</span><span class="nb">map</span><span class="p">)</span>
 
     <span class="c1"># adding title</span>
     <span class="n">canvas</span><span class="o">.</span><span class="n">add_title</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">font_color</span><span class="p">)</span>

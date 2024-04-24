@@ -63,7 +63,7 @@
 
 
 \title{sjvisualizer}
-\date{Nov 22, 2023}
+\date{Apr 24, 2024}
 \release{0.0.13}
 \author{Sjoerd Tilmans}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -487,6 +487,98 @@ events = \{
 
 \sphinxAtStartPar
 \}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{world\_map() (in module sjvisualizer.plot)@\spxentry{world\_map()}\spxextra{in module sjvisualizer.plot}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.plot.world_map}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxcode{\sphinxupquote{sjvisualizer.plot.}}\sphinxbfcode{\sphinxupquote{world\_map}}}{\sphinxparam{\DUrole{n,n}{excel}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sub\_title}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{duration}\DUrole{o,o}{=}\DUrole{default_value}{1}}, \sphinxparam{\DUrole{n,n}{fps}\DUrole{o,o}{=}\DUrole{default_value}{60}}, \sphinxparam{\DUrole{n,n}{record}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{output\_video}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}output.mp4\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{background\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}210, 210, 210{]}, {[}100, 40, 10{]}{]}}}}{}
+\pysigstopsignatures
+\sphinxAtStartPar
+Function to create a bar chart race
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{excel}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} excel file containing the data
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{title}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} title on top of the animation
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{sub\_title}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} sub\sphinxhyphen{}title to provide extra context, displayed just under the main title
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{duration}} (\sphinxstyleliteralemphasis{\sphinxupquote{integer}}) \textendash{} length of the animation
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{fps}} (\sphinxstyleliteralemphasis{\sphinxupquote{integer}}) \textendash{} number of frames per second
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{record}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}) \textendash{} should the animation be saved as an mp4? Defaults to False. If set to True, the render speed on screen is reduced, however, the playback speed of the video is correct.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{output\_video}} \textendash{} name of the saved video.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{unit}} \textendash{} unit to be displayed in the graph
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{time\_indicator}} (\sphinxstyleliteralemphasis{\sphinxupquote{string}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}day\textquotesingle{}}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}month\textquotesingle{}}}\sphinxstyleliteralemphasis{\sphinxupquote{, or }}\sphinxstyleliteralemphasis{\sphinxupquote{\textquotesingle{}year\textquotesingle{}}}) \textendash{} should the time format show year, month or day
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ (}}\sphinxstyleliteralemphasis{\sphinxupquote{R}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{G}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{B}}\sphinxstyleliteralemphasis{\sphinxupquote{)}}) \textendash{} color of the texts rendered to the screen. In RGB colors.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{background\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ (}}\sphinxstyleliteralemphasis{\sphinxupquote{R}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{G}}\sphinxstyleliteralemphasis{\sphinxupquote{, }}\sphinxstyleliteralemphasis{\sphinxupquote{B}}\sphinxstyleliteralemphasis{\sphinxupquote{)}}) \textendash{} color of the background. In RGB colors.
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{colors}} (\sphinxstyleliteralemphasis{\sphinxupquote{dict}}) \textendash{} 
+\sphinxAtStartPar
+dictionary that holds color information for each of the data categories. The key of the dict should
+corespond to the name of the data category (column). The value of the dict should be the RGB values of the color:
+\begin{quote}
+\begin{description}
+\sphinxlineitem{\{}\begin{description}
+\sphinxlineitem{“United States”: {[}}
+\sphinxAtStartPar
+23,
+60,
+225
+
+\end{description}
+
+\sphinxAtStartPar
+{]}
+
+\end{description}
+
+\sphinxAtStartPar
+\}, default is \{\}
+\end{quote}
+
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{color\_bar\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{list}}\sphinxstyleliteralemphasis{\sphinxupquote{{[}}}\sphinxstyleliteralemphasis{\sphinxupquote{lists}}\sphinxstyleliteralemphasis{\sphinxupquote{{]}}}) \textendash{} list that holds start and end color of color bar in RGB values, example: color\_bar\_color={[}{[}210,210,210{]}, {[}100,40,10{]}{]}
+
+\end{itemize}
 
 \end{description}\end{quote}
 
@@ -1153,7 +1245,7 @@ at the bottom of the visualization. Typically you want this square to match the 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.LineChart.event}}
 \pysigstartsignatures
-\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.LineChart.}}\sphinxbfcode{\sphinxupquote{event}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_date}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{end\_date}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{font\_size}\DUrole{o,o}{=}\DUrole{default_value}{12}}, \sphinxparam{\DUrole{n,n}{text\_font}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Microsoft JhengHei UI\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{parent}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{event\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}}{}
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.LineChart.}}\sphinxbfcode{\sphinxupquote{event}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_date}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{end\_date}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{font\_size}\DUrole{o,o}{=}\DUrole{default_value}{12}}, \sphinxparam{\DUrole{n,n}{text\_font}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Interstate\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{parent}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{event\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}}{}
 \pysigstopsignatures\index{draw() (sjvisualizer.LineChart.event method)@\spxentry{draw()}\spxextra{sjvisualizer.LineChart.event method}}
 
 \begin{fulllineitems}
@@ -1325,6 +1417,10 @@ dictionary to add additional context to the line chart. For example to indicate 
 \sphinxAtStartPar
 \sphinxstyleliteralstrong{\sphinxupquote{line\_width}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} width of the line
 
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{unit}} (\sphinxstyleliteralemphasis{\sphinxupquote{str}}) \textendash{} unit of the values visualized, default is “”
+
 \end{itemize}
 
 \end{description}\end{quote}
@@ -1341,6 +1437,136 @@ dictionary to add additional context to the line chart. For example to indicate 
 
 \begin{fulllineitems}
 \phantomsection\label{\detokenize{index:sjvisualizer.LineChart.line_chart.update}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{time}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\phantomsection\label{\detokenize{index:module-sjvisualizer.WorldMap}}\index{module@\spxentry{module}!sjvisualizer.WorldMap@\spxentry{sjvisualizer.WorldMap}}\index{sjvisualizer.WorldMap@\spxentry{sjvisualizer.WorldMap}!module@\spxentry{module}}\index{color\_bar (class in sjvisualizer.WorldMap)@\spxentry{color\_bar}\spxextra{class in sjvisualizer.WorldMap}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.WorldMap.color_bar}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.WorldMap.}}\sphinxbfcode{\sphinxupquote{color\_bar}}}{\sphinxparam{\DUrole{n,n}{canvas}}, \sphinxparam{\DUrole{n,n}{colors}}, \sphinxparam{\DUrole{n,n}{x1}}, \sphinxparam{\DUrole{n,n}{y1}}, \sphinxparam{\DUrole{n,n}{x2}}, \sphinxparam{\DUrole{n,n}{y2}}, \sphinxparam{\DUrole{n,n}{data}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{min\_value}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{parent}\DUrole{o,o}{=}\DUrole{default_value}{None}}}{}
+\pysigstopsignatures\index{draw() (sjvisualizer.WorldMap.color\_bar method)@\spxentry{draw()}\spxextra{sjvisualizer.WorldMap.color\_bar method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.WorldMap.color_bar.draw}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{draw}}}{\sphinxparam{\DUrole{n,n}{data}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{update() (sjvisualizer.WorldMap.color\_bar method)@\spxentry{update()}\spxextra{sjvisualizer.WorldMap.color\_bar method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.WorldMap.color_bar.update}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{data}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{country (class in sjvisualizer.WorldMap)@\spxentry{country}\spxextra{class in sjvisualizer.WorldMap}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.WorldMap.country}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.WorldMap.}}\sphinxbfcode{\sphinxupquote{country}}}{\sphinxparam{\DUrole{n,n}{name}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{coords}\DUrole{o,o}{=}\DUrole{default_value}{{[}{]}}}, \sphinxparam{\DUrole{n,n}{value}\DUrole{o,o}{=}\DUrole{default_value}{0}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{min\_value}\DUrole{o,o}{=}\DUrole{default_value}{0}}}{}
+\pysigstopsignatures\index{draw() (sjvisualizer.WorldMap.country method)@\spxentry{draw()}\spxextra{sjvisualizer.WorldMap.country method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.WorldMap.country.draw}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{draw}}}{}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{update() (sjvisualizer.WorldMap.country method)@\spxentry{update()}\spxextra{sjvisualizer.WorldMap.country method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.WorldMap.country.update}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{data}}, \sphinxparam{\DUrole{n,n}{current\_max}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+
+\end{fulllineitems}
+
+\index{world\_map (class in sjvisualizer.WorldMap)@\spxentry{world\_map}\spxextra{class in sjvisualizer.WorldMap}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.WorldMap.world_map}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{class\DUrole{w,w}{  }}}\sphinxcode{\sphinxupquote{sjvisualizer.WorldMap.}}\sphinxbfcode{\sphinxupquote{world\_map}}}{\sphinxparam{\DUrole{n,n}{canvas}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{width}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{height}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{x\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{y\_pos}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{start\_time}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{text}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{multi\_color\_df}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{anchor}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}c\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{sort}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{colors}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{root}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{display\_percentages}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{display\_label}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{title}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{invert}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{origin}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}s\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{display\_value}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{font\_color}\DUrole{o,o}{=}\DUrole{default_value}{(0, 0, 0)}}, \sphinxparam{\DUrole{n,n}{back\_ground\_color}\DUrole{o,o}{=}\DUrole{default_value}{(255, 255, 255)}}, \sphinxparam{\DUrole{n,n}{events}\DUrole{o,o}{=}\DUrole{default_value}{\{\}}}, \sphinxparam{\DUrole{n,n}{time\_indicator}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}year\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{number\_of\_bars}\DUrole{o,o}{=}\DUrole{default_value}{None}}, \sphinxparam{\DUrole{n,n}{unit}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{x\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{y\_ticks}\DUrole{o,o}{=}\DUrole{default_value}{4}}, \sphinxparam{\DUrole{n,n}{log\_scale}\DUrole{o,o}{=}\DUrole{default_value}{False}}, \sphinxparam{\DUrole{n,n}{only\_show\_latest\_event}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{allow\_decrease}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{format}\DUrole{o,o}{=}\DUrole{default_value}{\textquotesingle{}Europe\textquotesingle{}}}, \sphinxparam{\DUrole{n,n}{draw\_points}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{area}\DUrole{o,o}{=}\DUrole{default_value}{True}}, \sphinxparam{\DUrole{n,n}{color\_bar\_color}\DUrole{o,o}{=}\DUrole{default_value}{{[}{[}100, 100, 100{]}, {[}255, 0, 0{]}{]}}}, \sphinxparam{\DUrole{o,o}{**}\DUrole{n,n}{kwargs}}}{}
+\pysigstopsignatures\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{canvas}} (\sphinxstyleliteralemphasis{\sphinxupquote{tkinter.Canvas}}) \textendash{} tkinter canvas to draw the graph to
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{width}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} width of the plot in pixels, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{height}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} height of the plot in pixels, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{x\_pos}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} the x location of the top left pixel in this plot, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{y\_pos}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} the y location of the top left pixel in this plot, default depends on screen resolution
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{df}} (\sphinxstyleliteralemphasis{\sphinxupquote{pandas.DataFrame}}) \textendash{} pandas dataframe that holds the data
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{tuple}}\sphinxstyleliteralemphasis{\sphinxupquote{ of }}\sphinxstyleliteralemphasis{\sphinxupquote{length 3 with integers}}) \textendash{} font color, default is (0,0,0)
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{font\_size}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} font size, in pixels
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{min\_value}} (\sphinxstyleliteralemphasis{\sphinxupquote{float}}) \textendash{} minimum value to appear on color bar, defaults to 0
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{color\_bar\_color}} (\sphinxstyleliteralemphasis{\sphinxupquote{list}}\sphinxstyleliteralemphasis{\sphinxupquote{{[}}}\sphinxstyleliteralemphasis{\sphinxupquote{lists}}\sphinxstyleliteralemphasis{\sphinxupquote{{]}}}) \textendash{} list that holds start and end color of color bar in RGB values, example: color\_bar\_color={[}{[}210,210,210{]}, {[}100,40,10{]}{]}
+
+\item {} 
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{unit}} (\sphinxstyleliteralemphasis{\sphinxupquote{str}}) \textendash{} unit of the values visualized, default is “”
+
+\end{itemize}
+
+\end{description}\end{quote}
+\index{draw() (sjvisualizer.WorldMap.world\_map method)@\spxentry{draw()}\spxextra{sjvisualizer.WorldMap.world\_map method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.WorldMap.world_map.draw}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{draw}}}{\sphinxparam{\DUrole{n,n}{time}}}{}
+\pysigstopsignatures
+\end{fulllineitems}
+
+\index{update() (sjvisualizer.WorldMap.world\_map method)@\spxentry{update()}\spxextra{sjvisualizer.WorldMap.world\_map method}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:sjvisualizer.WorldMap.world_map.update}}
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{update}}}{\sphinxparam{\DUrole{n,n}{time}}}{}
 \pysigstopsignatures

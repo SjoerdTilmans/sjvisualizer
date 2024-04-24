@@ -131,6 +131,9 @@ class line_chart(cv.sub_plot):
             :param line_width: width of the line
             :type line_width: int
 
+            :param unit: unit of the values visualized, default is ""
+            :type unit: str
+
             """
 
     def draw(self, time):
@@ -246,7 +249,7 @@ class line_chart(cv.sub_plot):
 
 class event():
 
-    def __init__(self, name=None, canvas=None, start_date=None, end_date=None, font_color=(0,0,0), font_size=12, text_font="Microsoft JhengHei UI", parent=None, event_color=(255, 255, 255)):
+    def __init__(self, name=None, canvas=None, start_date=None, end_date=None, font_color=(0,0,0), font_size=12, text_font="Interstate", parent=None, event_color=(255, 255, 255)):
         self.name = name
         self.canvas = canvas
         self.start_date = datetime.datetime.strptime(start_date, "%d/%m/%Y")
@@ -311,6 +314,15 @@ class event():
 class line():
 
     def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors=None, time=None, xaxis=None, yaxis=None, chart=None, draw_points=False, line_width=None, label_at_end=True):
+
+        self.m = 2
+        self.k = 0.5
+        self.d = 2.4
+
+        self.y_loc = 0
+        self.v = 0
+        self.a = 0
+
         self.name = name
         self.canvas = canvas
         self.unite = unit
@@ -326,6 +338,8 @@ class line():
         else:
             self.line_width = line_width
         self.colors = colors
+
+        self.label_drawn = False
 
         self.x_values = []
         self.y_values = []
@@ -361,7 +375,7 @@ class line():
         self.points = []
 
         if self.label_at_end:
-            self.font = font.Font(family=self.xaxis.text_font, size=int(self.xaxis.font_size*0.85))
+            self.font = font.Font(family=self.xaxis.text_font, size=int(self.xaxis.font_size))
             self.line_label = self.canvas.create_text(-10000, -10000, text=self.name, font=self.font, fill=self.color, anchor="w")
 
     def update(self, value, time):
@@ -397,10 +411,21 @@ class line():
         else:
             self.canvas.coords(self.line, *coords)
 
-        if self.label_at_end and value:
-            self.canvas.coords(self.line_label, coords[-2] + 5, coords[-1])
+        if self.label_at_end and value and not self.label_drawn:
+            self.y_loc = coords[-1]
+            self.canvas.coords(self.line_label, coords[-2] + 10, coords[-1])
+            self.label_drawn = True
+        elif self.label_at_end and value and self.label_drawn:
+            target_y = coords[-1]
+            F = self.k * (target_y - self.y_loc) - self.d * self.v
+            self.a = F / self.m
+            self.v = self.v + self.a
+            self.y_loc = self.y_loc + self.v
+            self.canvas.coords(self.line_label, coords[-2] + 10, self.y_loc)
+
         elif self.label_at_end:
             self.canvas.coords(self.line_label, -1000, -1000)
+            self.label_drawn = False
 
     def remove_points(self):
         for p in self.points:

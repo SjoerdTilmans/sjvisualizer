@@ -7,6 +7,7 @@ sjvisualizer/BarRace.py
 sjvisualizer/Canvas.py
 sjvisualizer/DataHandler.py
 sjvisualizer/Date.py
+sjvisualizer/Empty.py
 sjvisualizer/Legend.py
 sjvisualizer/LineChart.py
 sjvisualizer/PieRace.py
@@ -14,8 +15,10 @@ sjvisualizer/StackedBarChart.py
 sjvisualizer/StaticImage.py
 sjvisualizer/StaticText.py
 sjvisualizer/Total.py
+sjvisualizer/WorldMap.py
 sjvisualizer/__init__.py
 sjvisualizer/plot.py
+sjvisualizer/world.json
 sjvisualizer.egg-info/PKG-INFO
 sjvisualizer.egg-info/SOURCES.txt
 sjvisualizer.egg-info/dependency_links.txt
