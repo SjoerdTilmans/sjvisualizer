@@ -18,7 +18,7 @@ def main(fps = 60, duration = 0.35):
     canvas = Canvas.canvas()
 
     # add bar chart
-    bar_chart = BarRace.bar_race(canvas=canvas.canvas, df=df, colors=colors, height=720, width=720, x_pos=175, y_pos=200)
+    bar_chart = BarRace.bar_race(canvas=canvas.canvas, df=df, colors=colors, height=720, width=720, x_pos=175, y_pos=200, back_ground_color=(255,0,0))
     canvas.add_sub_plot(bar_chart)
 
     # add static text

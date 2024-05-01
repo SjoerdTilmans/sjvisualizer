@@ -196,7 +196,7 @@ class bar_race(cv.sub_plot):
                                           target_y=self.distance/2 + self.y_pos + (self.number_of_bars) * 3 * self.distance / 2 + self.shift, root=self.root,
                                           size=int(self.distance), width=fraction*self.width*0.75, radius=0, unit=self.unit, display_value=self.display_value, multi_colors=self.multi_colors, color_data=data_multi_color, font_color=self.font_color, mode=self.mode, colors=self.colors, decimal_places=self.decimal_places, font_scale=self.font_scale, graph=self)
 
-        self.rec = self.canvas.create_rectangle(self.x_pos - 0, self.y_pos + self.height + self.shift, self.x_pos + self.width, self.y_pos + self.height + 1.35 * self.distance + self.shift, fill = cv._from_rgb(self.back_ground_color), outline="")
+        self.rec = self.canvas.create_rectangle(self.x_pos - 1000, self.y_pos + self.height + self.shift, self.x_pos + self.width, self.y_pos + self.height + 1.35 * self.distance + self.shift, fill = cv._from_rgb(self.back_ground_color), outline="")
 
 
     def update(self, time):
