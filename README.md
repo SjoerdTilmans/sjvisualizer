@@ -95,6 +95,15 @@ plt.stacked_area(excel="data/Nuclear.xlsx",
         title="Nuclear Warheads by Country",
         colors=colors)
 ```
+## Data format
+Currently sjvisualizer reads data from an Excel file. The format should be as shown in the picture below:
+<img width="377" alt="example data format" src="https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/fb5b0665-77f0-4d08-81d5-05c84e02804e">
+In this file the first column should contain the dates, and each subsequent column holds the data for the data categories, in this example the different countries.
+
+The date can either be shown as just the year, or as a full date as shown below. In this case, please make sure that Excel recognises the cell as a date.
+
+<img width="651" alt="example data format_long" src="https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/999d1f19-60d6-4a16-a5fb-ea2d17671013">
+
 
 ## More advanced animations
 Using sjvisualizer, you can also mix and match chart types and positions like in the following example:
@@ -114,9 +123,6 @@ Want to learn more about sjvisualizer:
 ![Purple Colorful Modern Roadmap Timeline Infographic (1)](https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/542e02ec-113c-4fb7-a46a-fc3b65abddd2)
 
 
-If you like this project, please concider supporting me using PayPal [PayPal](https://www.paypal.com/donate/?hosted_button_id=YMN9G93CTNLD2).
-
-
 ## Usage
 sjvisualizer is a free and open-source data animation library, please include the following attribution in any publications you use it in.
 ```
@@ -125,7 +131,7 @@ Made with sjvisualizer, the open-source data animation library for Python
 
 
 ## Support this project
-If you like this project, please concider supporting me using PayPal [PayPal](https://www.paypal.com/donate/?hosted_button_id=YMN9G93CTNLD2).
+If you like this project, please concider supporting me using PayPal [Buy me a Coffee](https://www.buymeacoffee.com/sjoerdtilmans).
     
 ## Contributing
 Contributions are always welcome! A couple of ideas to contribute:
