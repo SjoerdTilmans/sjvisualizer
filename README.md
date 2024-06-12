@@ -97,6 +97,7 @@ plt.stacked_area(excel="data/Nuclear.xlsx",
 ```
 ## Data format
 Currently sjvisualizer reads data from an Excel file. The format should be as shown in the picture below:
+
 <img width="377" alt="example data format" src="https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/fb5b0665-77f0-4d08-81d5-05c84e02804e">
 In this file the first column should contain the dates, and each subsequent column holds the data for the data categories, in this example the different countries.
 
