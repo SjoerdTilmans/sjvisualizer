@@ -185,6 +185,15 @@ class canvas():
         :type file_name: str
 
         """
+        # Update the canvas root, so we know where it is. 
+        self.tk.update()
+
+        # Find the location of the canvas
+        x = self.tk.winfo_rootx() + self.canvas.winfo_x()
+        y = self.tk.winfo_rooty() + self.canvas.winfo_y()
+        xx = x + self.canvas.winfo_width()
+        yy = y + self.canvas.winfo_height()
+        
         if not df:
             for sub in self.sub_canvas:
                 if not sub.df is None:
@@ -207,7 +216,7 @@ class canvas():
 
             # grab a screenshot for each of the frames
             if record and i > 1:
-                img = ImageGrab.grab(bbox=(0, 0, width, height))
+                img = ImageGrab.grab(bbox=(x, y, xx, yy))
 
                 self.frames.append(img)
 
