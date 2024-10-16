@@ -46,10 +46,12 @@ elif platform.system() == "Linux": # if OS is linux
 else: # if OS can't be detected
     SCALEFACTOR = 1
 
-min_slice = 0.02
-min_slice_image = 0.055
-min_slice_percentage_display = 0.055
-decimal_places = 2
+# SCALEFACTOR = 0.75
+
+min_slice = 0.0001
+min_slice_image = 0.001
+min_slice_percentage_display = 0.01
+decimal_places = 1
 text_font = "Microsoft JhengHei UI"
 min_color = 20
 max_color = 225
@@ -276,15 +278,14 @@ class pie():
                                           weight="bold")
                     self.text = self.canvas.create_text(
                         ((self.x1 + self.x2) / 2 + (self.size / 2 + self.size / 10) * x_dir,
-                         (self.y1 + self.y2) / 2 - (
-                                 self.size / 2 + self.size / 10) * y_dir),
+                         (self.y1 + self.y2) / 2 - (self.size / 2 + self.size / 10) * y_dir),
                         text=self.name, font=self.font_temp, fill=_from_rgb(self.font_color))
 
                 if self.display_percentages:
                     if self.extent > min_slice_percentage_display * 360:
-                        self.text2 = self.canvas.create_text(((self.x1 + self.x2) / 2 + (
-                                    self.size / 2 + self.size / 10) * x_dir, int((self.y1 + self.y2) / 2 - (
-                                    self.size / 2 + self.size / 10) * y_dir) + self.size / 30 + 15),
+                        self.text2 = self.canvas.create_text(
+                            (    (self.x1 + self.x2) / 2 + (self.size / 2 + self.size / 10) * x_dir,
+                             int((self.y1 + self.y2) / 2 - (self.size / 2 + self.size / 10) * y_dir) + self.size / 30 + 15),
                                                              text=format(self.extent / 360 * 100,
                                                                          ",.{}f".format(decimal_places)) + "%",
                                                              font=self.font2, fill="grey")
@@ -372,10 +373,8 @@ class pie():
                         if self.display_percentages:
                             if self.extent > min_slice_percentage_display * 360:
                                 self.canvas.itemconfig(self.text2, text=format(self.extent/360*100, ",.{}f".format(decimal_places)) + "%")
-                                self.canvas.coords(self.text2, ((self.x1 + self.x2) / 2 + (
-                                            self.size / 2 + self.size / 12 + len(self.name) * (15 + self.size / 30) * self.size / 7500 + (
-                                                15 + self.size / 50)) * x_dir,
-                                                               int((self.y1 + self.y2) / 2 - (self.size / 2 + self.size / 12) * y_dir) + self.size/30 + 10))
+                                self.canvas.coords(self.text2, ((self.x1 + self.x2) / 2 + (self.size / 2 + self.size / 12 + len(self.name) * (15 + self.size / 30) * self.size / 7500 + (15 + self.size / 50)) * x_dir,
+                                                               int((self.y1 + self.y2) / 2 - (self.size / 2 + self.size / 12) * y_dir) + self.size/30 ))
                             else:
                                 self.canvas.itemconfig(self.text2, text="")
                     else:
