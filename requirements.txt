@@ -1,6 +1,6 @@
 pandas>=2.0.0
 screeninfo>=0.7
-Pillow>=9"
+Pillow>=9
 openpyxl>=3
 opencv-python>=4.8.1.78
-PIL
+Pillow

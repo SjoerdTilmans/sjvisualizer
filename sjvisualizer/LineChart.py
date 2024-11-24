@@ -147,6 +147,9 @@ class line_chart(cv.sub_plot):
 
         if not hasattr(self, "draw_points"):
             self.draw_points = True
+        
+        if not hasattr(self, "keep_last_points"):
+            self.keep_last_points = True
 
         if not hasattr(self, "events"):
             self.events = {}
@@ -195,7 +198,7 @@ class line_chart(cv.sub_plot):
         self.lines = {}
 
         for name, d in data.items():
-            self.lines[name] = line(name=name, canvas=self.canvas, value=d, time=time, font_color=self.font_color, colors=self.colors, xaxis=self.axis1, yaxis=self.axis2, draw_points=self.draw_points, chart=self, line_width=self.line_width)
+            self.lines[name] = line(name=name, canvas=self.canvas, value=d, time=time, font_color=self.font_color, colors=self.colors, xaxis=self.axis1, yaxis=self.axis2, draw_points=self.draw_points, chart=self, line_width=self.line_width, keep_last_points=self.keep_last_points)
 
         if self.sjcanvas:
             if len(self.df.columns) > 10:
@@ -236,10 +239,16 @@ class line_chart(cv.sub_plot):
 
         for name, d in data.items():
             if self.draw_points:
-                if MAX_POINTS < total_points:
-                    self.lines[name].point_radius = self.lines[name].point_radius - 0.25
-                if self.lines[name].point_radius < 0:
-                    self.lines[name].remove_points()
+                if self.keep_last_points:
+                    # only keep the last points
+                    if len(self.lines[name].points) > 1:
+                        for p in self.lines[name].points[:-1]:
+                            self.canvas.delete(p)
+                else:
+                    if MAX_POINTS < total_points:
+                        self.lines[name].point_radius = self.lines[name].point_radius - 0.25
+                    if self.lines[name].point_radius < 0:
+                        self.lines[name].remove_points()
             self.lines[name].update(d, time)
 
         for e in self.event_obj:
@@ -313,7 +322,7 @@ class event():
 
 class line():
 
-    def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors=None, time=None, xaxis=None, yaxis=None, chart=None, draw_points=False, line_width=None, label_at_end=True):
+    def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors=None, time=None, xaxis=None, yaxis=None, chart=None, draw_points=False, line_width=None, label_at_end=True, keep_last_points=False):
 
         self.m = 2
         self.k = 0.5
@@ -331,6 +340,7 @@ class line():
         self.yaxis = yaxis
         self.chart = chart
         self.draw_points = draw_points
+        self.keep_last_points = keep_last_points
         self.point_radius = int(2 + self.chart.height/150)
         self.label_at_end = label_at_end
         if not line_width:
