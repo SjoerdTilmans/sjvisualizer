@@ -132,6 +132,7 @@ Made with sjvisualizer, the open-source data animation library for Python
 ```
 ## SJVisualizer Supporters
 <img width="556" height="280" alt="logos-exact_size_vontobel (1)" src="https://github.com/user-attachments/assets/0efa0605-068b-401d-92e8-252c70a09402" />
+
 Do you like what we are doing and want to support this project, get in touch at info@sjdataviz.com
 
 ## Contributing
