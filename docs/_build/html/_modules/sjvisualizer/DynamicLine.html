@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sjvisualizer.DynamicLine &mdash; sjvisualizer 0.0.15beta documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            sjvisualizer
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sjvisualizer</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">sjvisualizer.DynamicLine</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for sjvisualizer.DynamicLine</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">sjvisualizer</span> <span class="kn">import</span> <span class="n">Canvas</span> <span class="k">as</span> <span class="n">cv</span>
+<span class="kn">from</span> <span class="nn">sjvisualizer</span> <span class="kn">import</span> <span class="n">Axis</span>
+<span class="kn">from</span> <span class="nn">sjvisualizer.Canvas</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageTk</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">font</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+
+<span class="kn">from</span> <span class="nn">screeninfo</span> <span class="kn">import</span> <span class="n">get_monitors</span>
+
+<span class="n">months</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;Jan&quot;</span><span class="p">,</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;Feb&quot;</span><span class="p">,</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;Mar&quot;</span><span class="p">,</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;Apr&quot;</span><span class="p">,</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;May&quot;</span><span class="p">,</span>
+    <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;Jun&quot;</span><span class="p">,</span>
+    <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;Jul&quot;</span><span class="p">,</span>
+    <span class="mi">8</span><span class="p">:</span> <span class="s2">&quot;Aug&quot;</span><span class="p">,</span>
+    <span class="mi">9</span><span class="p">:</span> <span class="s2">&quot;Sept&quot;</span><span class="p">,</span>
+    <span class="mi">10</span><span class="p">:</span> <span class="s2">&quot;Oct&quot;</span><span class="p">,</span>
+    <span class="mi">11</span><span class="p">:</span> <span class="s2">&quot;Nov&quot;</span><span class="p">,</span>
+    <span class="mi">12</span><span class="p">:</span> <span class="s2">&quot;Dec&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">random_colors</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">102</span><span class="p">,</span><span class="mi">155</span><span class="p">,</span><span class="mi">188</span><span class="p">),(</span><span class="mi">168</span><span class="p">,</span><span class="mi">198</span><span class="p">,</span><span class="mi">134</span><span class="p">),(</span><span class="mi">243</span><span class="p">,</span><span class="mi">167</span><span class="p">,</span><span class="mi">18</span><span class="p">),(</span><span class="mi">41</span><span class="p">,</span><span class="mi">51</span><span class="p">,</span><span class="mi">92</span><span class="p">),(</span><span class="mi">228</span><span class="p">,</span><span class="mi">87</span><span class="p">,</span><span class="mi">46</span><span class="p">),(</span><span class="mi">255</span><span class="p">,</span><span class="mi">155</span><span class="p">,</span><span class="mi">113</span><span class="p">),(</span><span class="mi">255</span><span class="p">,</span><span class="mi">253</span><span class="p">,</span><span class="mi">130</span><span class="p">),(</span><span class="mi">45</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">71</span><span class="p">),(</span><span class="mi">237</span><span class="p">,</span><span class="mi">33</span><span class="p">,</span><span class="mi">124</span><span class="p">),(</span><span class="mi">27</span><span class="p">,</span><span class="mi">153</span><span class="p">,</span><span class="mi">139</span><span class="p">),(</span><span class="mi">245</span><span class="p">,</span><span class="mi">213</span><span class="p">,</span><span class="mi">71</span><span class="p">),(</span><span class="mi">219</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">105</span><span class="p">),(</span><span class="mi">20</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">160</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">),(</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">200</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">66</span><span class="p">,</span><span class="mi">217</span><span class="p">,</span><span class="mi">200</span><span class="p">),(</span><span class="mi">44</span><span class="p">,</span><span class="mi">140</span><span class="p">,</span><span class="mi">153</span><span class="p">),(</span><span class="mi">50</span><span class="p">,</span><span class="mi">103</span><span class="p">,</span><span class="mi">113</span><span class="p">),(</span><span class="mi">40</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">75</span><span class="p">),(</span><span class="mi">147</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">33</span><span class="p">),(</span><span class="mi">208</span><span class="p">,</span><span class="mi">227</span><span class="p">,</span><span class="mi">127</span><span class="p">),(</span><span class="mi">221</span><span class="p">,</span><span class="mi">185</span><span class="p">,</span><span class="mi">103</span><span class="p">),(</span><span class="mi">209</span><span class="p">,</span><span class="mi">96</span><span class="p">,</span><span class="mi">61</span><span class="p">),(</span><span class="mi">34</span><span class="p">,</span><span class="mi">29</span><span class="p">,</span><span class="mi">35</span><span class="p">),(</span><span class="mi">97</span><span class="p">,</span><span class="mi">87</span><span class="p">,</span><span class="mi">113</span><span class="p">),(</span><span class="mi">81</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">99</span><span class="p">),(</span><span class="mi">77</span><span class="p">,</span><span class="mi">83</span><span class="p">,</span><span class="mi">130</span><span class="p">),(</span><span class="mi">202</span><span class="p">,</span><span class="mi">207</span><span class="p">,</span><span class="mi">133</span><span class="p">),(</span><span class="mi">140</span><span class="p">,</span><span class="mi">186</span><span class="p">,</span><span class="mi">128</span><span class="p">),(</span><span class="mi">101</span><span class="p">,</span><span class="mi">142</span><span class="p">,</span><span class="mi">156</span><span class="p">)]</span>
+
+<span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Windows&quot;</span><span class="p">:</span>
+    <span class="n">SCALEFACTOR</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">windll</span><span class="o">.</span><span class="n">shcore</span><span class="o">.</span><span class="n">GetScaleFactorForDevice</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span>
+<span class="k">elif</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Darwin&quot;</span><span class="p">:</span> <span class="c1"># if OS is mac</span>
+    <span class="n">SCALEFACTOR</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">elif</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span> <span class="c1"># if OS is linux</span>
+    <span class="n">SCALEFACTOR</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">else</span><span class="p">:</span> <span class="c1"># if OS can&#39;t be detected</span>
+    <span class="n">SCALEFACTOR</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">format_str</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">-%m-%Y&#39;</span>  <span class="c1"># The format</span>
+
+<span class="n">monitor</span> <span class="o">=</span> <span class="n">get_monitors</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">HEIGHT</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">height</span>
+<span class="n">WIDTH</span> <span class="o">=</span> <span class="n">monitor</span><span class="o">.</span><span class="n">width</span>
+
+<div class="viewcode-block" id="dynamic_curve"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.DynamicLine.dynamic_curve">[docs]</a><span class="k">class</span> <span class="nc">dynamic_curve</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">sub_plot</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Example class to create custom data animations this class is derived from the sub_plot class</span>
+
+<span class="sd">            :param canvas: tkinter canvas to draw the graph to</span>
+<span class="sd">            :type canvas: tkinter.Canvas</span>
+
+<span class="sd">            :param width: width of the plot in pixels, default depends on screen resolution</span>
+<span class="sd">            :type width: int</span>
+
+<span class="sd">            :param height: height of the plot in pixels, default depends on screen resolution</span>
+<span class="sd">            :type height: int</span>
+
+<span class="sd">            :param x_pos: the x location of the top left pixel in this plot, default depends on screen resolution</span>
+<span class="sd">            :type x_pos: int</span>
+
+<span class="sd">            :param y_pos: the y location of the top left pixel in this plot, default depends on screen resolution</span>
+<span class="sd">            :type y_pos: int</span>
+
+<span class="sd">            :param df: pandas dataframe that holds the data</span>
+<span class="sd">            :type df: pandas.DataFrame</span>
+
+<span class="sd">            :param color: list or tuple holding rgb color value for the line, default is (31, 119, 180)</span>
+<span class="sd">            :type colors: list</span>
+
+<span class="sd">            :param font_color: font color, default is (0,0,0)</span>
+<span class="sd">            :type font_color: tuple of length 3 with integers</span>
+
+<span class="sd">            :param font_size: font size, in pixels</span>
+<span class="sd">            :type font_size: int</span>
+
+<span class="sd">            :param unit: unit of the values visualized, default is &quot;&quot;</span>
+<span class="sd">            :type unit: str</span>
+
+<span class="sd">            :param text_font: selected font, defaults to Microsoft JhengHei UI</span>
+<span class="sd">            :type text_font: str</span>
+
+<span class="sd">            :param marker_size: size of the markers</span>
+<span class="sd">            :type marker_size: int</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="dynamic_curve.draw"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.DynamicLine.dynamic_curve.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function gets executed only once at the start of the animation&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_min_value</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;marker_size&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">marker_size</span> <span class="o">=</span> <span class="mi">15</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">31</span><span class="p">,</span> <span class="mi">119</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+        <span class="c1"># get the data for the given time step</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_for_frame</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+
+        <span class="c1"># create a dictionary to hold all graph_element objects</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph_elements</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># create axis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="n">Axis</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="n">canvas</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_ticks</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span><span class="p">,</span>
+                               <span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">*</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">*</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">allow_decrease</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                               <span class="n">is_date</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">font_size</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">,</span> <span class="n">ticks_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                               <span class="n">unit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="nb">max</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+        <span class="c1"># create line object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_line</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">cv</span><span class="o">.</span><span class="n">_from_rgb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker_size</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
+
+        <span class="c1"># loop over all values in the row</span>
+        <span class="n">spacing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="n">x_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span> <span class="o">+</span> <span class="n">spacing</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph_elements</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph_element</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">x_pos</span><span class="p">,</span> <span class="n">canvas</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">d</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span> <span class="n">chart</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_font</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text_font</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">font_size</span><span class="p">)</span>
+            <span class="n">x_pos</span> <span class="o">=</span> <span class="n">x_pos</span> <span class="o">+</span> <span class="n">spacing</span></div>
+
+<div class="viewcode-block" id="dynamic_curve.update"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.DynamicLine.dynamic_curve.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function gets executed every frame&quot;&quot;&quot;</span>
+        <span class="c1"># get the data for the given time step</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_for_frame</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">min</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_min_value</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="nb">max</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="c1"># loop over all values in the row</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">graph_elements</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_line</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="dynamic_curve.update_line"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.DynamicLine.dynamic_curve.update_line">[docs]</a>    <span class="k">def</span> <span class="nf">update_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">[</span><span class="n">coord</span> <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph_elements</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">coords</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">line</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span></div></div>
+<div class="viewcode-block" id="graph_element"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.DynamicLine.graph_element">[docs]</a><span class="k">class</span> <span class="nc">graph_element</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">canvas</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">colors</span><span class="o">=</span><span class="p">{},</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">chart</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">text_font</span><span class="o">=</span><span class="s2">&quot;Microsoft JhengHei UI&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">canvas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unite</span> <span class="o">=</span> <span class="n">unit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">font_color</span> <span class="o">=</span> <span class="n">font_color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">font_size</span> <span class="o">=</span> <span class="n">font_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">chart</span> <span class="o">=</span> <span class="n">chart</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="n">colors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_font</span> <span class="o">=</span> <span class="n">text_font</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">pos</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">colors</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">_from_rgb</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_set_color</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_color</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_set_color</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">_from_rgb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
+
+<div class="viewcode-block" id="graph_element.draw"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.DynamicLine.graph_element.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># here we can add the options to draw objects to the screen using standard tkinter functions</span>
+        <span class="c1"># in reality you want the size and position of the elements to be derived from the value</span>
+        <span class="n">font_obj</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text_font</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font_size</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">marker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_oval</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">cv</span><span class="o">.</span><span class="n">_from_rgb</span><span class="p">((</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">)),</span> <span class="n">outline</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">y_pos</span> <span class="o">+</span> <span class="mf">0.85</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="s2">&quot;nw&quot;</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="n">font_obj</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">cv</span><span class="o">.</span><span class="n">_from_rgb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">),</span> <span class="n">angle</span><span class="o">=-</span><span class="mi">35</span><span class="p">)</span></div>
+        <span class="c1"># self.value = self.canvas.create_text(0, 0, text=cv.format_value(value), anchor=&quot;w&quot;, font=font_obj, fill=cv._from_rgb(self.font_color))</span>
+
+<div class="viewcode-block" id="graph_element.update"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.DynamicLine.graph_element.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="c1"># here we can update the size and location of the elements on the screen by using standard tkinter functions</span>
+        <span class="c1"># in reality you want the size and position of the elements to be derived from the value</span>
+        <span class="c1"># self.canvas.coords(self.label, 10, 10)</span>
+
+        <span class="c1"># we can also update the value</span>
+        <span class="c1"># self.canvas.itemconfig(self.value, text=cv.format_value(value))</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">y_pos</span><span class="o">+</span><span class="mf">0.85</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">height</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">axis</span><span class="o">.</span><span class="n">calc_positions</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">marker</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">marker_size</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">marker_size</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">marker_size</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">chart</span><span class="o">.</span><span class="n">marker_size</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coords</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">sjvisualizer</span> <span class="kn">import</span> <span class="n">Canvas</span><span class="p">,</span> <span class="n">DataHandler</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">DataHandler</span><span class="o">.</span><span class="n">DataHandler</span><span class="p">(</span><span class="n">excel_file</span><span class="o">=</span><span class="s2">&quot;data/Area Dev.xlsx&quot;</span><span class="p">,</span> <span class="n">number_of_frames</span><span class="o">=</span><span class="mi">60</span><span class="o">*</span><span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">df</span>
+
+    <span class="n">canvas</span> <span class="o">=</span> <span class="n">Canvas</span><span class="o">.</span><span class="n">canvas</span><span class="p">()</span>
+
+    <span class="n">dc</span> <span class="o">=</span> <span class="n">dynamic_curve</span><span class="p">(</span><span class="n">canvas</span><span class="o">=</span><span class="n">canvas</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">font_color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">add_sub_plot</span><span class="p">(</span><span class="n">dc</span><span class="p">)</span>
+
+    <span class="n">canvas</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">fps</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Sjoerd Tilmans.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

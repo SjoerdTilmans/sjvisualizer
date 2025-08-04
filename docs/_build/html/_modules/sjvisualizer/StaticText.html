@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>sjvisualizer.StaticText &mdash; sjvisualizer 0.0.13 documentation</title>
+  <title>sjvisualizer.StaticText &mdash; sjvisualizer 0.0.15beta documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -169,6 +169,12 @@
 <span class="sd">        :param font_color: font color, default is (0,0,0)</span>
 <span class="sd">        :type font_color: tuple of length 3 with integers</span>
 
+<span class="sd">        :param font_size: font size</span>
+<span class="sd">        :type font_size: int</span>
+
+<span class="sd">        :param text_font: selected font, defaults to Microsoft JhengHei UI</span>
+<span class="sd">        :type text_font: str</span>
+
 <span class="sd">        :param angle: rotation of the text by number of degrees</span>
 <span class="sd">        :type angle: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -177,15 +183,25 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;angle&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">angle</span> <span class="o">=</span> <span class="mi">0</span>
 
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">height_is_set</span><span class="p">:</span>
+            <span class="n">font_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.65</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="n">SCALEFACTOR</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">font_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">font_size</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;text_font&quot;</span><span class="p">):</span>
+            <span class="n">text_font</span> <span class="o">=</span> <span class="n">text_font</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">text_font</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_font</span>
+
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;align&quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">align</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">text_font</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.65</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="n">SCALEFACTOR</span><span class="p">),</span> <span class="n">underline</span><span class="o">=</span><span class="n">UNDERLINE</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">text_font</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">font_size</span><span class="p">,</span> <span class="n">underline</span><span class="o">=</span><span class="n">UNDERLINE</span><span class="p">,</span>
                                       <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span><span class="p">,</span>
                                                     <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">cv</span><span class="o">.</span><span class="n">_from_rgb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">),</span>
                                                     <span class="n">anchor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">anchor</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">text_font</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.65</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="n">SCALEFACTOR</span><span class="p">),</span> <span class="n">underline</span><span class="o">=</span><span class="n">UNDERLINE</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">text_font</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">font_size</span><span class="p">,</span> <span class="n">underline</span><span class="o">=</span><span class="n">UNDERLINE</span><span class="p">,</span>
                                       <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span><span class="p">,</span>
                                                     <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">cv</span><span class="o">.</span><span class="n">_from_rgb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">),</span>
@@ -193,11 +209,23 @@
 
 
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">text_font</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">0.65</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">/</span> <span class="n">SCALEFACTOR</span><span class="p">),</span> <span class="n">underline</span><span class="o">=</span><span class="n">UNDERLINE</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="n">font</span><span class="o">.</span><span class="n">Font</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">text_font</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">font_size</span><span class="p">,</span> <span class="n">underline</span><span class="o">=</span><span class="n">UNDERLINE</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">create_text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">font</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">cv</span><span class="o">.</span><span class="n">_from_rgb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">font_color</span><span class="p">),</span> <span class="n">anchor</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">anchor</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="static_text.update"><a class="viewcode-back" href="../../sjvisualizer.html#sjvisualizer.StaticText.static_text.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">tag_raise</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">sjvisualizer</span> <span class="kn">import</span> <span class="n">Canvas</span><span class="p">,</span> <span class="n">DataHandler</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">DataHandler</span><span class="o">.</span><span class="n">DataHandler</span><span class="p">(</span><span class="n">excel_file</span><span class="o">=</span><span class="s2">&quot;data/Neg Number Bar Dev.xlsx&quot;</span><span class="p">,</span> <span class="n">number_of_frames</span><span class="o">=</span><span class="mf">0.25</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span><span class="o">.</span><span class="n">df</span>
+
+    <span class="n">canvas</span> <span class="o">=</span> <span class="n">Canvas</span><span class="o">.</span><span class="n">canvas</span><span class="p">()</span>
+
+    <span class="n">bar_chart</span> <span class="o">=</span> <span class="n">static_text</span><span class="p">(</span><span class="n">canvas</span><span class="o">=</span><span class="n">canvas</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">text_font</span><span class="o">=</span><span class="s2">&quot;Georgia&quot;</span><span class="p">)</span>
+    <span class="n">canvas</span><span class="o">.</span><span class="n">add_sub_plot</span><span class="p">(</span><span class="n">bar_chart</span><span class="p">)</span>
+
+    <span class="n">canvas</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">fps</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">record</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
            </div>
@@ -207,7 +235,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Sjoerd Tilmans.</p>
+    <p>&#169; Copyright 2025, Sjoerd Tilmans.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

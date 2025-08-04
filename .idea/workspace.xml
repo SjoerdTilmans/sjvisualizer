@@ -26,20 +26,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.Catalogue (1).executor&quot;: &quot;Run&quot;,
-    &quot;Python.Catalogue.executor&quot;: &quot;Run&quot;,
-    &quot;Python.bar_example_advanced.executor&quot;: &quot;Run&quot;,
-    &quot;Python.basic_world_map.executor&quot;: &quot;Run&quot;,
-    &quot;Python.dev_world_map.executor&quot;: &quot;Run&quot;,
-    &quot;Python.plt.executor&quot;: &quot;Run&quot;,
-    &quot;Python.plt_worldmap.executor&quot;: &quot;Run&quot;,
-    &quot;Python.smoke_test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.Bubble.executor": "Run",
+    "Python.Catalogue (1).executor": "Run",
+    "Python.Catalogue.executor": "Run",
+    "Python.DynamicMatrix.executor": "Run",
+    "Python.Histogram.executor": "Run",
+    "Python.XYLine.executor": "Run",
+    "Python.bar_example_advanced.executor": "Run",
+    "Python.basic_world_map.executor": "Run",
+    "Python.dev_world_map.executor": "Run",
+    "Python.plt.executor": "Run",
+    "Python.plt_worldmap.executor": "Run",
+    "Python.smoke_test.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Sjoerd Tilmans\OneDrive\Documenten\GitHub\sjvisualizer\Examples" />

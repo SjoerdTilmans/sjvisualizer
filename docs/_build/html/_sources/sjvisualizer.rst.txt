@@ -2,11 +2,31 @@
    :members:
    :undoc-members:
 
+.. automodule:: sjvisualizer.DynamicMatrix
+   :members:
+   :undoc-members:
+
+.. automodule:: sjvisualizer.Histogram
+   :members:
+   :undoc-members:
+
+.. automodule:: sjvisualizer.DynamicLine
+   :members:
+   :undoc-members:
+
 .. automodule:: sjvisualizer.Canvas
    :members:
    :undoc-members:
 
+.. automodule:: sjvisualizer.Bubble
+   :members:
+   :undoc-members:
+
 .. automodule:: sjvisualizer.BarRace
+   :members:
+   :undoc-members:
+
+.. automodule:: sjvisualizer.BarRace_legacy
    :members:
    :undoc-members:
   

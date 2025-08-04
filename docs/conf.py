@@ -12,9 +12,9 @@ sys.path.insert(0, os.path.abspath(".."))
 import sjvisualizer
 
 project = 'sjvisualizer'
-copyright = '2023, Sjoerd Tilmans'
+copyright = '2025, Sjoerd Tilmans'
 author = 'Sjoerd Tilmans'
-release = '0.0.13'
+release = '0.0.15'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
