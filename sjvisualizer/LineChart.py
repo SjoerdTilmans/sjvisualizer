@@ -107,6 +107,9 @@ class line_chart(cv.sub_plot):
             :param font_size: font size, in pixels
             :type font_size: int
 
+            :param text_font: selected font, defaults to Microsoft JhengHei UI
+            :type text_font: str
+
             :param draw_points: if set to True, the script will draw markers for each line, this may impact performance
             :type draw_points: boolean
 
@@ -115,11 +118,18 @@ class line_chart(cv.sub_plot):
 
             :parem events: dictionary to add additional context to the line chart. For example to indicate events in time. Example:
             events = {
-                "{EVENT NAME}": ["START DATE DD/MM/YYYY", "END DATE DD/MM/YYYY"],
-                "Event 1": ["28/01/2017", "28/01/2018"],
-                "Event 2": ["28/01/2019", "28/01/2020"],
-                "Last event": ["28/05/2020", "28/01/2021"]
-            }
+                "Event 1": {
+                    "start_date": "01/01/1980",
+                    "end_date": "01/01/1981",
+                    "color": (255,0,0),
+                    "label": "Latin American Debt Crisis"
+                },
+                "Global Financial Crisis": {
+                    "start_date": "30/06/2007",
+                    "end_date": "31/12/2009",
+                    "color": (0,255,0)
+                    "color": (0,255,0)
+                }
             :type events: dict
 
             :param event_color: color of the event indication, default is (225,225,225)
@@ -134,6 +144,14 @@ class line_chart(cv.sub_plot):
             :param unit: unit of the values visualized, default is ""
             :type unit: str
 
+            :param y_lims: initial x-axis limits
+            :type y_lims: list(float)
+
+            :param axis_line_width: line width for the axis and ticks
+            :type axis_line_width: int
+
+            :param decimal_places: number of decimal places to be displayed on the y-axis
+            :type decimal_places: int
             """
 
     def draw(self, time):
@@ -178,19 +196,37 @@ class line_chart(cv.sub_plot):
         if not hasattr(self, "draw_legend"):
             self.draw_legend = False
 
+        if not hasattr(self, "y_lims"):
+            self.y_lims = None
+
+        if not hasattr(self, "axis_line_width"):
+            self.axis_line_width = 3
+
+        if not hasattr(self, "text_font"):
+            text_font = text_font
+        else:
+            text_font = self.text_font
+
+        if not hasattr(self, "decimal_places"):
+            self.decimal_places = 0
+
         # making room for legend
         if self.sjcanvas:
             self.x_pos = self.x_pos - self.width / 10
 
         data = self._get_data_for_frame(time)
 
-        self.axis1 = Axis.axis(canvas=self.canvas, n=self.x_ticks, orientation="horizontal", x=self.x_pos, y=self.y_pos+self.height, length=self.width, allow_decrease=False, is_date=True, time_indicator=self.time_indicator, font_size=self.font_size, color=self.font_color)
+        self.axis1 = Axis.axis(canvas=self.canvas, text_font=text_font, line_tickness=self.axis_line_width, n=self.x_ticks, orientation="horizontal", x=self.x_pos, y=self.y_pos+self.height, length=self.width, allow_decrease=False, is_date=True, time_indicator=self.time_indicator, font_size=self.font_size, color=self.font_color)
 
         self.min_time = time
         self.axis1.draw(min=self.min_time, max=self.min_time)
 
-        self.axis2 = Axis.axis(canvas=self.canvas, n=self.y_ticks, orientation="vertical", x=self.x_pos, y=self.y_pos+self.height, length=self.height, width=self.width, allow_decrease=False, is_date=False, font_size=self.font_size, color=self.font_color, ticks_only=False, unit=self.unit, tick_prefix=self.tick_prefix)
-        self.axis2.draw(min=min(data), max=max(data))
+        self.axis2 = Axis.axis(canvas=self.canvas, decimal_places=self.decimal_places, text_font=text_font, line_tickness=self.axis_line_width, n=self.y_ticks, orientation="vertical", x=self.x_pos, y=self.y_pos+self.height, length=self.height, width=self.width, allow_decrease=False, is_date=False, font_size=self.font_size, color=self.font_color, ticks_only=False, unit=self.unit, tick_prefix=self.tick_prefix)
+
+        if self.y_lims:
+            self.axis2.draw(min=self.y_lims[0], max=self.y_lims[1])
+        else:
+            self.axis2.draw(min=min(data), max=max(data))
 
         self.lines = {}
 
@@ -220,7 +256,15 @@ class line_chart(cv.sub_plot):
 
         self.event_obj = []
         for name, dates in self.events.items():
-            self.event_obj.append(event(name=name, canvas=self.canvas, start_date=dates[0], end_date=dates[1], font_color=self.font_color, font_size=self.font_size, parent=self, event_color=self.event_color))
+            if not "color" in dates:
+                dates["color"] = (150, 150, 150)
+            if "label" in dates:
+                self.event_obj.append(
+                    event(name=dates["label"], canvas=self.canvas, start_date=dates["start_date"], end_date=dates["end_date"],
+                          font_color=self.font_color, font_size=self.font_size, parent=self,
+                          event_color=dates["color"]))
+            else:
+                self.event_obj.append(event(name=name, canvas=self.canvas, start_date=dates["start_date"], end_date=dates["end_date"], font_color=self.font_color, font_size=self.font_size, parent=self, event_color=dates["color"]))
 
     def update(self, time):
         self.max_time = time
@@ -249,7 +293,7 @@ class line_chart(cv.sub_plot):
 
 class event():
 
-    def __init__(self, name=None, canvas=None, start_date=None, end_date=None, font_color=(0,0,0), font_size=12, text_font="Interstate", parent=None, event_color=(255, 255, 255)):
+    def __init__(self, name=None, canvas=None, start_date=None, end_date=None, font_color=(0,0,0), font_size=12, text_font="Microsoft JhengHei UI", parent=None, event_color=(255, 255, 255)):
         self.name = name
         self.canvas = canvas
         self.start_date = datetime.datetime.strptime(start_date, "%d/%m/%Y")
@@ -304,10 +348,10 @@ class event():
         text_width = self.canvas.bbox(self.label)[2] - self.canvas.bbox(self.label)[0]
         if (pos1 + pos2) / 2 + text_width/2 > self.parent.y_pos + self.parent.width:
             self.canvas.itemconfig(self.label, anchor="se")
-            return self.parent.y_pos + self.parent.width
-        elif (pos1 + pos2) / 2 - text_width/2 < self.parent.y_pos:
+            return self.parent.x_pos + self.parent.width
+        elif (pos1 + pos2) / 2 - text_width/2 < self.parent.x_pos:
             self.canvas.itemconfig(self.label, anchor="sw")
-            return self.parent.y_pos
+            return self.parent.x_pos
         self.canvas.itemconfig(self.label, anchor="s")
         return (pos1 + pos2) / 2
 
@@ -433,3 +477,15 @@ class line():
 
         self.points = []
         self.draw_points = False
+
+if __name__ == "__main__":
+    from sjvisualizer import Canvas, DataHandler
+
+    df = DataHandler.DataHandler(excel_file="data/Neg Number Bar Dev.xlsx", number_of_frames=0.25*60*60).df
+
+    canvas = Canvas.canvas()
+
+    line_chart = line_chart(canvas=canvas, text="test", df=df, font_size=50, text_font="Georgia")
+    canvas.add_sub_plot(line_chart)
+
+    canvas.play(fps=60, record=False)

@@ -3,13 +3,13 @@ from sjvisualizer.Canvas import *
 from tkinter import *
 from PIL import Image
 import io
-from tkinter import font
 import datetime
 import time
 import math
 from PIL import Image, ImageTk
 import copy
 import pandas as pd
+from tkinter import font
 import random
 import operator
 import os
@@ -45,21 +45,6 @@ elif platform.system() == "Linux": # if OS is linux
 else: # if OS can't be detected
     SCALEFACTOR = 1
 
-min_slice = 0.03
-min_slice_image = 0.055
-min_slice_percentage_display = 0.055
-decimal_places = 2
-text_font = "Microsoft JhengHei UI"
-min_color = 20
-max_color = 225
-UNDERLINE = 0
-LINE_END_SPACING = 25
-BUBBLE_CHART_INCREMENTS = 20
-MAX_A = 4
-BUBBLE_PICTURE_SIZE = 0.2
-MIN_BUBBLE_DISTANCE = 0
-MIN_BUBBLE_FONT = 10
-BUBBLE_TOP = 20 # number of bubbles to display
 format_str = '%d-%m-%Y'  # The format
 
 monitor = get_monitors()[0]
@@ -105,7 +90,11 @@ class empty(cv.sub_plot):
             :type font_size: int
 
             :param unit: unit of the values visualized, default is ""
-            :type unit: str"""
+            :type unit: str
+
+            :param text_font: selected font, defaults to Microsoft JhengHei UI
+            :type text_font: str
+            """
 
     def draw(self, time):
         """This function gets executed only once at the start of the animation"""
@@ -117,7 +106,7 @@ class empty(cv.sub_plot):
 
         # loop over all values in the row
         for i, (name, d) in enumerate(data.items()):
-            self.graph_elements[name] = graph_element(name=name, canvas=self.canvas, value=d, unit=self.unit, font_color=self.font_color, colors=self.colors, chart=self)
+            self.graph_elements[name] = graph_element(name=name, canvas=self.canvas, value=d, unit=self.unit, font_color=self.font_color, colors=self.colors, chart=self, text_font=self.text_font, font_size=self.font_size)
 
     def update(self, time):
         """This function gets executed every frame"""
@@ -130,7 +119,7 @@ class empty(cv.sub_plot):
 
 class graph_element():
 
-    def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors={}, font_size=12, chart=None):
+    def __init__(self, name=None, canvas=None, value=0, unit=None, font_color=(0,0,0), colors={}, font_size=12, chart=None, text_font="Microsoft JhengHei UI"):
         self.name = name
         self.canvas = canvas
         self.unite = unit
@@ -138,6 +127,7 @@ class graph_element():
         self.font_size = font_size
         self.chart = chart
         self.colors = colors
+        self.text_font = text_font
 
         if isinstance(colors, dict):
             if name in colors:
@@ -163,9 +153,10 @@ class graph_element():
     def draw(self, value):
         # here we can add the options to draw objects to the screen using standard tkinter functions
         # in reality you want the size and position of the elements to be derived from the value
-        self.square = self.canvas.create_rectangle(50, 50, 500, 500)
-        self.label = self.canvas.create_text(0, 0, text=self.name, anchor="w")
-        self.value = self.canvas.create_text(0, 0, text=cv.format_value(value), anchor="w")
+        font_obj = font.Font(family=self.text_font, size=int(self.font_size / SCALEFACTOR))
+        self.square = self.canvas.create_rectangle(50, 50, 500, 500, fill=self.color, outline="")
+        self.label = self.canvas.create_text(0, 0, text=self.name, anchor="w", font=font_obj, fill=cv._from_rgb(self.font_color))
+        self.value = self.canvas.create_text(0, 0, text=cv.format_value(value), anchor="w", font=font_obj, fill=cv._from_rgb(self.font_color))
 
     def update(self, value):
         # here we can update the size and location of the elements on the screen by using standard tkinter functions
@@ -182,7 +173,7 @@ if __name__ == "__main__":
 
     canvas = Canvas.canvas()
 
-    empty_chart = empty(canvas=canvas, df=df)
+    empty_chart = empty(canvas=canvas, df=df, font_size=40, font_color=(0, 0, 0))
     canvas.add_sub_plot(empty_chart)
 
     canvas.play()

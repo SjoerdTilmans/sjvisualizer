@@ -100,8 +100,12 @@ class canvas():
     """Canvas to which all the graphs will be drawn
 
     :param bg: Background color in RGB, defaults to (255, 255, 255) (white)
-    :type bg: tuple of length 3 with integers"""
-    def __init__(self, width=None, height=None, bg=(255, 255, 255), colors={}):
+    :type bg: tuple of length 3 with integers
+
+    :param include_logo: Should the "Made with SJVisualizer" logo be included?, defaults to True
+    :type include_logo: bool
+    """
+    def __init__(self, width=None, height=None, bg=(255, 255, 255), colors={}, include_logo=True):
         """
 
 
@@ -122,6 +126,8 @@ class canvas():
         self.canvas = Canvas(self.tk, width=width, height=height, bg=_from_rgb(bg))
         self.canvas.config(highlightthickness=0)
         self.tk.attributes("-fullscreen", True)
+
+        self.include_logo = include_logo
 
         self.colors = colors
 
@@ -189,6 +195,10 @@ class canvas():
             for sub in self.sub_canvas:
                 if not sub.df is None:
                     df = sub.df
+                elif hasattr(self, "df_x") and not sub.df_x is None:
+                    df = sub.df_x
+                elif hasattr(self, "df_y") and not sub.df_y is None:
+                    df = sub.df_y
 
         # prepare empty list to store animation frames
         if record:
@@ -196,7 +206,8 @@ class canvas():
             fourc = cv2.VideoWriter_fourcc(*"mp4v")
             capture_video = cv2.VideoWriter(file_name, fourc, fps, (width, height))
 
-        self._add_sj_logo()
+        if self.include_logo:
+            self._add_sj_logo()
 
         # main loop of the animation
         for i, date_time in enumerate(df.index):
@@ -320,18 +331,27 @@ class sub_plot():
     :param font_color: font color
     :type font_color: tuple of length 3 with integers
     """
-    def __init__(self, canvas=None, width=None, height=None, x_pos=None, y_pos=None, start_time=None, text=None, df=None, multi_color_df=None, anchor="c", sort=True, colors={}, root=None, display_percentages=True, display_label=True, title=None, invert=False, origin="s", display_value=True, font_color=(0,0,0), back_ground_color=(255,255,255), events={}, time_indicator="year", number_of_bars=None, unit="", x_ticks = 4, y_ticks = 4, log_scale=False, only_show_latest_event=True, allow_decrease=True, format="Europe", draw_points=True, area=True, color_bar_color=[[100, 100, 100], [255, 0, 0]], **kwargs):
+    def __init__(self, canvas=None, width=None, height=None, x_pos=None, y_pos=None, start_time=None, text=None, df=None, multi_color_df=None, anchor="c", sort=True, colors={}, root=None, display_percentages=True, display_label=True, title=None, invert=False, origin="s", display_value=True, font_color=(0,0,0), back_ground_color=(255,255,255), events={}, time_indicator="year", number_of_bars=None, unit="", x_ticks = 4, y_ticks = 4, log_scale=False, only_show_latest_event=True, allow_decrease=True, format="Europe", draw_points=True, area=True, font_size=25, color_bar_color=[[100, 100, 100], [255, 0, 0]], text_font="Microsoft JhengHei UI", **kwargs):
         """
 
         """
+        self.__dict__.update(kwargs)
         if width == None:
             self.width = 0.65 * WIDTH
         else:
             self.width = width
 
+        if not isinstance(df, pd.DataFrame):
+            if hasattr(self, "df_x"):
+                df = self.df_x
+            elif hasattr(self, "df_y"):
+                df = self.df_y
+
         if height == None:
             self.height = 0.65 * HEIGHT
+            self.height_is_set = False
         else:
+            self.height_is_set = True
             self.height = height
 
         if not start_time and isinstance(df, pd.DataFrame):
@@ -349,9 +369,7 @@ class sub_plot():
 
         self.time_indicator = time_indicator
 
-        if hasattr(self, "decimal_places"):
-            self.decimal_places = decimal_places
-        else:
+        if not hasattr(self, "decimal_places"):
             self.decimal_places = decimal_places
 
         self.allow_decrease = allow_decrease
@@ -369,6 +387,8 @@ class sub_plot():
         self.root = root
         self.invert = invert
         self.origin = origin
+        self.font_size = font_size
+        self.text_font = text_font
 
         self.format = format
 
@@ -406,8 +426,6 @@ class sub_plot():
         self.sort = sort
 
         self.unit = unit
-
-        self.__dict__.update(kwargs)
 
         self.x_ticks = x_ticks
         self.y_ticks = y_ticks
@@ -500,17 +518,17 @@ def format_date(time, time_indicator, format="Europe"):
 
     return text
 
-def format_value(number, decimal=3):
+def format_value(number, decimal=0):
     units = ['k', 'm', 'b', 't']
     unit_index = 0
 
-    while number >= 1000 and unit_index < len(units):
+    while abs(number) >= 1000 and unit_index < len(units):
         number /= 1000.0
         unit_index += 1
 
-    formatted_number = "{:.1f}".format(number).rstrip('.')
+    formatted_number = "{:.{}f}".format(number, decimal).rstrip('.')
 
-    formatted_number = formatted_number.rstrip('0')
+    # formatted_number = formatted_number.rstrip('0')
 
     if formatted_number.endswith('.'):
         formatted_number = formatted_number[:-1]

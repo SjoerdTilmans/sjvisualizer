@@ -134,7 +134,11 @@ Made with sjvisualizer, the open-source data animation library for Python
 
 ## Support this project
 If you like this project, please concider supporting me using PayPal [Buy me a Coffee](https://www.buymeacoffee.com/sjoerdtilmans).
-    
+
+## SJVisualizer Supporters
+
+Do you like what we are doing and want to support this project, get in touch at info@sjdataviz.com
+
 ## Contributing
 Contributions are always welcome! A couple of ideas to contribute:
 - Improve documentation of this project. I have been thinking of setting up a readthedocs page.

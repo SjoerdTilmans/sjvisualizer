@@ -2,12 +2,18 @@ LICENSE
 README.md
 setup.py
 sjvisualizer/AreaChart.py
+sjvisualizer/AreaPlot.py
 sjvisualizer/Axis.py
 sjvisualizer/BarRace.py
+sjvisualizer/BarRace_legacy.py
+sjvisualizer/Bubble.py
 sjvisualizer/Canvas.py
 sjvisualizer/DataHandler.py
 sjvisualizer/Date.py
+sjvisualizer/DynamicLine.py
+sjvisualizer/DynamicMatrix.py
 sjvisualizer/Empty.py
+sjvisualizer/Histogram.py
 sjvisualizer/Legend.py
 sjvisualizer/LineChart.py
 sjvisualizer/PieRace.py
@@ -16,6 +22,7 @@ sjvisualizer/StaticImage.py
 sjvisualizer/StaticText.py
 sjvisualizer/Total.py
 sjvisualizer/WorldMap.py
+sjvisualizer/XYLine.py
 sjvisualizer/__init__.py
 sjvisualizer/plot.py
 sjvisualizer/world.json

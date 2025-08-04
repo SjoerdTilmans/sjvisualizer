@@ -19,7 +19,7 @@ months = {
 }
 
 class axis():
-    def __init__(self, canvas, x=0, y=0, length=1000, width=1000, orientation="horizontal", n=3, allow_decrease=False, tick_length=0, is_log_scale=False, is_date=False, color=(50,50,50), font_size=20, text_font="Microsoft JhengHei UI", time_indicator="year", line_tickness=3, ticks_only=True, unit="", tick_prefix=""):
+    def __init__(self, canvas, x=0, y=0, length=1000, width=1000, orientation="horizontal", n=3, allow_decrease=False, tick_length=0, is_log_scale=False, is_date=False, color=(50,50,50), font_size=20, text_font="Microsoft JhengHei UI", time_indicator="year", line_tickness=3, ticks_only=True, unit="", tick_prefix="", anchor="s", decimal_places=0):
         self.canvas = canvas
         self.x = x
         self.y = y
@@ -38,13 +38,15 @@ class axis():
         self.width = width
         self.unit = unit
         self.tick_prefix = tick_prefix
+        self.anchor = anchor
+        self.decimal_places = decimal_places
 
         self.min = None
         self.max = None
 
         self.ticks = []
         for i in range(self.n * 3):
-            self.ticks.append(tick(self.canvas, axis=self, length=tick_length, tick_prefix=self.tick_prefix))
+            self.ticks.append(tick(self.canvas, axis=self, length=tick_length, tick_prefix=self.tick_prefix, label_pos=self.anchor))
 
     def draw(self, min=0, max=0):
         self.min = min
@@ -109,7 +111,12 @@ class axis():
             else:
                 if self.time_indicator == "year":
                     tick_values = calculate_nice_ticks(self.min_date, self.max_date, self.n,
-                                                       is_log_scale=self.is_log_scale, time_indicator=True)
+                                                       is_log_scale=self.is_log_scale, time_indicator=self.time_indicator)
+                elif self.time_indicator == "month":
+                    tick_values = calculate_nice_ticks(self.min_date, self.max_date, self.n,
+                                                       is_log_scale=self.is_log_scale,
+                                                       time_indicator=self.time_indicator)
+
                 else:
                     tick_values = calculate_nice_ticks(self.min_date, self.max_date, self.n, is_log_scale=self.is_log_scale)
 
@@ -168,15 +175,22 @@ class tick():
                 t = datetime.datetime(1800,1,1) + datetime.timedelta(days=value)
                 label = cv.format_date(t, self.axis.time_indicator)
             else:
-                label = cv.format_value(value)
+                label = cv.format_value(value, decimal=self.axis.decimal_places)
             if self.axis.orientation == "horizontal":
-                self.canvas.coords(self.line, self.axis.x + pos, self.axis.y - self.length - l, self.axis.x + pos, self.axis.y + 10)
+                if self.label_pos == "s":
+                    self.canvas.coords(self.line, self.axis.x + pos, self.axis.y - self.length - l, self.axis.x + pos, self.axis.y + 10)
+                elif self.label_pos == "n":
+                    self.canvas.coords(self.line, self.axis.x + pos, self.axis.y, self.axis.x + pos,
+                                       self.axis.y + 10 + l)
+                else:
+                    self.canvas.coords(self.line, self.axis.x + pos, self.axis.y - self.length - l, self.axis.x + pos,
+                                       self.axis.y + 10)
                 self.canvas.itemconfig(self.text, text=self.tick_prefix + label + self.axis.unit)
                 if self.label_pos == "s":
                     self.canvas.coords(self.text, self.axis.x + pos, self.axis.y + 11)
                 elif self.label_pos == "n":
                     self.canvas.coords(self.text, self.axis.x + pos, self.axis.y - self.length - 1)
-                    self.canvas.itemconfig(anchor="s")
+                    self.canvas.itemconfig(self.text, anchor="s")
 
             elif self.axis.orientation == "vertical":
                 if l:
@@ -245,16 +259,17 @@ def calculate_nice_ticks(min_val, max_val, num_ticks, is_log_scale=False, time_i
 
         return tick_values
 
-    # if time indicator is set to year
+    # if time indicator is set to year or month
     else:
         if min_val == max_val:
             max_val = min_val + 0.1
-
-        dt = (max_val - min_val)/365.242199
+        if time_indicator == "year":
+            dt = (max_val - min_val) / 365.242199
+        else:
+            dt = (max_val - min_val) / 31
         if is_log_scale:
             min_val = math.log10(min_val)
             max_val = math.log10(max_val)
-
         # Calculate the rough range
         rough_range = dt
 
@@ -291,10 +306,16 @@ def calculate_nice_ticks(min_val, max_val, num_ticks, is_log_scale=False, time_i
         while current_val <= nice_max_val:
             # get the year from the number of days
             # date = datetime.datetime(1800,1,1) + datetime.timedelta(days=current_val * 365.242199 + min_val)
-            tick_values.append(current_val * 365.242199 + min_val)
+            if time_indicator == "year":
+                tick_values.append(current_val * 365.242199 + min_val)
+            else:
+                tick_values.append(current_val * 31 + min_val)
             current_val += nice_tick_incr
 
         if is_log_scale:
             tick_values = [10 ** val for val in tick_values]
+
+        if max_val > 60000:
+            pass
 
         return tick_values

@@ -103,6 +103,12 @@ class static_text(cv.sub_plot):
         :param font_color: font color, default is (0,0,0)
         :type font_color: tuple of length 3 with integers
 
+        :param font_size: font size
+        :type font_size: int
+
+        :param text_font: selected font, defaults to Microsoft JhengHei UI
+        :type text_font: str
+
         :param angle: rotation of the text by number of degrees
         :type angle: float
         """
@@ -111,15 +117,25 @@ class static_text(cv.sub_plot):
         if not hasattr(self, "angle"):
             self.angle = 0
 
+        if self.height_is_set:
+            font_size = int(0.65 * self.height / SCALEFACTOR)
+        else:
+            font_size = self.font_size
+
+        if not hasattr(self, "text_font"):
+            text_font = text_font
+        else:
+            text_font = self.text_font
+
         if hasattr(self, "align"):
             if self.align == "left":
-                self.font = font.Font(family=text_font, size=int(0.65 * self.height / SCALEFACTOR), underline=UNDERLINE,
+                self.font = font.Font(family=text_font, size=font_size, underline=UNDERLINE,
                                       weight="bold")
                 self.text = self.canvas.create_text(self.x_pos, self.height / 2 + self.y_pos,
                                                     text=self.text, font=self.font, fill=cv._from_rgb(self.font_color),
                                                     anchor=self.anchor)
             else:
-                self.font = font.Font(family=text_font, size=int(0.65 * self.height / SCALEFACTOR), underline=UNDERLINE,
+                self.font = font.Font(family=text_font, size=font_size, underline=UNDERLINE,
                                       weight="bold")
                 self.text = self.canvas.create_text(self.width / 2 + self.x_pos, self.height / 2 + self.y_pos,
                                                     text=self.text, font=self.font, fill=cv._from_rgb(self.font_color),
@@ -127,8 +143,20 @@ class static_text(cv.sub_plot):
 
 
         else:
-            self.font = font.Font(family=text_font, size=int(0.65*self.height/ SCALEFACTOR), underline=UNDERLINE, weight="bold")
+            self.font = font.Font(family=text_font, size=font_size, underline=UNDERLINE, weight="bold")
             self.text = self.canvas.create_text(self.width/2 + self.x_pos, self.height/2 + self.y_pos, text=self.text, font=self.font, fill=cv._from_rgb(self.font_color), anchor=self.anchor, angle=self.angle)
 
     def update(self, *args, **kwargs):
         self.canvas.tag_raise(self.text)
+
+if __name__ == "__main__":
+    from sjvisualizer import Canvas, DataHandler
+
+    df = DataHandler.DataHandler(excel_file="data/Neg Number Bar Dev.xlsx", number_of_frames=0.25*60*60).df
+
+    canvas = Canvas.canvas()
+
+    bar_chart = static_text(canvas=canvas, text="test", df=df, font_size=50, text_font="Georgia")
+    canvas.add_sub_plot(bar_chart)
+
+    canvas.play(fps=60, record=False)
