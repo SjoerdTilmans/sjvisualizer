@@ -130,15 +130,8 @@ sjvisualizer is a free and open-source data animation library, please include th
 ```
 Made with sjvisualizer, the open-source data animation library for Python
 ```
-
-
-## Support this project
-<img width="556" height="280" alt="logos-exact_size_vontobel (1)" src="https://github.com/user-attachments/assets/0efa0605-068b-401d-92e8-252c70a09402" />
-
-If you like this project, please concider supporting me using PayPal [Buy me a Coffee](https://www.buymeacoffee.com/sjoerdtilmans).
-
 ## SJVisualizer Supporters
-
+<img width="556" height="280" alt="logos-exact_size_vontobel (1)" src="https://github.com/user-attachments/assets/0efa0605-068b-401d-92e8-252c70a09402" />
 Do you like what we are doing and want to support this project, get in touch at info@sjdataviz.com
 
 ## Contributing
@@ -148,6 +141,9 @@ Contributions are always welcome! A couple of ideas to contribute:
 - Add new chart types. I have uploaded an example skeleton of new chart types in Empty.py, this is a setup that should serve as a good starting point. (https://github.com/SjoerdTilmans/sjvisualizer/blob/main/sjvisualizer/Empty.py)
 
 Before making any changes, please create your own development branch here on GitHub. Once ready submit a pull request and set me as reviewer!
+
+## Support this project
+If you like this project, please concider supporting me using PayPal [Buy me a Coffee](https://www.buymeacoffee.com/sjoerdtilmans).
 
 ## License
 sjvisualizer is released under the MIT License. See the LICENSE file for more details.
