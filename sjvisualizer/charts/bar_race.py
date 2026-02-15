@@ -177,10 +177,13 @@ class bar_race(sub_plot):
                 "bar_area_height": self.height,
             }
         else:
-            base_bottom = max(self.height * 0.12, (self.font_size / SCALEFACTOR) * 2.2)
-            # Rotated labels need a bit more vertical room.
+            # Bottom margin reserved for category labels in vertical mode.
+            # Keep it tight so labels sit close to the bars while still
+            # avoiding clipping at the bottom of the subplot.
+            base_bottom = max(self.height * 0.06, (self.font_size / SCALEFACTOR) * 1.6)
+            # Rotated labels need slightly more room, but avoid overly large gaps.
             if abs(getattr(self, "category_label_angle", 0) or 0) > 0.1:
-                base_bottom *= 1.45
+                base_bottom *= 1.10
             bottom_margin = int(base_bottom)
             bar_area_width = self.width - left_margin
             bar_area_height = self.height - bottom_margin
@@ -398,7 +401,7 @@ class bar:
             0,
             0,
             text=self.name,
-            anchor="e",
+            anchor="ne",
             font=self._font_obj,
             fill=from_rgb(self.font_color),
         )
@@ -520,41 +523,37 @@ class bar:
                     self.canvas.itemconfig(self.value, text=format_value(value, decimal=self.chart.decimal_places) + self.unit)
 
                     # Value label above (positive) or below (negative) the bar end.
-                    if y1 <= y0:
-                        self.canvas.coords(self.value, self.x, top - 8)
-                        self.canvas.itemconfig(self.value, anchor="s")
-                    else:
-                        self.canvas.coords(self.value, self.x, bottom + 8)
-                        self.canvas.itemconfig(self.value, anchor="n")
+                    self.canvas.coords(self.value, self.x, top - 8)
+                    self.canvas.itemconfig(self.value, anchor="s")
 
-                    # Category label in the reserved bottom margin (inside the subplot bbox).
+                    # Category label just below the bars, centered under each bar.
                     bottom_margin = 0
                     if hasattr(self.chart, "_layout"):
                         bottom_margin = int(self.chart._layout.get("bottom_margin", 0) or 0)
-                    # Put labels close to the bottom of the reserved margin.
-                    label_y = axis_y + (bottom_margin * 0.92 if bottom_margin else 14)
+
+                    # Keep labels close to the bars (avoid large empty gaps).
+                    pad = max(20, int((self.chart.font_size / SCALEFACTOR) * 0.35))
+                    label_y = axis_y + pad
 
                     # Rotate category labels to reduce overlap.
                     angle = float(getattr(self.chart, "category_label_angle", 30) or 0)
+
+                    x_anchor = self.x
+                    # Clamp within subplot bounds to reduce clipping at the edges.
+                    if hasattr(self.chart, "x_pos") and hasattr(self.chart, "width"):
+                        x_min = self.chart.x_pos + 2
+                        x_max = self.chart.x_pos + self.chart.width - 2
+                        x_anchor = max(x_min, min(x_anchor, x_max))
+
+                    self.canvas.coords(self.label, x_anchor, label_y)
                     if abs(angle) > 0.1:
-                        # Anchor to the top-right so the label extends down-left.
-                        half = self.bar_height / 2
-                        x_anchor = self.x + half
-                        # Keep within the plot area to reduce clipping.
-                        if hasattr(self.chart, "x_pos") and hasattr(self.chart, "width"):
-                            x_min = self.chart.x_pos + 2
-                            x_max = self.chart.x_pos + self.chart.width - 2
-                            x_anchor = max(x_min, min(x_anchor, x_max))
-                        self.canvas.coords(self.label, x_anchor, label_y)
                         try:
-                            self.canvas.itemconfig(self.label, anchor="ne", angle=angle)
+                            self.canvas.itemconfig(self.label, anchor="e", angle=angle)
                         except Exception:
                             # Older Tk builds may not support angled text.
-                            self.canvas.itemconfig(self.label, anchor="ne")
+                            self.canvas.itemconfig(self.label, anchor="e")
                     else:
-                        self.canvas.coords(self.label, self.x, label_y)
-                        self.canvas.itemconfig(self.label, anchor="n")
-
+                        self.canvas.itemconfig(self.label, anchor="e")
                     if self.img:
                         vb = self.canvas.bbox(self.value)
                         if vb:
