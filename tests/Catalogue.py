@@ -18,8 +18,6 @@ def main(fps = 60, duration = 0.2):
     with open('colors/colors.json') as f:
         colors = json.load(f)
 
-    colors = {}
-
     df = DataHandler.DataHandler(excel_file="data/browsers.xlsx", number_of_frames=number_of_frames).df
 
     canvas = Canvas.canvas()

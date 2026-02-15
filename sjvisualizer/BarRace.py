@@ -124,9 +124,15 @@ class bar_race(cv.sub_plot):
         # create axis
         data = self._get_data_for_frame(time)
         self.axis1 = Axis.axis(canvas=self.canvas, decimal_places=self.decimal_places, n=4, orientation="horizontal", x=self.x_pos + int(1/4 * self.width),
-                  y=self.y_pos, length=self.width - int(1/4 * self.width), allow_decrease=False, is_date=False,
+                  y=self.y_pos - 10, length=self.width - int(1/4 * self.width), allow_decrease=False, is_date=False,
                   font_size=int(self.font_size / SCALEFACTOR / 1.5), color=self.font_color, anchor="n", width=self.height)
-        self.axis1.draw(min=min(data), max=max(data))
+
+        if min(data) > 0:
+            minimum = 0
+        else:
+            minimum = min(data)
+
+        self.axis1.draw(min=minimum, max=max(data))
 
     def update(self, time):
         """This function gets executed every frame"""
@@ -149,7 +155,12 @@ class bar_race(cv.sub_plot):
                 self.graph_elements[name].delete()
 
         # update axis
-        self.axis1.update(min=min(data), max=max(data))
+        if min(data) > 0:
+            minimum = 0
+        else:
+            minimum = min(data)
+
+        self.axis1.update(min=minimum, max=max(data))
 
 
 class bar():
@@ -205,9 +216,10 @@ class bar():
         # here we can add the options to draw objects to the screen using standard tkinter functions
         # in reality you want the size and position of the elements to be derived from the value
         font_obj = font.Font(family=self.text_font, size=int(self.font_size / SCALEFACTOR))
+        font_obj_num = font.Font(family=self.text_font, size=int(self.font_size / SCALEFACTOR*0.9))
         self.rect = self.canvas.create_rectangle(50, 50, 500, 500, fill=self.color, outline="")
         self.label = self.canvas.create_text(0, 0, text=self.name, anchor="e", font=font_obj, fill=cv._from_rgb(self.font_color))
-        self.value = self.canvas.create_text(0, 0, text=cv.format_value(value, decimal=self.chart.decimal_places), anchor="w", font=font_obj, fill=cv._from_rgb(self.font_color))
+        self.value = self.canvas.create_text(0, 0, text=cv.format_value(value, decimal=self.chart.decimal_places), anchor="w", font=font_obj_num, fill=cv._from_rgb(self.font_color))
         if self.img:
             self.img_obj = self.canvas.create_image(-1000, -1000, image=self.img, anchor="w")
         self.exists = True

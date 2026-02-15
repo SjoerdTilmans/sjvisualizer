@@ -277,7 +277,7 @@ class area():
         coords.append(self.xaxis.y)
 
         if not self.area:
-            self.area = self.canvas.create_polygon(*coords, width=1, fill=self.color, outline=cv._from_rgb(self.outline_color))
+            self.area = self.canvas.create_polygon(*coords, width=1, fill=self.color, outline="")
         else:
             self.canvas.coords(self.area, *coords)
 
