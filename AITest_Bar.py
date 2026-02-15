@@ -14,7 +14,8 @@ chart = BarRace.bar_race(
     df=df,
     number_of_bars=17,
     colors=colors,
-    title="Hello World!"
+    title="Hello World!",
+    allow_decrease = True
 )
 c.add_sub_plot(chart)
 
