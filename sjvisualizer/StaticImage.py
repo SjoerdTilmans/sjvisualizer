@@ -1,99 +1,139 @@
 from sjvisualizer import Canvas as cv
-from sjvisualizer.Canvas import *
-from tkinter import *
-from PIL import Image
-import io
-from tkinter import font
-import datetime
-import time
-import math
+from sjvisualizer.Canvas import sub_plot  # avoid star import
 from PIL import Image, ImageTk
-import copy
-import pandas as pd
-import random
-import operator
 import os
 import ctypes
-import json
+import platform
 
 from screeninfo import get_monitors
 
-months = {
-    1: "Jan",
-    2: "Feb",
-    3: "Mar",
-    4: "Apr",
-    5: "May",
-    6: "Jun",
-    7: "Jul",
-    8: "Aug",
-    9: "Sept",
-    10: "Oct",
-    11: "Nov",
-    12: "Dec",
-}
 
-random_colors = [(102,155,188),(168,198,134),(243,167,18),(41,51,92),(228,87,46),(255,155,113),(255,253,130),(45,48,71),(237,33,124),(27,153,139),(245,213,71),(219,48,105),(20,70,160),(0,0,200),(0,200,0),(200,0,0),(66,217,200),(44,140,153),(50,103,113),(40,70,75),(147,22,33),(208,227,127),(221,185,103),(209,96,61),(34,29,35),(97,87,113),(81,70,99),(77,83,130),(202,207,133),(140,186,128),(101,142,156)]
-
+# Keep these globals for compatibility with other modules/scripts that might import them
 if platform.system() == "Windows":
     SCALEFACTOR = ctypes.windll.shcore.GetScaleFactorForDevice(0) / 100
-elif platform.system() == "Darwin": # if OS is mac
-    SCALEFACTOR = 1
-elif platform.system() == "Linux": # if OS is linux
-    SCALEFACTOR = 1
-else: # if OS can't be detected
+else:
     SCALEFACTOR = 1
 
-min_slice = 0.03
-min_slice_image = 0.055
-min_slice_percentage_display = 0.055
-decimal_places = 2
-text_font = "Microsoft JhengHei UI Light"
-min_color = 20
-max_color = 225
-UNDERLINE = 0
-LINE_END_SPACING = 25
-BUBBLE_CHART_INCREMENTS = 20
-MAX_A = 4
-BUBBLE_PICTURE_SIZE = 0.2
-MIN_BUBBLE_DISTANCE = 0
-MIN_BUBBLE_FONT = 10
-BUBBLE_TOP = 20 # number of bubbles to display
-format_str = '%d-%m-%Y'  # The format
+try:
+    monitor = get_monitors()[0]
+    HEIGHT = monitor.height
+    WIDTH = monitor.width
+except Exception:
+    WIDTH = 1920
+    HEIGHT = 1080
 
-monitor = get_monitors()[0]
-HEIGHT = monitor.height
-WIDTH = monitor.width
+
+def _normalize_anchor(anchor: str) -> str:
+    """Tk uses 'center' not 'c'. Keep backward compatibility."""
+    if not anchor:
+        return "center"
+    a = str(anchor).lower()
+    if a in ("c", "center"):
+        return "center"
+    return a
+
+
+def _store_tk_image(root, name_prefix: str, img):
+    """Prevent Tk images from being GC'd by storing on the root object."""
+    if root is None:
+        return
+    i = 0
+    safe = (name_prefix or "img").replace(os.sep, "_").replace(".", "_").replace(" ", "_")
+    attr = f"_{safe}_{i}"
+    while hasattr(root, attr):
+        i += 1
+        attr = f"_{safe}_{i}"
+    setattr(root, attr, img)
+
+
+def _resize_image(path: str, target_w, target_h, keep_aspect: bool, allow_upscale: bool):
+    im = Image.open(path)
+    orig_w, orig_h = im.size
+
+    # If nothing specified, keep original size
+    if target_w is None and target_h is None:
+        new_w, new_h = orig_w, orig_h
+
+    elif keep_aspect:
+        # Fit within (target_w, target_h) if both given; otherwise scale by the one provided.
+        if target_w is not None and target_h is not None:
+            scale = min(target_w / orig_w, target_h / orig_h)
+        elif target_w is not None:
+            scale = target_w / orig_w
+        else:
+            scale = target_h / orig_h
+
+        if not allow_upscale:
+            scale = min(scale, 1.0)
+
+        new_w = max(1, int(round(orig_w * scale)))
+        new_h = max(1, int(round(orig_h * scale)))
+
+    else:
+        # Stretch to exact target dimensions (legacy-style “force fit”)
+        if target_w is None:
+            target_w = orig_w
+        if target_h is None:
+            target_h = orig_h
+        new_w, new_h = max(1, int(target_w)), max(1, int(target_h))
+
+    im = im.resize((new_w, new_h), resample=Image.LANCZOS)
+    return im, new_w, new_h
+
 
 class static_image(sub_plot):
     """
     Use this to add static images to your visualization.
 
-    :param canvas: tkinter canvas to draw the graph to
-    :type canvas: tkinter.Canvas
-
-    :param width: width of the image in pixels
-    :type width: int
-
-    :param height: height of the image in pixels
-    :type height: int
-
-    :param x_pos: the x location of the top left pixel of this image
-    :type x_pos: int
-
-    :param y_pos: the y location of the top left pixel of this image
-    :type y_pos: int
-
-    :param file: file location of the image you want to add the canvas, only png files are support
-    :type file: str
-
-    :param on_top: set this to True to always draw this image on top
-    :type on_top: boolean
+    Improvements:
+    - keep_aspect=True properly preserves aspect ratio without needing width==height.
+    - width-only or height-only sizing supported.
+    - position_mode:
+        * "box"   (default): x_pos/y_pos are top-left of a box; image is placed at box center (legacy feel)
+        * "point": x_pos/y_pos are the anchor point directly (new requested behavior)
     """
 
     def draw(self, *args, **kwargs):
-        img = cv.load_image(self.file, self.width, self.height, self.root, self.file)
-        self.img = self.canvas.create_image(self.width/2 + self.x_pos, self.height/2 + self.y_pos, image=img, anchor=self.anchor)
+        # Defaults (chosen to preserve behavior unless user opts in)
+        keep_aspect = getattr(self, "keep_aspect", True)
+        allow_upscale = getattr(self, "allow_upscale", True)
+        position_mode = getattr(self, "position_mode", "box")
+
+        # Use actual pixel width/height now (not the legacy cv.load_image semantics)
+        target_w = getattr(self, "width", None)
+        target_h = getattr(self, "height", None)
+
+        # Some charts set width/height via sub_plot defaults; if user didn't intend that,
+        # they can explicitly pass width/height to control size.
+        if target_w is not None:
+            target_w = int(target_w)
+        if target_h is not None:
+            target_h = int(target_h)
+
+        im, new_w, new_h = _resize_image(self.file, target_w, target_h, keep_aspect, allow_upscale)
+        tk_img = ImageTk.PhotoImage(im)
+
+        # store reference to avoid garbage collection
+        root = getattr(self, "root", None)
+        if root is None:
+            try:
+                root = self.canvas.winfo_toplevel()
+            except Exception:
+                root = None
+        _store_tk_image(root, self.file, tk_img)
+
+        anchor = _normalize_anchor(getattr(self, "anchor", "center"))
+
+        if position_mode == "point":
+            x = self.x_pos
+            y = self.y_pos
+        else:
+            # legacy-style: treat x_pos/y_pos as top-left; place image at center of its own size
+            x = self.x_pos + new_w / 2
+            y = self.y_pos + new_h / 2
+
+        self.img = self.canvas.create_image(x, y, image=tk_img, anchor=anchor)
+        self._tk_img = tk_img  # extra safety: keep on self too
 
     def update(self, *args, **kwargs):
         if hasattr(self, "on_top"):

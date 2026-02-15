@@ -2,14 +2,17 @@ from tkinter import *
 import tkinter
 import sjvisualizer
 from PIL import Image, ImageGrab
+# import pyautogui
+# from mss import mss
 import numpy as np
 import cv2
 import time
 import io
 from tkinter import font
 import datetime
+import time
 import math
-from PIL import ImageTk
+from PIL import Image, ImageTk
 import copy
 import pandas as pd
 import random
@@ -49,7 +52,7 @@ color_palette = [
     (154, 187, 252), (207, 148, 64), (178, 250, 168), (141, 196, 133), (250, 215, 160),
     (229, 81, 69), (119, 215, 246), (162, 38, 98), (205, 215, 169), (98, 162, 125),
     (106, 207, 89), (248, 86, 169), (249, 79, 133), (240, 224, 89), (105, 222, 99),
-    (248, 249, 48), (50, 148, 66), (229, 81, 102), (162, 132, 76), (121, 129, 65),
+    (248, 249, 48), (50, 148, 66), (229, 81, 201), (162, 132, 76), (121, 129, 65),
     (229, 111, 111), (189, 100, 179), (79, 114, 129), (209, 63, 42), (129, 41, 159),
     (129, 92, 41), (158, 116, 45), (55, 162, 192), (79, 141, 76), (110, 129, 59),
     (114, 79, 159), (159, 41, 68), (179, 127, 94), (63, 92, 40), (255, 89, 71),
@@ -64,11 +67,11 @@ color_palette = [
 
 if platform.system() == "Windows":
     SCALEFACTOR = ctypes.windll.shcore.GetScaleFactorForDevice(0) / 100
-elif platform.system() == "Darwin":  # mac
+elif platform.system() == "Darwin": # if OS is mac
     SCALEFACTOR = 1
-elif platform.system() == "Linux":
+elif platform.system() == "Linux": # if OS is linux
     SCALEFACTOR = 1
-else:
+else: # if OS can't be detected
     SCALEFACTOR = 1
 
 min_slice = 0.03
@@ -85,21 +88,15 @@ MAX_A = 4
 BUBBLE_PICTURE_SIZE = 0.2
 MIN_BUBBLE_DISTANCE = 0
 MIN_BUBBLE_FONT = 10
-BUBBLE_TOP = 20  # number of bubbles to display
-format_str = "%d-%m-%Y"
+BUBBLE_TOP = 20 # number of bubbles to display
+format_str = '%d-%m-%Y'  # The format
 FRAMES_PER_VIDEO_WRITE = 10
 
-# Safer monitor detection (won't crash in headless/CI)
-try:
-    monitor = get_monitors()[0]
-    HEIGHT = monitor.height
-    WIDTH = monitor.width
-except Exception:
-    WIDTH = 1920
-    HEIGHT = 1080
+monitor = get_monitors()[0]
+HEIGHT = monitor.height
+WIDTH = monitor.width
 
-
-class canvas:
+class canvas():
     """Canvas to which all the graphs will be drawn
 
     :param bg: Background color in RGB, defaults to (255, 255, 255) (white)
@@ -108,17 +105,23 @@ class canvas:
     :param include_logo: Should the "Made with SJVisualizer" logo be included?, defaults to True
     :type include_logo: bool
     """
+    def __init__(self, width=None, height=None, bg=(255, 255, 255), colors={}, include_logo=True):
+        """
 
-    def __init__(self, width=None, height=None, bg=(255, 255, 255), colors=None, include_logo=True):
+
+        """
         self.tk = Tk()
-
         if not width:
             width = WIDTH
+        else:
+            width = width
+
         if not height:
             height = HEIGHT
+        else:
+            height = height
 
-        # Copy the palette per-canvas (so multiple canvases don't share/pop the same list)
-        self.color_palette = list(color_palette)
+        self.color_palette = color_palette
 
         self.canvas = Canvas(self.tk, width=width, height=height, bg=_from_rgb(bg))
         self.canvas.config(highlightthickness=0)
@@ -126,8 +129,6 @@ class canvas:
 
         self.include_logo = include_logo
 
-        if colors is None:
-            colors = {}
         self.colors = colors
 
         self.canvas.pack()
@@ -137,18 +138,18 @@ class canvas:
 
         self.sub_canvas = []
 
-        if not os.path.isdir("assets"):
-            os.mkdir("assets")
+        if not os.path.isdir('assets'):
+            os.mkdir('assets')
 
-    def update(self, time_obj):
+    def update(self, time):
         """
         Update function that gets called every frame of the animation.
 
-        :param time_obj: time object that corresponds to the frame
-        :type time_obj: datetime object
+        :param time: time object that corresponds to the frame
+        :type time: datetime object
         """
         for sub in self.sub_canvas:
-            sub.update(time_obj)
+            sub.update(time)
 
         self.canvas.pack()
         self.tk.update()
@@ -170,21 +171,36 @@ class canvas:
     def play(self, df=None, fps=30, record=False, width=WIDTH, height=HEIGHT, file_name="output.mp4"):
         """
         Main loop of the animation. This function will orchestrate the animation for each time step set in the pandas df
+
+        :param df: pandas data frame to be animated
+        :type df: pandas.DataFrame
+
+        :param fps: frame rate of the animation, defaults to 30 frames per second
+        :type fps: int
+
+        :param record: if set to True, the screen will be recorded, this will severely impact performance on high resolution screens
+        :type record: boolean
+
+        :param width: if record is set to True, this is the width of the window being recorded. Defaults to full screen.
+        :type width: int
+
+        :param height: if record is set to True, this is the height of the window being recorded. Defaults to full screen.
+        :type height: int
+
+        :param file_name: if record is set to True, this is the name of the output file. Defaults to output.mp4.
+        :type file_name: str
+
         """
-        if df is None:
+        if not df:
             for sub in self.sub_canvas:
                 if not sub.df is None:
                     df = sub.df
-                elif hasattr(sub, "df_x") and not sub.df_x is None:
+                elif hasattr(self, "df_x") and not sub.df_x is None:
                     df = sub.df_x
-                elif hasattr(sub, "df_y") and not sub.df_y is None:
+                elif hasattr(self, "df_y") and not sub.df_y is None:
                     df = sub.df_y
 
-        if df is None:
-            raise ValueError("No dataframe provided and no subplot contains a dataframe to play.")
-
         # prepare empty list to store animation frames
-        capture_video = None
         if record:
             self.frames = []
             fourc = cv2.VideoWriter_fourcc(*"mp4v")
@@ -193,6 +209,7 @@ class canvas:
         if self.include_logo:
             self._add_sj_logo()
 
+        # main loop of the animation
         for i, date_time in enumerate(df.index):
             start = time.time()
             self.update(date_time)
@@ -202,6 +219,7 @@ class canvas:
             # grab a screenshot for each of the frames
             if record and i > 1:
                 img = ImageGrab.grab(bbox=(0, 0, width, height))
+
                 self.frames.append(img)
 
                 if len(self.frames) > FRAMES_PER_VIDEO_WRITE:
@@ -211,140 +229,114 @@ class canvas:
                         capture_video.write(img_final)
                     self.frames = []
 
-            # Lower-CPU pacing (no busy wait)
-            elapsed = time.time() - start
-            remaining = (1 / fps) - elapsed
-            if remaining > 0:
-                time.sleep(remaining)
+            while time.time() - start < 1 / fps:
+                time.sleep(0.0001)
 
             time_used = time.time() - start
-            time_used = time.time() - start
-            fps_value = 1.0 / max(time_used, 1e-9)
-            print(f"FPS: {fps_value:,.{decimal_places}f}")
-
+            print("FPS: {}".format(format(1/time_used, ",.{}f".format(decimal_places))))
 
         if record:
-            # flush remaining frames
-            if getattr(self, "frames", None):
-                for f in self.frames:
-                    img_np = np.array(f)
-                    img_final = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
-                    capture_video.write(img_final)
-                self.frames = []
-
-            try:
-                capture_video.release()
-            except Exception:
-                pass
-
             time.sleep(1)
             self.tk.destroy()
             cv2.destroyAllWindows()
 
     def add_title(self, text, color=(0, 0, 0)):
-        title_font = font.Font(family=text_font, size=int(self.height / 30 / SCALEFACTOR), weight="bold")
-        self.canvas.create_text(self.width / 2, self.height / 20, font=title_font, text=text, fill=_from_rgb(color))
+        """
+        Helper function to add a title to your animation.
+
+        :param text: title to be displayed at the top of the visualization
+        :type text: str
+
+        :param color: title color in RGB, defaults to (0, 0, 0) black
+        :type color: tuple of length 3 with integers
+
+        """
+        title_font = font.Font(family=text_font, size=int(self.height/30/ SCALEFACTOR), weight="bold")
+        self.canvas.create_text(self.width/2, self.height/20, font=title_font, text=text, fill=_from_rgb(color))
 
     def add_sub_title(self, text, color=(0, 0, 0)):
-        title_font = font.Font(family=text_font, size=int(self.height / 45 / SCALEFACTOR))
-        self.canvas.create_text(self.width / 2, self.height / 11, font=title_font, text=text, fill=_from_rgb(color))
+        """
+        Helper function to add a sub title to your animation.
+
+        :param text: sub title to be displayed at the top of the visualization
+        :type text: str
+
+        :param color: sub title color in RGB, defaults to (0, 0, 0) black
+        :type color: tuple of length 3 with integers
+
+        """
+        title_font = font.Font(family=text_font, size=int(self.height/45/ SCALEFACTOR))
+        self.canvas.create_text(self.width/2, self.height/11, font=title_font, text=text, fill=_from_rgb(color))
 
     def add_time(self, df, time_indicator="year", color=(150, 150, 150)):
-        from sjvisualizer import Date
+        """
+        Helper function to add a timestamp to the visualization
 
-        subp = Date.date(
-            canvas=self.canvas,
-            start_time=list(df.index)[0],
-            width=0,
-            height=self.height / 12,
-            x_pos=self.width / 20,
-            y_pos=self.height * 0.9,
-            time_indicator=time_indicator,
-            font_color=color,
-            anchor="w",
-        )
-        self.add_sub_plot(subp)
+        :param df: pandas dataframe that holds the timestamps as the index
+        :type df: pandas.DataFrame
+
+        :param time_indicator: determine the format of the timestamp, possible values: "day", "month", "year", defaults to "year"
+        :type time_indicator: str
+
+        :param color: text color in RGB, defaults to (150, 150, 150)
+        :type color: tuple of length 3 with integers
+        """
+        from sjvisualizer import Date
+        sub_plot = Date.date(canvas=self.canvas, start_time=list(df.index)[0], width=0, height=self.height/12,
+                                       x_pos=self.width/20, y_pos=self.height*0.9, time_indicator=time_indicator,
+                                       font_color=color, anchor="w")
+        self.add_sub_plot(sub_plot)
 
     def add_logo(self, logo):
-        from sjvisualizer import StaticImage
+        """
+        Helper function to add a logo
 
-        img = StaticImage.static_image(
-            canvas=self.canvas,
-            width=int(self.width / 15),
-            height=int(self.width / 15),
-            x_pos=self.width * 0.95,
-            y_pos=self.height * 0.00,
-            file=logo,
-            root=self.tk,
-            anchor="ne",
-        )
+        :param logo: image name of your logo, absolute or relative path
+        :type str
+        """
+        from sjvisualizer import StaticImage
+        img = StaticImage.static_image(canvas=self.canvas, width=int(self.width/15), height=int(self.width/15), x_pos=self.width*0.95,
+                                           y_pos=self.height*0.00,
+                                           file=logo, root=self.tk, anchor="ne")
         self.add_sub_plot(img)
 
     def _add_sj_logo(self):
         from sjvisualizer import StaticImage
-
         path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "Made with SJvisualzer.png")
-        img = StaticImage.static_image(
-            canvas=self.canvas,
-            width=int(self.width / 5),
-            height=int(self.width / 5),
-            x_pos=self.width * 0.85,
-            y_pos=self.height * 0.90,
-            file=path,
-            root=self.tk,
-            anchor="e",
-        )
+        img = StaticImage.static_image(canvas=self.canvas, width=int(self.width / 45), height=int(self.width / 45),
+                                       x_pos=self.width * 0.95,
+                                       y_pos=self.height * 0.95,
+                                       file=path, root=self.tk, anchor="se")
         self.add_sub_plot(img)
 
-
-class sub_plot:
+class sub_plot():
     """
     Basic sub_plot class from which all chart types are inherited
+
+    :param canvas: tkinter canvas to draw the graph to
+    :type canvas: tkinter.Canvas
+
+    :param width: width of the plot in pixels
+    :type width: int
+
+    :param height: height of the plot in pixels
+    :type height: int
+
+    :param x_pos: the x location of the top left pixel in this plot
+    :type x_pos: int
+
+    :param y_pos: the y location of the top left pixel in this plot
+    :type y_pos: int
+
+    :param font_color: font color
+    :type font_color: tuple of length 3 with integers
     """
+    def __init__(self, canvas=None, width=None, height=None, x_pos=None, y_pos=None, start_time=None, text=None, df=None, multi_color_df=None, anchor="c", sort=True, colors={}, root=None, display_percentages=True, display_label=True, title=None, invert=False, origin="s", display_value=True, font_color=(0,0,0), back_ground_color=(255,255,255), events={}, time_indicator="year", number_of_bars=None, unit="", x_ticks = 4, y_ticks = 4, log_scale=False, only_show_latest_event=True, allow_decrease=True, format="Europe", draw_points=True, area=True, font_size=25, color_bar_color=[[100, 100, 100], [255, 0, 0]], text_font="Microsoft JhengHei UI", **kwargs):
+        """
 
-    def __init__(
-        self,
-        canvas=None,
-        width=None,
-        height=None,
-        x_pos=None,
-        y_pos=None,
-        start_time=None,
-        text=None,
-        df=None,
-        multi_color_df=None,
-        anchor="c",
-        sort=True,
-        colors=None,
-        root=None,
-        display_percentages=True,
-        display_label=True,
-        title=None,
-        invert=False,
-        origin="s",
-        display_value=True,
-        font_color=(0, 0, 0),
-        back_ground_color=(255, 255, 255),
-        events=None,
-        time_indicator="year",
-        number_of_bars=None,
-        unit="",
-        x_ticks=4,
-        y_ticks=4,
-        log_scale=False,
-        only_show_latest_event=True,
-        allow_decrease=False,
-        format="Europe",
-        draw_points=True,
-        area=True,
-        font_size=25,
-        color_bar_color=((100, 100, 100), (255, 0, 0)),
-        text_font="Microsoft JhengHei UI",
-        **kwargs,
-    ):
+        """
         self.__dict__.update(kwargs)
-
-        if width is None:
+        if width == None:
             self.width = 0.65 * WIDTH
         else:
             self.width = width
@@ -355,7 +347,7 @@ class sub_plot:
             elif hasattr(self, "df_y"):
                 df = self.df_y
 
-        if height is None:
+        if height == None:
             self.height = 0.65 * HEIGHT
             self.height_is_set = False
         else:
@@ -382,7 +374,7 @@ class sub_plot:
 
         self.allow_decrease = allow_decrease
 
-        # Canvas wiring (keep legacy behavior)
+
         if isinstance(canvas, tkinter.Canvas):
             self.canvas = canvas
             self.sjcanvas = None
@@ -390,13 +382,7 @@ class sub_plot:
             self.canvas = canvas.canvas
             self.sjcanvas = canvas
         else:
-            raise TypeError("Please set the canvas to a tkinter.Canvas or sjvisualizer.Canvas.canvas")
-
-        if colors is None:
-            colors = {}
-        if events is None:
-            events = {}
-
+            raise "Please set the canvas to a tkinter.Canvas or sjvisualizer.Canvas"
         self.colors = colors
         self.root = root
         self.invert = invert
@@ -405,20 +391,26 @@ class sub_plot:
         self.text_font = text_font
 
         self.format = format
+
         self.area = area
+
         self.events = events
+
         self.back_ground_color = back_ground_color
+
         self.only_show_latest_event = only_show_latest_event
+
         self.font_color = font_color
+
         self.display_label = display_label
         self.display_percentages = display_percentages
 
-        if x_pos is None:
+        if x_pos == None:
             self.x_pos = 0.175 * WIDTH
         else:
             self.x_pos = x_pos
 
-        if y_pos is None:
+        if y_pos == None:
             self.y_pos = 0.175 * HEIGHT
         else:
             self.y_pos = y_pos
@@ -426,29 +418,26 @@ class sub_plot:
         self.text = text
         self.df = df
         self.multi_color_df = multi_color_df
+
         self.anchor = anchor
+
         self.display_value = display_value
+
         self.sort = sort
+
         self.unit = unit
+
         self.x_ticks = x_ticks
         self.y_ticks = y_ticks
+
         self.log_scale = log_scale
+
         self.draw_points = draw_points
+
         self.color_bar_color = color_bar_color
 
         if title:
-            self.canvas.create_text(
-                self.x_pos + self.width / 2,
-                self.y_pos - self.height / 18,
-                anchor="s",
-                text=title,
-                font=font.Font(
-                    family=text_font,
-                    size=int(15 + self.height / 60 / SCALEFACTOR),
-                    weight="bold",
-                ),
-                fill=_from_rgb(self.font_color),
-            )
+            self.canvas.create_text(x_pos + width/2, y_pos - height/18, anchor = "s", text=title, font=font.Font(family=text_font, size=int(15 + self.height/60/ SCALEFACTOR), weight="bold"), fill=_from_rgb(self.font_color))
 
         if self.root:
             self.draw(self.start_time)
@@ -462,17 +451,26 @@ class sub_plot:
         with open("colors/colors.json", "w") as file:
             json.dump(self.colors, file, indent=4)
 
-    def update(self, time_obj):
+    def update(self, time):
         pass
 
     def load_image(self):
         pass
 
-    def _get_data_for_frame(self, time_obj, df=None):
+    def _get_data_for_frame(self, time, df=None):
         if not isinstance(df, pd.DataFrame):
             df = self.df
-        return df.loc[time_obj]
+        return df.loc[time]
 
+
+def format_date(time, time_indicator):
+    if time_indicator == "year":
+        return str(time.year)
+    elif time_indicator == "month":
+        return str("{} {}".format(months[time.month], time.year))
+    elif time_indicator == "day":
+        return str("{} {} {}".format(time.day, months[time.month], time.year))
+    return None
 
 def _from_rgb(rgb):
     rgb = list(rgb)
@@ -481,25 +479,24 @@ def _from_rgb(rgb):
             rgb[i] = 0
     return "#%02x%02x%02x" % tuple(rgb)
 
-
 def truncate(n, decimals=1):
+    # decimals = len(str(n))
     multiplier = 10 ** decimals
     if not math.isnan(n):
         return round(n * multiplier) / multiplier
-    return 0
-
+    else:
+        return 0
 
 def calc_spacing(value, current_spacing, n):
     if current_spacing * 4 < value:
-        current_spacing = round(current_spacing * 2, -len(str(round(value))) + 1)
+        current_spacing = round(current_spacing * 2, -len(str(round(value)))+1)
     if not current_spacing:
         current_spacing = 1
     return current_spacing
 
-
 def load_image(path, x, y, root, name):
     load = Image.open(path)
-    load = load.resize((int(x * load.size[0] / load.size[1]), int(y)), resample=2)
+    load = load.resize((int(x * load.size[0]/load.size[1]), int(y)), resample=2)
     load = ImageTk.PhotoImage(load)
     i = 0
     while hasattr(root, name + str(i)):
@@ -507,33 +504,33 @@ def load_image(path, x, y, root, name):
     setattr(root, name + str(i), load)
     return load
 
-
-def format_date(time_obj, time_indicator, format="Europe"):
+def format_date(time, time_indicator, format="Europe"):
+    # format date
     if time_indicator == "year":
-        text = str(time_obj.year)
+        text = str(time.year)
     elif time_indicator == "month":
-        text = str("{} {}".format(months[time_obj.month], time_obj.year))
+        text = str("{} {}".format(months[time.month], time.year))
     elif time_indicator == "day":
         if format == "USA":
-            text = str("{} {} {}".format(months[time_obj.month], time_obj.day, time_obj.year))
+            text = str("{} {} {}".format(months[time.month], time.day, time.year))
         else:
-            text = str("{} {} {}".format(time_obj.day, months[time_obj.month], time_obj.year))
-    else:
-        text = ""
+            text = str("{} {} {}".format(time.day, months[time.month], time.year))
+
     return text
 
-
 def format_value(number, decimal=0):
-    units = ["k", "m", "b", "t"]
+    units = ['k', 'm', 'b', 't']
     unit_index = 0
 
     while abs(number) >= 1000 and unit_index < len(units):
         number /= 1000.0
         unit_index += 1
 
-    formatted_number = "{:.{}f}".format(number, decimal).rstrip(".")
+    formatted_number = "{:.{}f}".format(number, decimal).rstrip('.')
 
-    if formatted_number.endswith("."):
+    # formatted_number = formatted_number.rstrip('0')
+
+    if formatted_number.endswith('.'):
         formatted_number = formatted_number[:-1]
 
     if unit_index > 0:
@@ -541,6 +538,5 @@ def format_value(number, decimal=0):
 
     return formatted_number
 
-
 def hex_to_rgb(h):
-    return tuple(int(h.lstrip("#")[i : i + 2], 16) for i in (0, 2, 4))
+    return tuple(int(h.lstrip("#")[i:i + 2], 16) for i in (0, 2, 4))
