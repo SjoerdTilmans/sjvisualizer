@@ -40,7 +40,7 @@ from ..core.subplot import sub_plot, load_image
 from ..core.axis import axis
 from ..utils.colors import from_rgb, min_color, max_color
 from ..utils.format import format_value
-from ..utils.scaling import HEIGHT, SCALEFACTOR
+from ..utils.scaling import HEIGHT, WIDTH, SCALEFACTOR
 
 
 class bar_race(sub_plot):
@@ -58,6 +58,11 @@ class bar_race(sub_plot):
         If ``True`` (default), categories are sorted by value each frame.
     unit:
         Optional unit suffix appended to the numeric value labels.
+    orientation:
+        Bar direction: ``"horizontal"`` (default) or ``"vertical"``.
+    category_label_angle:
+        Rotation angle (degrees) for category labels. Defaults to ``30`` for
+        vertical bars (to reduce overlap) and ``0`` for horizontal bars.
 
     All common positioning/styling options are inherited from
     :class:`sjvisualizer.core.subplot.sub_plot` (e.g. ``x_pos``, ``y_pos``,
@@ -73,6 +78,7 @@ class bar_race(sub_plot):
         y_pos=None,
         width=None,
         height=None,
+        orientation: str = "horizontal",
         colors=None,
         root=None,
         anchor="c",
@@ -86,6 +92,7 @@ class bar_race(sub_plot):
         allow_decrease: bool = False,
         sort: bool = True,
         unit: str = "",
+        category_label_angle: float | int | None = None,
         decimal_places: int | None = None,
         **kwargs,
     ):
@@ -106,6 +113,22 @@ class bar_race(sub_plot):
         self.allow_decrease = bool(allow_decrease)
         self.sort = bool(sort)
         self.unit = unit
+
+        # Orientation of bars: "horizontal" (default) or "vertical"
+        orientation = (orientation or "horizontal").lower().strip()
+        if orientation in ("h", "hor", "horizontal"):
+            orientation = "horizontal"
+        elif orientation in ("v", "ver", "vertical"):
+            orientation = "vertical"
+        else:
+            raise ValueError("orientation must be 'horizontal' or 'vertical'")
+        self.orientation = orientation
+
+        # Rotation angle (degrees) for category labels.
+        # Primarily useful in vertical mode to reduce overlap.
+        if category_label_angle is None:
+            category_label_angle = 30 if self.orientation == "vertical" else 0
+        self.category_label_angle = float(category_label_angle)
 
         if decimal_places is not None:
             kwargs["decimal_places"] = int(decimal_places)
@@ -128,10 +151,52 @@ class bar_race(sub_plot):
         )
 
     def draw(self, time_obj):
+        """Initial draw for the bar race."""
+
         data = self._get_data_for_frame(time_obj)
 
         self.graph_elements = {}
-        bar_height = int(self.height / self.number_of_bars * 0.75)
+
+        # Layout tuning.
+        # For horizontal bars we reserve a left margin for category labels.
+        # For vertical bars we use the full width and place category labels
+        # in a dedicated bottom margin.
+        left_margin = int(1 / 4 * self.width) if self.orientation == "horizontal" else 0
+
+        if self.orientation == "horizontal":
+            bar_thickness = int(self.height / self.number_of_bars * 0.75)
+            self._layout = {
+                "orientation": "horizontal",
+                "left_margin": left_margin,
+                "bottom_margin": 0,
+                "bar_thickness": bar_thickness,
+                "step": self.height / self.number_of_bars,
+                "axis_x": self.x_pos + left_margin,
+                "axis_y": self.y_pos - 10,
+                "bar_area_width": self.width - left_margin,
+                "bar_area_height": self.height,
+            }
+        else:
+            base_bottom = max(self.height * 0.12, (self.font_size / SCALEFACTOR) * 2.2)
+            # Rotated labels need a bit more vertical room.
+            if abs(getattr(self, "category_label_angle", 0) or 0) > 0.1:
+                base_bottom *= 1.45
+            bottom_margin = int(base_bottom)
+            bar_area_width = self.width - left_margin
+            bar_area_height = self.height - bottom_margin
+            # Use most of the available width.
+            bar_thickness = int(bar_area_width / self.number_of_bars * 0.90)
+            self._layout = {
+                "orientation": "vertical",
+                "left_margin": left_margin,
+                "bottom_margin": bottom_margin,
+                "bar_thickness": bar_thickness,
+                "step": bar_area_width / self.number_of_bars,
+                "axis_x": self.x_pos + left_margin,
+                "axis_y": self.y_pos + bar_area_height,
+                "bar_area_width": bar_area_width,
+                "bar_area_height": bar_area_height,
+            }
 
         for name, d in data.items():
             self.graph_elements[name] = bar(
@@ -144,52 +209,95 @@ class bar_race(sub_plot):
                 chart=self,
                 text_font=self.text_font,
                 font_size=self.font_size,
-                bar_height=bar_height,
+                bar_height=self._layout["bar_thickness"],
+                orientation=self.orientation,
             )
 
-        data = self._get_data_for_frame(time_obj)
-        self.axis1 = axis(
-            canvas=self.canvas,
-            decimal_places=self.decimal_places,
-            n=4,
-            orientation="horizontal",
-            x=self.x_pos + int(1 / 4 * self.width),
-            y=self.y_pos - 10,
-            length=self.width - int(1 / 4 * self.width),
-            allow_decrease=self.allow_decrease,
-            is_date=False,
-            font_size=int(self.font_size / SCALEFACTOR / 1.5),
-            color=self.font_color,
-            anchor="n",
-            width=self.height,
-        )
+        # Axis for the bar lengths/heights.
+        if self.orientation == "horizontal":
+            self.axis1 = axis(
+                canvas=self.canvas,
+                decimal_places=self.decimal_places,
+                n=4,
+                orientation="horizontal",
+                x=self._layout["axis_x"],
+                y=self._layout["axis_y"],
+                length=self._layout["bar_area_width"],
+                allow_decrease=self.allow_decrease,
+                is_date=False,
+                font_size=int(self.font_size / SCALEFACTOR / 1.5),
+                color=self.font_color,
+                anchor="n",
+                width=self.height,
+            )
+        else:
+            self.axis1 = axis(
+                canvas=self.canvas,
+                decimal_places=self.decimal_places,
+                n=4,
+                orientation="vertical",
+                x=self._layout["axis_x"],
+                y=self._layout["axis_y"],
+                length=self._layout["bar_area_height"],
+                allow_decrease=self.allow_decrease,
+                is_date=False,
+                font_size=int(self.font_size / SCALEFACTOR / 1.5),
+                color=self.font_color,
+                anchor="w",
+                width=self._layout["bar_area_width"],
+            )
 
-        minimum = 0 if min(data) > 0 else min(data)
-        self.axis1.draw(min=minimum, max=max(data))
+        minimum = 0 if data.min() > 0 else data.min()
+        self.axis1.draw(min_val=minimum, max_val=data.max())
+
+        # Position bars for the first frame (avoids a one-frame "jump")
+        self.update(time_obj)
 
     def update(self, time_obj):
+        """Update all bars and the axis for a given frame."""
+
         data = self._get_data_for_frame(time_obj)
 
-        bar_y_pos = self.y_pos + (self.height / self.number_of_bars) / 2
-
         if self.sort:
-            data = self._get_data_for_frame(time_obj).sort_values(ascending=False)
+            data = data.sort_values(ascending=False)
 
-        for i, (name, d) in enumerate(data.items()):
-            if d:
-                if i == self.number_of_bars:
-                    bar_y_pos = HEIGHT + (self.height / self.number_of_bars)
-                if i < self.number_of_bars + 1:
-                    self.graph_elements[name].update(d, bar_y_pos)
+        if self.orientation == "horizontal":
+            bar_y_pos = self.y_pos + (self.height / self.number_of_bars) / 2
+
+            for i, (name, d) in enumerate(data.items()):
+                if d:
+                    if i == self.number_of_bars:
+                        bar_y_pos = HEIGHT + (self.height / self.number_of_bars)
+
+                    if i < self.number_of_bars + 1:
+                        self.graph_elements[name].update(d, bar_y_pos)
+                    else:
+                        self.graph_elements[name].delete()
+
+                    bar_y_pos = bar_y_pos + (self.height / self.number_of_bars)
                 else:
                     self.graph_elements[name].delete()
-                bar_y_pos = bar_y_pos + (self.height / self.number_of_bars)
-            else:
-                self.graph_elements[name].delete()
 
-        minimum = 0 if min(data) > 0 else min(data)
-        self.axis1.update(min=minimum, max=max(data))
+        else:
+            step = float(self._layout.get("step") or (self._layout["bar_area_width"] / self.number_of_bars))
+            bar_x_pos = self._layout["axis_x"] + step / 2
 
+            for i, (name, d) in enumerate(data.items()):
+                if d:
+                    if i == self.number_of_bars:
+                        bar_x_pos = WIDTH + step
+
+                    if i < self.number_of_bars + 1:
+                        self.graph_elements[name].update(d, bar_x_pos)
+                    else:
+                        self.graph_elements[name].delete()
+
+                    bar_x_pos = bar_x_pos + step
+                else:
+                    self.graph_elements[name].delete()
+
+        minimum = 0 if data.min() > 0 else data.min()
+        self.axis1.update(min_val=minimum, max_val=data.max())
 
 class bar:
     """A single animated bar in a :class:`bar_race`.
@@ -211,6 +319,7 @@ class bar:
         text_font="Microsoft JhengHei UI",
         bar_height=50,
         unit="",
+        orientation=None,
     ):
         self.name = name
         self.canvas = canvas
@@ -218,6 +327,14 @@ class bar:
         self.font_color = font_color
         self.font_size = font_size
         self.chart = chart
+
+        self.orientation = (orientation or getattr(self.chart, "orientation", "horizontal")).lower().strip()
+        if self.orientation in ("h", "hor", "horizontal"):
+            self.orientation = "horizontal"
+        elif self.orientation in ("v", "ver", "vertical"):
+            self.orientation = "vertical"
+        else:
+            self.orientation = "horizontal"
 
         if colors is None:
             colors = {}
@@ -297,51 +414,165 @@ class bar:
             self.img_obj = self.canvas.create_image(-1000, -1000, image=self.img, anchor="w")
         self.exists = True
 
-    def update(self, value, bar_y_pos):
+    def update(self, value, bar_pos):
+        """Update the bar geometry for the current frame.
+
+        Parameters
+        ----------
+        value:
+            The current numeric value for this category.
+        bar_pos:
+            Primary position used for ranking animation:
+            - horizontal charts: y position (row)
+            - vertical charts:   x position (column)
+        """
+
         if value:
             if self.exists:
-                if not hasattr(self, "y"):
-                    self.y = bar_y_pos
+                if self.orientation == "horizontal":
+                    if not hasattr(self, "y"):
+                        self.y = bar_pos
 
-                F = self.stiffness * (bar_y_pos - self.y) - self.damping * self.v
-                self.a = F / self.mass
-                self.v = self.v + self.a
-                self.y = self.y + self.v
+                    F = self.stiffness * (bar_pos - self.y) - self.damping * self.v
+                    self.a = F / self.mass
+                    self.v = self.v + self.a
+                    self.y = self.y + self.v
 
-                self.canvas.coords(
-                    self.rect,
-                    self.chart.axis1.calc_positions(0) + self.chart.x_pos + int(1 / 4 * self.chart.width),
-                    self.y - self.bar_height / 2,
-                    self.chart.axis1.calc_positions(value) + self.chart.x_pos + int(1 / 4 * self.chart.width),
-                    self.y + self.bar_height / 2,
-                )
+                    left_margin = 0
+                    if hasattr(self.chart, "_layout"):
+                        left_margin = int(self.chart._layout.get("left_margin", 0) or 0)
+                    x0 = self.chart.axis1.calc_positions(0) + self.chart.x_pos + left_margin
+                    x1 = self.chart.axis1.calc_positions(value) + self.chart.x_pos + left_margin
+                    left = min(x0, x1)
+                    right = max(x0, x1)
 
-                rect_bbox = self.canvas.coords(self.rect)
-                self.canvas.itemconfig(self.value, text=format_value(value, decimal=self.chart.decimal_places) + self.unit)
+                    self.canvas.coords(
+                        self.rect,
+                        left,
+                        self.y - self.bar_height / 2,
+                        right,
+                        self.y + self.bar_height / 2,
+                    )
 
-                value_bbox = self.canvas.bbox(self.value)
-                if (rect_bbox[2] - rect_bbox[0]) * 0.75 > (value_bbox[2] - value_bbox[0]):
-                    self.canvas.coords(self.value, rect_bbox[2] - 10, self.y)
-                    self.canvas.itemconfig(self.value, anchor="e")
+                    rect_bbox = self.canvas.coords(self.rect)
+                    self.canvas.itemconfig(self.value, text=format_value(value, decimal=self.chart.decimal_places) + self.unit)
+
+                    # Place value text inside near the bar end if it fits, otherwise outside.
+                    value_bbox = self.canvas.bbox(self.value) or (0, 0, 0, 0)
+                    text_w = (value_bbox[2] - value_bbox[0]) or 0
+                    bar_w = rect_bbox[2] - rect_bbox[0]
+
+                    direction = 1 if x1 >= x0 else -1
+                    if direction == 1:
+                        if bar_w * 0.75 > text_w:
+                            self.canvas.coords(self.value, rect_bbox[2] - 10, self.y)
+                            self.canvas.itemconfig(self.value, anchor="e")
+                        else:
+                            self.canvas.coords(self.value, rect_bbox[2] + 10, self.y)
+                            self.canvas.itemconfig(self.value, anchor="w")
+                    else:
+                        if bar_w * 0.75 > text_w:
+                            self.canvas.coords(self.value, rect_bbox[0] + 10, self.y)
+                            self.canvas.itemconfig(self.value, anchor="w")
+                        else:
+                            self.canvas.coords(self.value, rect_bbox[0] - 10, self.y)
+                            self.canvas.itemconfig(self.value, anchor="e")
+
+                    # Category label on the left
+                    self.canvas.coords(self.label, self.chart.x_pos + left_margin - 10, self.y)
+                    self.canvas.itemconfig(self.label, anchor="e")
+
+                    # Optional icon after the value text
+                    if self.img:
+                        vb = self.canvas.bbox(self.value)
+                        if vb:
+                            if direction == 1:
+                                self.canvas.coords(self.img_obj, vb[2] + 20, self.y)
+                                self.canvas.itemconfig(self.img_obj, anchor="w")
+                            else:
+                                self.canvas.coords(self.img_obj, vb[0] - 20, self.y)
+                                self.canvas.itemconfig(self.img_obj, anchor="e")
+
                 else:
-                    self.canvas.coords(self.value, rect_bbox[2] + 10, self.y)
-                    self.canvas.itemconfig(self.value, anchor="w")
+                    if not hasattr(self, "x"):
+                        self.x = bar_pos
 
-                self.canvas.coords(self.label, self.chart.x_pos + int(1 / 4 * self.chart.width) - 10, self.y)
+                    F = self.stiffness * (bar_pos - self.x) - self.damping * self.v
+                    self.a = F / self.mass
+                    self.v = self.v + self.a
+                    self.x = self.x + self.v
 
-                value_bbox = self.canvas.bbox(self.value)
-                if self.img:
-                    self.canvas.coords(self.img_obj, value_bbox[2] + 20, self.y)
+                    half = self.bar_height / 2  # thickness for vertical bars
+                    axis_y = self.chart.axis1.y
+                    y0 = axis_y - self.chart.axis1.calc_positions(0)
+                    y1 = axis_y - self.chart.axis1.calc_positions(value)
+                    top = min(y0, y1)
+                    bottom = max(y0, y1)
+
+                    self.canvas.coords(
+                        self.rect,
+                        self.x - half,
+                        top,
+                        self.x + half,
+                        bottom,
+                    )
+
+                    self.canvas.itemconfig(self.value, text=format_value(value, decimal=self.chart.decimal_places) + self.unit)
+
+                    # Value label above (positive) or below (negative) the bar end.
+                    if y1 <= y0:
+                        self.canvas.coords(self.value, self.x, top - 8)
+                        self.canvas.itemconfig(self.value, anchor="s")
+                    else:
+                        self.canvas.coords(self.value, self.x, bottom + 8)
+                        self.canvas.itemconfig(self.value, anchor="n")
+
+                    # Category label in the reserved bottom margin (inside the subplot bbox).
+                    bottom_margin = 0
+                    if hasattr(self.chart, "_layout"):
+                        bottom_margin = int(self.chart._layout.get("bottom_margin", 0) or 0)
+                    # Put labels close to the bottom of the reserved margin.
+                    label_y = axis_y + (bottom_margin * 0.92 if bottom_margin else 14)
+
+                    # Rotate category labels to reduce overlap.
+                    angle = float(getattr(self.chart, "category_label_angle", 30) or 0)
+                    if abs(angle) > 0.1:
+                        # Anchor to the top-right so the label extends down-left.
+                        half = self.bar_height / 2
+                        x_anchor = self.x + half
+                        # Keep within the plot area to reduce clipping.
+                        if hasattr(self.chart, "x_pos") and hasattr(self.chart, "width"):
+                            x_min = self.chart.x_pos + 2
+                            x_max = self.chart.x_pos + self.chart.width - 2
+                            x_anchor = max(x_min, min(x_anchor, x_max))
+                        self.canvas.coords(self.label, x_anchor, label_y)
+                        try:
+                            self.canvas.itemconfig(self.label, anchor="ne", angle=angle)
+                        except Exception:
+                            # Older Tk builds may not support angled text.
+                            self.canvas.itemconfig(self.label, anchor="ne")
+                    else:
+                        self.canvas.coords(self.label, self.x, label_y)
+                        self.canvas.itemconfig(self.label, anchor="n")
+
+                    if self.img:
+                        vb = self.canvas.bbox(self.value)
+                        if vb:
+                            self.canvas.coords(self.img_obj, vb[2] + 10, (vb[1] + vb[3]) / 2)
+                            self.canvas.itemconfig(self.img_obj, anchor="w")
 
             else:
-                self.y = bar_y_pos
+                # Recreate bar if it was previously deleted.
+                if self.orientation == "horizontal":
+                    self.y = bar_pos
+                else:
+                    self.x = bar_pos
                 self.v = 0
                 self.a = 0
                 self.draw(value)
-                self.update(value, bar_y_pos)
+                self.update(value, bar_pos)
         else:
             self.delete()
-
     def delete(self):
         """Remove all Tk primitives for this bar."""
 

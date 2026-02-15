@@ -15,7 +15,8 @@ chart = BarRace.bar_race(
     number_of_bars=17,
     colors=colors,
     title="Hello World!",
-    allow_decrease = True
+    allow_decrease = True,
+    orientation = "Vertical"
 )
 c.add_sub_plot(chart)
 
