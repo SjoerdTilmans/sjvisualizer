@@ -192,7 +192,12 @@ class sub_plot:
 
         # If a root is already known, draw immediately.
         if self.root:
-            self.draw(getattr(self, "start_time", None))
+            initial_time = getattr(self, "start_time", None)
+            if initial_time is None:
+                df = getattr(self, "df", None)
+                if isinstance(df, pd.DataFrame) and len(df.index) > 0:
+                    initial_time = df.index[0]
+            self.draw(initial_time)
 
     def set_root(self, root):
         """Attach the Tk root and trigger the initial draw.
@@ -202,7 +207,12 @@ class sub_plot:
 
         if not self.root:
             self.root = root
-            self.draw(getattr(self, "start_time", None))
+            initial_time = getattr(self, "start_time", None)
+            if initial_time is None:
+                df = getattr(self, "df", None)
+                if isinstance(df, pd.DataFrame) and len(df.index) > 0:
+                    initial_time = df.index[0]
+            self.draw(initial_time)
 
     def save_colors(self, path: str = "colors/colors.json"):
         """Persist the current ``colors`` mapping to JSON."""
@@ -236,7 +246,26 @@ class sub_plot:
             df = getattr(self, "df", None)
         if not isinstance(df, pd.DataFrame):
             raise ValueError("No dataframe available on this subplot.")
-        return df.loc[time_obj]
+        # When charts are first added to a canvas we may not have a frame time yet.
+        # Fall back to the first row rather than raising KeyError.
+        if time_obj is None or (hasattr(pd, "isna") and pd.isna(time_obj)):
+            return df.iloc[0]
+
+        try:
+            return df.loc[time_obj]
+        except KeyError:
+            # For datetime-like indices, we can fall back to the nearest value.
+            if isinstance(df.index, pd.DatetimeIndex):
+                try:
+                    key = pd.to_datetime(time_obj)
+                    if pd.isna(key):
+                        return df.iloc[0]
+                    pos = df.index.get_indexer([key], method="nearest")[0]
+                    if pos >= 0:
+                        return df.iloc[pos]
+                except Exception:
+                    pass
+            raise
 
 
 # --- Legacy helpers (kept to minimize chart changes) ---

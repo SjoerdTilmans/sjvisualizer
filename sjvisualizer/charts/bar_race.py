@@ -264,6 +264,9 @@ class bar_race(sub_plot):
         if self.sort:
             data = data.sort_values(ascending=False)
 
+        minimum = 0 if data.min() > 0 else data.min()
+        self.axis1.update(min_val=minimum, max_val=data.max())
+
         if self.orientation == "horizontal":
             bar_y_pos = self.y_pos + (self.height / self.number_of_bars) / 2
 
@@ -298,9 +301,6 @@ class bar_race(sub_plot):
                     bar_x_pos = bar_x_pos + step
                 else:
                     self.graph_elements[name].delete()
-
-        minimum = 0 if data.min() > 0 else data.min()
-        self.axis1.update(min_val=minimum, max_val=data.max())
 
 class bar:
     """A single animated bar in a :class:`bar_race`.
@@ -557,8 +557,11 @@ class bar:
                     if self.img:
                         vb = self.canvas.bbox(self.value)
                         if vb:
-                            self.canvas.coords(self.img_obj, vb[2] + 10, (vb[1] + vb[3]) / 2)
-                            self.canvas.itemconfig(self.img_obj, anchor="w")
+                            self.canvas.coords(self.img_obj, (vb[0] + vb[2]) / 2, max((vb[1], vb[3])))
+                            self.canvas.itemconfig(self.img_obj, anchor="c")
+                            self.canvas.tag_raise(self.img_obj)
+                            self.canvas.coords(self.value, self.x, top - 8 - self.bar_height/2)
+
 
             else:
                 # Recreate bar if it was previously deleted.
