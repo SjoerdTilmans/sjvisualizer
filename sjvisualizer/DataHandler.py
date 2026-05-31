@@ -12,10 +12,11 @@ class DataHandler():
     :param number_of_frames: number of frames in your animation. Typically you want to aim for 60*FPS*Duration
     :type number_of_frames: int
     """
-    def __init__(self, excel_file=None, number_of_frames=0, log_scale=False):
+    def __init__(self, excel_file=None, number_of_frames=0, log_scale=False, nrows = None):
         self.excel_file = excel_file
         self.number_of_frames = number_of_frames + 7
         self.log_scale = log_scale
+        self.nrows = nrows
 
         # try to find cached location of the file
         try:
@@ -29,11 +30,11 @@ class DataHandler():
             self._load_file()
         else:
             print("loading new data frame")
-            self.df = pd.read_excel(excel_file, index_col=[0])
+            self.df = pd.read_excel(excel_file, index_col=[0], nrows = self.nrows)
             self._prep_data()
 
     def _load_file(self):
-        self.df = pd.read_excel(self.cache_location, index_col=[0])
+        self.df = pd.read_excel(self.cache_location, index_col=[0], nrows = self.nrows)
         self.df = self.df.loc[:, ~self.df.columns.str.contains('^Unnamed')]
 
     def _prep_data(self):
@@ -111,12 +112,14 @@ class DataHandler():
 
 class SizeCompareDataHandler():
 
-    def __init__(self, excel_file=None, number_of_frames=0, area = True):
+    def __init__(self, excel_file=None, number_of_frames=0, area = True, nrows = None):
         self.excel_file = excel_file
         self.number_of_frames = number_of_frames
-
-        self.df = pd.read_excel(excel_file)
+        self.nrows = nrows
         self.area = area
+
+        self.df = pd.read_excel(excel_file, nrows = self.nrows)
+       
 
         # speed of the smooth transition
         self.w = 0.1
