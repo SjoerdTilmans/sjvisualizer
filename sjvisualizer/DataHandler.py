@@ -69,7 +69,7 @@ class DataHandler():
         print("Setting column to numerical value for interpolation")
         # set columns to numeric values for interpolation
         for col in temp_df:
-            if not isinstance(temp_df[col][0], str):
+            if not isinstance(temp_df[col].iloc[0], str):
                 try:
                     temp_df[col] = pd.to_numeric(temp_df[col])
                 except ValueError:
