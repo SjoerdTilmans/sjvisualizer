@@ -6,6 +6,8 @@ import datetime
 import math
 from tkinter import font
 
+import numpy as np
+
 from ..utils.colors import from_rgb
 from ..utils.format import format_date, format_value
 
@@ -40,6 +42,11 @@ class axis:
 
     Parameters are passed via ``__init__`` and most charts call :meth:`draw`
     once and :meth:`update` every frame.
+
+    ``fixed_min`` and ``fixed_max`` override automatic/sticky bounds (including
+    ``zero_based``). An unset bound keeps scaling automatically. If automatic
+    data falls outside a fixed bound, a one-unit (one-day for dates) range keeps
+    the axis increasing.
     """
 
     def __init__(
@@ -68,6 +75,8 @@ class axis:
         zero_based=False,
         sticky_min=None,
         sticky_max=None,
+        fixed_min=None,
+        fixed_max=None,
     ):
         self.canvas = canvas
         self.x = x
@@ -91,6 +100,10 @@ class axis:
         self.decimal_places = decimal_places
 
         self.zero_based = bool(zero_based)
+        self.fixed_min = fixed_min
+        self.fixed_max = fixed_max
+        if fixed_min is not None and fixed_max is not None and fixed_min >= fixed_max:
+            raise ValueError("fixed_min must be less than fixed_max")
 
         if sticky_min is None:
             sticky_min = (not allow_decrease)
@@ -104,6 +117,8 @@ class axis:
         self.max_val = None
 
         self.ticks = []
+        self.tick_length = tick_length
+        self._tick_font = font.Font(family=self.text_font, size=int(self.font_size))
         self._ensure_tick_capacity(self.n * 3, tick_length)
 
         self._axis_line_id = None
@@ -135,8 +150,25 @@ class axis:
             self.min_val = builtins_min(self.min_val, incoming_min) if self.sticky_min else incoming_min
             self.max_val = builtins_max(self.max_val, incoming_max) if self.sticky_max else incoming_max
 
-        if self.zero_based and incoming_min >= 0:
+        if self.zero_based and not self.is_log_scale and incoming_min >= 0:
             self.min_val = 0
+
+        if self.fixed_min is not None:
+            self.min_val = self.fixed_min
+        if self.fixed_max is not None:
+            self.max_val = self.fixed_max
+        if self.max_val <= self.min_val:
+            if self.is_log_scale:
+                if self.fixed_max is not None:
+                    self.min_val = self.max_val / 10
+                else:
+                    self.max_val = self.min_val * 10
+                return
+            step = datetime.timedelta(days=1) if self.is_date else 1
+            if self.fixed_max is not None:
+                self.min_val = self.max_val - step
+            elif self.fixed_min is not None:
+                self.max_val = self.min_val + step
 
     def draw(self, min_val=0, max_val=0, **kwargs):
         min_val, max_val = self._coerce_legacy_minmax_kwargs(min_val, max_val, kwargs)
@@ -173,7 +205,7 @@ class axis:
 
         if not self.is_date:
             tick_values = calculate_nice_ticks(self.min_val, self.max_val, self.n, is_log_scale=self.is_log_scale)
-            self._ensure_tick_capacity(builtins_max(self.n * 3, len(tick_values)), tick_length=0)
+            self._ensure_tick_capacity(builtins_max(self.n * 3, len(tick_values)), tick_length=self.tick_length)
 
             last_used = -1
             for i, v in enumerate(tick_values):
@@ -184,7 +216,7 @@ class axis:
                     self.ticks[i].update(value=1, draw=False)
                     continue
 
-                if abs(v) < 0.00001:
+                if not self.is_log_scale and abs(v) < 0.00001:
                     v = 0
 
                 if v == 0:
@@ -198,8 +230,8 @@ class axis:
                 self.ticks[j].update(value=1, draw=False)
 
         else:
-            min_days = (min_val - datetime.datetime(1800, 1, 1)).days
-            max_days = (max_val - datetime.datetime(1800, 1, 1)).days
+            min_days = (self.min_val - datetime.datetime(1800, 1, 1)).days
+            max_days = (self.max_val - datetime.datetime(1800, 1, 1)).days
 
             if min_days == max_days:
                 for t in self.ticks:
@@ -224,7 +256,7 @@ class axis:
             for _ in range(number_of_ticks):
                 tick_values.append(tick_values[-1] + spacing)
 
-            self._ensure_tick_capacity(builtins_max(self.n * 3, len(tick_values)), tick_length=0)
+            self._ensure_tick_capacity(builtins_max(self.n * 3, len(tick_values)), tick_length=self.tick_length)
 
             last_used = -1
             for i, v in enumerate(tick_values):
@@ -240,19 +272,16 @@ class axis:
                 self.ticks[j].update(value=1, draw=False)
 
     def calc_positions(self, value):
-        if self.min_val == 0 and self.max_val == 0:
-            self.max_val = 0.1
-
         if not self.is_date:
             if not self.is_log_scale:
-                denom = (self.max_val - self.min_val) or 1e-12
+                denom = (self.max_val - self.min_val) or (0.1 if self.min_val == 0 else 1e-12)
                 return self.length * (value - self.min_val) / denom
 
-            v = builtins_max(float(value), 1e-12)
-            mn = builtins_max(float(self.min_val), 1e-12)
-            mx = builtins_max(float(self.max_val), mn * 10)
+            v = float(value) if value > 0 else 1e-12
+            mn = float(self.min_val) if self.min_val > 0 else 1e-12
+            mx = float(self.max_val) if self.max_val > mn else mn * 10
 
-            return self.length * math.log10(v / mn) / (math.log10(mx / mn) or 1e-12)
+            return self.length * (math.log10(v) - math.log10(mn)) / (math.log10(mx) - math.log10(mn))
 
         min_days = (self._as_date(self.min_val) - datetime.datetime(1800, 1, 1)).days
         max_days = (self._as_date(self.max_val) - datetime.datetime(1800, 1, 1)).days
@@ -262,6 +291,15 @@ class axis:
     @staticmethod
     def _as_date(v):
         return v if isinstance(v, datetime.datetime) else datetime.datetime.fromtimestamp(v)
+
+    def calc_positions_many(self, values):
+        """Map a history of values without a Python call for every point."""
+        values = np.asarray(values, dtype=float)
+        if not self.is_log_scale or self.is_date:
+            return self.calc_positions(values)
+        mn = float(self.min_val) if self.min_val > 0 else 1e-12
+        mx = float(self.max_val) if self.max_val > mn else mn * 10
+        return self.length * (np.log10(np.where(values > 0, values, 1e-12)) - math.log10(mn)) / (math.log10(mx) - math.log10(mn))
 
 
 class tick:
@@ -277,14 +315,34 @@ class tick:
         self.length = length
         self.label_pos = label_pos
         self.tick_prefix = tick_prefix
-        self.font = font.Font(family=self.axis.text_font, size=int(self.axis.font_size))
+        self.font = self.axis._tick_font
+        self._render_state = None
 
     def draw(self, value=0):
+        if hasattr(self, "line"):
+            return
         self.line = self.canvas.create_line(-1, -1, -1, -1, fill=from_rgb(self.axis.color), width=self.axis.line_tickness)
         self.text = self.canvas.create_text(-1, -1, text="", anchor="n", fill=from_rgb(self.axis.color), font=self.font)
 
     def update(self, value=0, draw=True, l=0):
+        # Tick capacity may grow after the initial axis draw.
+        self.draw()
+        if not draw:
+            if self._render_state != (False,):
+                self.canvas.coords(self.line, -1, -1, -1, -1)
+                self.canvas.itemconfig(self.text, text="")
+                self._render_state = (False,)
+            return
+
         pos = self.axis.calc_positions(value)
+        state = (value, pos, l, self.length, self.axis.x, self.axis.y,
+                 self.axis.length, self.axis.orientation, self.label_pos,
+                 self.axis.is_date, self.axis.time_indicator,
+                 self.axis.decimal_places, self.tick_prefix, self.axis.unit)
+        if state == self._render_state:
+            self.canvas.tag_raise(self.line)
+            return
+        self._render_state = state
 
         if draw:
             if self.axis.is_date:
@@ -292,6 +350,8 @@ class tick:
                 label = format_date(t, self.axis.time_indicator)
             else:
                 label = format_value(value, decimal=self.axis.decimal_places)
+                if self.axis.is_log_scale and value < 1:
+                    label = f"{value:.3g}"
 
             if self.axis.orientation == "horizontal":
                 if self.label_pos == "s":
@@ -333,8 +393,8 @@ class tick:
 
 def calculate_nice_ticks(min_val, max_val, num_ticks, is_log_scale=False, time_indicator=False):
     if is_log_scale:
-        min_val = builtins_max(float(min_val), 1e-12)
-        max_val = builtins_max(float(max_val), min_val * 10)
+        min_val = float(min_val) if min_val > 0 else 1e-12
+        max_val = float(max_val) if max_val > min_val else min_val * 10
 
     if not time_indicator:
         if is_log_scale:

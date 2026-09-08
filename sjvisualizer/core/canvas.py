@@ -12,14 +12,11 @@ helpers from other modules.
 from __future__ import annotations
 
 import os
+import math
 import time
 from tkinter import Canvas as TkCanvas
 from tkinter import Tk
 from tkinter import font
-
-import cv2
-import numpy as np
-from PIL import ImageGrab
 
 from ..utils.colors import color_palette as _default_palette
 from ..utils.colors import from_rgb as _from_rgb
@@ -71,12 +68,13 @@ class canvas:
         for sub in self.sub_canvas:
             sub.update(time_obj)
 
-        self.canvas.pack()
         self.tk.update()
 
     def add_sub_plot(self, sub_plot):
         """Add a subplot to this canvas."""
 
+        if sub_plot in self.sub_canvas:
+            return
         sub_plot.set_root(self.tk)
         self.sub_canvas.append(sub_plot)
 
@@ -84,8 +82,20 @@ class canvas:
         # Update shared default used by charts that don't set decimal_places explicitly
         _subplot.decimal_places = int(decimals)
 
-    def play(self, df=None, fps=30, record=False, width=WIDTH, height=HEIGHT, file_name="output.mp4"):
-        """Main loop of the animation."""
+    def play(self, df=None, fps=30, record=False, width=None, height=None, file_name="output.mp4", *, show_fps=False):
+        """Play every frame; optionally record the canvas at its screen position.
+
+        Recording dimensions default to the canvas size. ``show_fps`` enables
+        per-frame diagnostics, which are disabled to avoid console overhead.
+        """
+
+        fps = float(fps)
+        if not math.isfinite(fps) or fps <= 0:
+            raise ValueError("fps must be a finite positive number")
+        width = int(self.width if width is None else width)
+        height = int(self.height if height is None else height)
+        if record and (width <= 0 or height <= 0):
+            raise ValueError("Recording dimensions must be positive")
 
         if df is None:
             for sub in self.sub_canvas:
@@ -101,60 +111,48 @@ class canvas:
 
         if df is None:
             raise ValueError("No dataframe provided and no subplot contains a dataframe to play.")
+        if len(df.index) == 0:
+            raise ValueError("Cannot play an empty dataframe")
+
+        if self.include_logo and not getattr(self, "_logo_added", False):
+            self._add_sj_logo()
+            self._logo_added = True
 
         capture_video = None
         if record:
-            self.frames = []
+            # Playback and data loading do not need the video encoder.
+            import cv2
+            import numpy as np
+            from PIL import ImageGrab
+
             fourc = cv2.VideoWriter_fourcc(*"mp4v")
             capture_video = cv2.VideoWriter(file_name, fourc, fps, (int(width), int(height)))
+            if not capture_video.isOpened():
+                capture_video.release()
+                raise RuntimeError(f"Could not open video writer for {file_name!r}")
 
-        if self.include_logo:
-            self._add_sj_logo()
+        try:
+            for date_time in df.index:
+                start = time.perf_counter()
+                self.update(date_time)
+                if record:
+                    x = self.canvas.winfo_rootx()
+                    y = self.canvas.winfo_rooty()
+                    with ImageGrab.grab(bbox=(x, y, x + width, y + height)) as img:
+                        capture_video.write(cv2.cvtColor(np.asarray(img.convert("RGB")), cv2.COLOR_RGB2BGR))
 
-        for i, date_time in enumerate(df.index):
-            start = time.time()
-            self.update(date_time)
-            if i == 0:
-                time.sleep(1)
-
-            # grab a screenshot for each of the frames
-            if record and i > 1:
-                img = ImageGrab.grab(bbox=(0, 0, int(width), int(height)))
-                self.frames.append(img)
-
-                if len(self.frames) > FRAMES_PER_VIDEO_WRITE:
-                    for f in self.frames:
-                        img_np = np.array(f)
-                        img_final = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
-                        capture_video.write(img_final)
-                    self.frames = []
-
-            # pace
-            elapsed = time.time() - start
-            remaining = (1 / fps) - elapsed
-            if remaining > 0:
-                time.sleep(remaining)
-
-            time_used = time.time() - start
-            fps_value = 1.0 / max(time_used, 1e-9)
-            print(f"FPS: {fps_value:,.{_subplot.decimal_places}f}")
+                remaining = (1 / fps) - (time.perf_counter() - start)
+                if remaining > 0:
+                    time.sleep(remaining)
+                if show_fps:
+                    fps_value = 1.0 / max(time.perf_counter() - start, 1e-9)
+                    print(f"FPS: {fps_value:,.{_subplot.decimal_places}f}")
+        finally:
+            if capture_video is not None:
+                capture_video.release()
 
         if record:
-            if getattr(self, "frames", None):
-                for f in self.frames:
-                    img_np = np.array(f)
-                    img_final = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
-                    capture_video.write(img_final)
-                self.frames = []
-
-            try:
-                capture_video.release()
-            except Exception:
-                pass
-
-            time.sleep(1)
             self.tk.destroy()
-            cv2.destroyAllWindows()
 
     def add_title(self, text, color=(0, 0, 0)):
         title_font = font.Font(family="Microsoft JhengHei UI", size=int(self.height / 30 / SCALEFACTOR), weight="bold")
@@ -170,7 +168,7 @@ class canvas:
 
         subp = Date.date(
             canvas=self.canvas,
-            start_time=list(df.index)[0],
+            start_time=df.index[0],
             width=0,
             height=self.height / 12,
             x_pos=self.width / 20,

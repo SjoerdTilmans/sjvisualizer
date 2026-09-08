@@ -129,7 +129,7 @@ class sub_plot:
             raise TypeError("Please set canvas to a tkinter.Canvas or sjvisualizer canvas()")
 
         if colors is None:
-            colors = {}
+            colors = self.sjcanvas.colors if self.sjcanvas is not None else {}
 
         self.colors = colors
         self.root = root
@@ -170,10 +170,7 @@ class sub_plot:
                 setattr(self, "df", df)
 
         if isinstance(df, pd.DataFrame) and not hasattr(self, "start_time"):
-            try:
-                self.start_time = list(df.index)[0]
-            except Exception:
-                self.start_time = None
+            self.start_time = df.index[0] if len(df.index) else None
 
         # Title (optional). Many charts rely on this being handled here.
         if title:
@@ -217,7 +214,7 @@ class sub_plot:
     def save_colors(self, path: str = "colors/colors.json"):
         """Persist the current ``colors`` mapping to JSON."""
 
-        os.makedirs(os.path.dirname(path), exist_ok=True)
+        os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
         with open(path, "w", encoding="utf-8") as file:
             json.dump(self.colors, file, indent=4)
 

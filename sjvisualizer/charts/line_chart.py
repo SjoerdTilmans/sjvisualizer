@@ -70,6 +70,7 @@ from tkinter import font
 from typing import Any, Dict, Mapping
 
 import pandas as pd
+import numpy as np
 
 from ..core.axis import axis
 from ..core.subplot import sub_plot
@@ -133,25 +134,29 @@ class line_chart(sub_plot):
         If ``True`` draw series labels at the most recent point.
     avoid_label_overlap:
         If ``True``, the end labels are laid out using a smooth overlap-avoidance
-        routine so labels do not cover each other. If ``False``, each label follows
+        routine. Labels may briefly overlap while exchanging vertical positions.
+        If ``False``, each label follows
         its own series endpoint (legacy behavior; labels may overlap). If ``None``
         (default), overlap avoidance is enabled only when ``x_df is None`` (date
         x-axis mode) and disabled when a numeric ``x_df`` is provided.
     label_min_separation:
         Minimum vertical separation between end labels in pixels.
-        If omitted, it is derived from the font line height.
+        If omitted, it is derived from the font line height. Text height is
+        always respected. If the stack cannot fit, it extends below the plot.
     label_padding:
         Extra padding (pixels) added on top of ``label_min_separation``.
     label_relax_iterations:
-        Number of relaxation iterations per frame used to resolve label
-        collisions (higher is more strict but slightly slower).
+        Frames per vertical label swap.
+        Higher values make crossings slower; the default is 14.
     label_relax_strength:
-        How strongly labels move toward their desired y-position per
-        iteration (0..1). Lower values are smoother.
-    y_lims:
-        Optional fixed y-axis limits: ``(ymin, ymax)``.
-    x_lims:
-        Optional fixed numeric x-axis limits: ``(xmin, xmax)`` (only when ``x_df`` is given).
+        How strongly labels move toward their stacked y-position per
+        frame (0..1). Lower values are smoother.
+    x_min, x_max, y_min, y_max:
+        Optional fixed bounds, set independently. Unset bounds scale automatically.
+        X bounds accept dates/datetimes or date strings in date mode, and numbers
+        in numeric mode. Y bounds accept numbers. ``y_min`` overrides
+        ``y_zero_based``. When both bounds are set, the minimum must be less
+        than the maximum. Lines are not clipped to these bounds.
     x_ticks, y_ticks:
         Number of ticks to render on each axis.
     axis_line_width:
@@ -160,6 +165,12 @@ class line_chart(sub_plot):
         Decimal places for tick labels.
     y_zero_based:
         If ``True`` and y-values are non-negative, the y-axis is clamped to start at 0.
+        Ignored when ``y_log=True``.
+    x_log, y_log:
+        Enable base-10 logarithmic scaling independently (default: ``False``).
+        ``x_log`` requires numeric ``x_df``. Values and fixed bounds on a log
+        axis must be finite and strictly positive; invalid frames raise
+        ``ValueError`` before changing the chart.
     tick_prefix, unit:
         Prefix/unit appended to y-axis tick labels.
     start_time:
@@ -207,21 +218,33 @@ class line_chart(sub_plot):
         label_padding: int = 2,
         label_relax_iterations: int = 14,
         label_relax_strength: float = 0.18,
-        y_lims: tuple[float, float] | None = None,
-        x_lims: tuple[float, float] | None = None,
+        x_min: float | datetime.datetime | str | None = None,
+        x_max: float | datetime.datetime | str | None = None,
+        y_min: float | None = None,
+        y_max: float | None = None,
         x_ticks: int = 8,
         y_ticks: int = 5,
         axis_line_width: int = 3,
         x_decimal_places: int = 0,
         y_decimal_places: int = 0,
         y_zero_based: bool = True,
+        x_log: bool = False,
+        y_log: bool = False,
         tick_prefix: str = "",
         unit: str = "",
         start_time: datetime.datetime | None = None,
         **kwargs: Any,
     ):
-        if df is None:
-            raise ValueError("line_chart requires df (y-values).")
+        if df is None or df.empty:
+            raise ValueError("line_chart requires a non-empty df (y-values).")
+        self.x_log = bool(x_log)
+        self.y_log = bool(y_log)
+        if self.x_log and x_df is None:
+            raise ValueError("x_log requires numeric x_df; date axes cannot use log scaling")
+        for removed in ("x_lims", "y_lims"):
+            if removed in kwargs:
+                prefix = removed[0]
+                raise TypeError(f"{removed} was removed; use {prefix}_min and {prefix}_max instead")
 
         # If not provided, pick a sensible font size relative to chart height.
         if font_size is None:
@@ -236,8 +259,8 @@ class line_chart(sub_plot):
             height=height if height is not None else int(HEIGHT * 0.6),
             x_pos=x_pos,
             y_pos=y_pos,
-            colors=colors if colors is not None else {},
-            root=root,
+            colors=colors,
+            root=None,
             anchor=anchor,
             title=title,
             font_color=font_color,
@@ -266,8 +289,24 @@ class line_chart(sub_plot):
         self.label_padding = int(label_padding)
         self.label_relax_iterations = int(label_relax_iterations)
         self.label_relax_strength = float(label_relax_strength)
-        self.y_lims = y_lims
-        self.x_lims = x_lims
+        for name, value in (("x_min", x_min), ("x_max", x_max),
+                            ("y_min", y_min), ("y_max", y_max)):
+            if value is not None:
+                if name.startswith("x_") and x_df is None:
+                    value = pd.Timestamp(value).to_pydatetime()
+                    if pd.isna(value):
+                        raise ValueError(f"{name} must be a valid date")
+                else:
+                    value = float(value)
+                    if not np.isfinite(value):
+                        raise ValueError(f"{name} must be finite")
+                    if getattr(self, f"{name[0]}_log") and value <= 0:
+                        raise ValueError(f"{name} must be strictly positive for a log axis")
+            setattr(self, name, value)
+        for prefix in ("x", "y"):
+            lower, upper = getattr(self, f"{prefix}_min"), getattr(self, f"{prefix}_max")
+            if lower is not None and upper is not None and lower >= upper:
+                raise ValueError(f"{prefix}_min must be less than {prefix}_max")
 
         self._axis_cfg = _AxisConfig(
             x_ticks=int(x_ticks),
@@ -295,145 +334,94 @@ class line_chart(sub_plot):
         self.axis_y: axis | None = None
         self.lines: dict[str, _Line] = {}
         self._events: list[_Event] = []
+        # The base class can draw immediately; wait until chart state exists.
+        if root is not None:
+            self.set_root(root)
 
     def _layout_end_labels(self):
-        """Lay out end labels to avoid overlap while remaining smooth.
+        """Pack labels vertically and smoothly exchange neighboring positions.
 
-        Compared to a simple "sort + snap to slots" approach, this method keeps a
-        small amount of inertia (per-label velocity). That makes label swaps feel
-        smooth when two lines cross, while still enforcing non-overlapping labels.
-
-        The routine:
-        - pulls each label toward its desired y-position with damping (smooth motion)
-        - pushes overlapping neighbors apart (collision resolution)
-        - clamps the whole group into the plot bounds
+        Interpolating between two packed layouts preserves spacing, except for
+        the exchanging pair, which may briefly overlap during the transition.
+        Labels keep following their endpoint's x coordinate throughout.
         """
-
         if not self.label_at_end or not self.avoid_label_overlap:
             return
-        if not self.lines:
+        active = [line for line in self.lines.values()
+                  if line.label_at_end and line.label_id is not None
+                  and line.desired_label_y is not None
+                  and line.desired_label_x is not None]
+        if not active:
+            self._label_order = []
+            self._label_swap = None
             return
 
-        # Collect label-enabled series that have a desired position.
-        active: list[_Line] = [
-            l
-            for l in self.lines.values()
-            if l.label_at_end and l.label_id is not None and l.desired_label_y is not None
-        ]
-        if len(active) <= 1:
-            for l in active:
-                l.apply_label_direct()
-            return
+        line_h = float(self._font.metrics("linespace"))
+        boxes = [self.canvas.bbox(line.label_id) for line in active]
+        line_h = max([line_h] + [box[3] - box[1] for box in boxes if box])
+        separation = max(line_h, float(self.label_min_separation or line_h))
+        separation += max(0, self.label_padding)
+        low = self.y_pos + line_h / 2
+        # When the chart is too short, extend the stack instead of overlapping.
+        high = max(self.y_pos + self.height - line_h / 2,
+                   low + separation * (len(active) - 1))
 
-        # Estimate font line height -> minimum separation.
-        try:
-            line_h = int(self._font.metrics("linespace"))
-        except Exception:
-            line_h = max(10, int(self.font_size / SCALEFACTOR))
+        order = getattr(self, "_label_order", [])
+        reset = set(order) != set(active)
+        if reset:
+            order = sorted(active, key=lambda line: line.desired_label_y)
+            self._label_order = order
+            self._label_swap = None
 
-        min_sep = int(self.label_min_separation) if self.label_min_separation is not None else int(line_h * 1.02)
-        min_sep = max(6, min_sep + self.label_padding)
+        def packed():
+            # Isotonic regression after subtracting the mandatory gaps gives
+            # the closest ordered, spaced layout (squared pixel distance).
+            blocks = []
+            for i, line in enumerate(order):
+                blocks.append([float(line.desired_label_y) - i * separation, 1])
+                while len(blocks) > 1 and blocks[-2][0] > blocks[-1][0]:
+                    right, nr = blocks.pop()
+                    left, nl = blocks.pop()
+                    blocks.append([(left * nl + right * nr) / (nl + nr), nl + nr])
+            ceiling = high - separation * (len(order) - 1)
+            values = [max(low, min(ceiling, mean))
+                      for mean, count in blocks for _ in range(count)]
+            return {line: values[i] + i * separation for i, line in enumerate(order)}
 
-        # Labels use anchor="w" (left-center), so y is the center.
-        min_y = self.y_pos + line_h / 2
-        max_y = self.y_pos + self.height - line_h / 2
+        if reset:
+            for line, y in packed().items():
+                line._label_y = y
 
-        # If there are too many labels to fit at the requested separation,
-        # shrink separation to the maximum feasible value.
-        available = max(1.0, float(max_y - min_y))
-        feasible = available / float(max(1, len(active) - 1))
-        if float(min_sep) > feasible:
-            min_sep = max(1, int(feasible))
+        swap = getattr(self, "_label_swap", None)
+        if swap is None:
+            for i in range(len(order) - 1):
+                # Keep ties stable; a small deadband avoids noisy repeated swaps.
+                if order[i].desired_label_y > order[i + 1].desired_label_y + 1:
+                    swap = {"start": {line: line._label_y for line in order}, "frame": 0}
+                    order[i], order[i + 1] = order[i + 1], order[i]
+                    self._label_swap = swap
+                    break
 
-        # Initialize current y (and velocity) on first draw.
-        for l in active:
-            if not l.label_drawn:
-                l._label_y = float(l.desired_label_y)
-                l._v = 0.0
-                l.label_drawn = True
+        targets = packed()
+        strength = max(0.01, min(1.0, self.label_relax_strength))
+        if swap is not None:
+            swap["frame"] += 1
+            # Retain the existing tuning option as the swap duration.
+            duration = max(2, self.label_relax_iterations)
+            t = min(1.0, swap["frame"] / duration)
+            ease = t * t * (3 - 2 * t)
+            for line in order:
+                line._label_y = (swap["start"][line] * (1 - ease)
+                                 + targets[line] * ease)
+            if t == 1:
+                self._label_swap = None
+        else:
+            for line in order:
+                line._label_y += strength * (targets[line] - line._label_y)
 
-        # Map strength -> acceleration, keep within a stable range.
-        iters = max(2, int(self.label_relax_iterations))
-        acc = max(0.002, min(0.25, float(self.label_relax_strength) * 0.08))
-        damp = 0.88
-        vmax = float(min_sep) * 0.45 if min_sep > 0 else 10.0
-
-        for _ in range(iters):
-            # 1) damped spring toward desired y
-            for l in active:
-                err = float(l.desired_label_y) - float(l._label_y)
-                l._v = (float(l._v) + acc * err) * damp
-                if float(l._v) > vmax:
-                    l._v = vmax
-                elif float(l._v) < -vmax:
-                    l._v = -vmax
-                l._label_y = float(l._label_y) + float(l._v)
-
-            # 2) collision resolution (position-based)
-            active.sort(key=lambda li: float(li._label_y))
-            for i in range(1, len(active)):
-                prev = active[i - 1]
-                cur = active[i]
-                dy = float(cur._label_y) - float(prev._label_y)
-                if dy < min_sep:
-                    corr = (float(min_sep) - dy) / 2.0
-                    prev._label_y = float(prev._label_y) - corr
-                    cur._label_y = float(cur._label_y) + corr
-                    # bleed a little correction into velocity so swaps feel smooth
-                    prev._v = float(prev._v) - corr * 0.06
-                    cur._v = float(cur._v) + corr * 0.06
-
-            # 3) clamp group into bounds (shift all)
-            active.sort(key=lambda li: float(li._label_y))
-            if float(active[0]._label_y) < min_y:
-                shift = float(min_y) - float(active[0]._label_y)
-                for l in active:
-                    l._label_y = float(l._label_y) + shift
-                    l._v = float(l._v) * 0.5
-            if float(active[-1]._label_y) > max_y:
-                shift = float(active[-1]._label_y) - float(max_y)
-                for l in active:
-                    l._label_y = float(l._label_y) - shift
-                    l._v = float(l._v) * 0.5
-
-        # Final short cleanup to guarantee separation and bounds without a hard snap.
-        for _ in range(6):
-            changed = False
-            active.sort(key=lambda li: float(li._label_y))
-            for i in range(1, len(active)):
-                prev = active[i - 1]
-                cur = active[i]
-                dy = float(cur._label_y) - float(prev._label_y)
-                if dy < min_sep:
-                    corr = (float(min_sep) - dy) / 2.0
-                    prev._label_y = float(prev._label_y) - corr
-                    cur._label_y = float(cur._label_y) + corr
-                    prev._v = float(prev._v) * 0.7
-                    cur._v = float(cur._v) * 0.7
-                    changed = True
-
-            active.sort(key=lambda li: float(li._label_y))
-            if float(active[0]._label_y) < min_y:
-                shift = float(min_y) - float(active[0]._label_y)
-                for l in active:
-                    l._label_y = float(l._label_y) + shift
-                    l._v = float(l._v) * 0.3
-                changed = True
-
-            if float(active[-1]._label_y) > max_y:
-                shift = float(active[-1]._label_y) - float(max_y)
-                for l in active:
-                    l._label_y = float(l._label_y) - shift
-                    l._v = float(l._v) * 0.3
-                changed = True
-
-            if not changed:
-                break
-
-        # Apply label coords.
-        for l in active:
-            l._label_y = max(float(min_y), min(float(max_y), float(l._label_y)))
-            l.apply_label_from_layout()
+        for line in active:
+            self.canvas.coords(line.label_id, line.desired_label_x, line._label_y)
+            line.label_drawn = True
 
     # ---- helpers
 
@@ -497,6 +485,14 @@ class line_chart(sub_plot):
 
     # ---- drawing
 
+    def _validate_log_frame(self, y_series, x_values):
+        for name, enabled, values in (("x", self.x_log, list(x_values.values())),
+                                      ("y", self.y_log, y_series.values)):
+            if enabled:
+                values = np.asarray(values, dtype=float)
+                if not np.all(np.isfinite(values) & (values > 0)):
+                    raise ValueError(f"{name} log axis requires finite, strictly positive values")
+
     def draw(self, time=None):
         self._x_is_date = (self.df_x is None)
 
@@ -507,6 +503,7 @@ class line_chart(sub_plot):
         y_series = self._get_y_series(time)
         cols = list(self.df.columns)
         x_values = self._get_x_for_frame(time, cols)
+        self._validate_log_frame(y_series, x_values)
 
         # --- X axis
         if self._x_is_date:
@@ -521,6 +518,8 @@ class line_chart(sub_plot):
                 n=self._axis_cfg.x_ticks,
                 allow_decrease=False,
                 is_date=True,
+                fixed_min=self.x_min,
+                fixed_max=self.x_max,
                 time_indicator=self.time_indicator,
                 font_size=self._font_px,
                 text_font=self.text_font,
@@ -534,8 +533,6 @@ class line_chart(sub_plot):
             xs = [x_values[c] for c in cols]
             x_min = min(xs) if xs else 0.0
             x_max = max(xs) if xs else 1.0
-            if self.x_lims:
-                x_min, x_max = self.x_lims
             self.axis_x = axis(
                 canvas=self.canvas,
                 x=self.x_pos,
@@ -545,6 +542,9 @@ class line_chart(sub_plot):
                 n=self._axis_cfg.x_ticks,
                 allow_decrease=False,
                 is_date=False,
+                is_log_scale=self.x_log,
+                fixed_min=self.x_min,
+                fixed_max=self.x_max,
                 font_size=self._font_px,
                 text_font=self.text_font,
                 color=self.font_color,
@@ -558,8 +558,6 @@ class line_chart(sub_plot):
         vals = [float(v) for v in y_series.values] if len(y_series.values) else [0.0]
         y_min = min(vals)
         y_max = max(vals)
-        if self.y_lims:
-            y_min, y_max = self.y_lims
 
         self.axis_y = axis(
             canvas=self.canvas,
@@ -571,6 +569,7 @@ class line_chart(sub_plot):
             n=self._axis_cfg.y_ticks,
             allow_decrease=False,
             is_date=False,
+            is_log_scale=self.y_log,
             font_size=self._font_px,
             text_font=self.text_font,
             color=self.font_color,
@@ -579,7 +578,9 @@ class line_chart(sub_plot):
             decimal_places=self._axis_cfg.y_decimal_places,
             unit=self._axis_cfg.unit,
             tick_prefix=self._axis_cfg.tick_prefix,
-            zero_based=self._axis_cfg.y_zero_based,
+            zero_based=self._axis_cfg.y_zero_based and not self.y_log,
+            fixed_min=self.y_min,
+            fixed_max=self.y_max,
         )
         self.axis_y.draw(min_val=y_min, max_val=y_max)
 
@@ -601,6 +602,8 @@ class line_chart(sub_plot):
             yv = float(y_series.get(name, 0.0))
             xv = float(x_values.get(name, 0.0))
             self.lines[name].seed(x=xv, y=yv, time_obj=time, x_is_date=self._x_is_date)
+
+        self._layout_end_labels()
 
         # --- events (date mode only)
         self._events = []
@@ -633,6 +636,7 @@ class line_chart(sub_plot):
         y_series = self._get_y_series(time)
         cols = list(self.df.columns)
         x_values = self._get_x_for_frame(time, cols)
+        self._validate_log_frame(y_series, x_values)
 
         # Update axes
         if self.axis_x is None or self.axis_y is None:
@@ -647,15 +651,11 @@ class line_chart(sub_plot):
             xs = [x_values[c] for c in cols] if cols else [0.0]
             x_min = min(xs) if xs else 0.0
             x_max = max(xs) if xs else 1.0
-            if self.x_lims:
-                x_min, x_max = self.x_lims
             self.axis_x.update(min_val=x_min, max_val=x_max)
 
         vals = [float(v) for v in y_series.values] if len(y_series.values) else [0.0]
         y_min = min(vals)
         y_max = max(vals)
-        if self.y_lims:
-            y_min, y_max = self.y_lims
         self.axis_y.update(min_val=y_min, max_val=y_max)
 
         # update line points (performance guard for markers)
@@ -837,6 +837,12 @@ class _Line:
             self.x_values.append(float(x))
         self.y_values.append(float(y))
 
+        if self.label_at_end:
+            self.desired_label_x = self.chart.x_pos + self.xaxis.calc_positions(self.x_values[-1]) + 10
+            self.desired_label_y = self.chart.y_pos + self.chart.height - self.yaxis.calc_positions(y)
+            if not self.chart.avoid_label_overlap:
+                self.apply_label_direct()
+
     def update(self, x: float, y: float, time_obj: datetime.datetime, x_is_date: bool):
         # Append "anchor" points occasionally to build a tail.
         if time_obj.hour == 0 and time_obj.minute == 0 and time_obj.second == 0:
@@ -850,13 +856,13 @@ class _Line:
         xs.append(float(_to_days_since_1800(time_obj)) if x_is_date else float(x))
         ys.append(float(y))
 
-        coords: list[float] = []
-        for i, (xv, yv) in enumerate(zip(xs, ys)):
-            px = self.chart.x_pos + self.xaxis.calc_positions(xv)
-            py = self.chart.y_pos + self.chart.height - self.yaxis.calc_positions(yv)
-            coords.extend([px, py])
+        positions = np.empty((len(xs), 2), dtype=float)
+        positions[:, 0] = self.chart.x_pos + self.xaxis.calc_positions_many(xs)
+        positions[:, 1] = self.chart.y_pos + self.chart.height - self.yaxis.calc_positions_many(ys)
+        coords = positions.ravel().tolist()
 
-            if self.draw_points:
+        if self.draw_points:
+            for i, (px, py) in enumerate(positions):
                 try:
                     self.canvas.coords(
                         self.points[i],

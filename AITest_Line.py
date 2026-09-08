@@ -4,7 +4,7 @@ import pandas as pd
 from sjvisualizer import Canvas, LineChart
 
 # time index (date axis)
-idx = [dt.datetime(2000, 1, 1) + dt.timedelta(days=i) for i in range(120)]
+idx = [dt.datetime(2000, 1, 1) + dt.timedelta(days=i) for i in range(600)]
 
 df = pd.DataFrame(
     {
@@ -24,6 +24,7 @@ chart = LineChart.line_chart(
     height=800,
     time_indicator="year",   # "year" | "month" | "day"
     draw_points=True,
+    y_min=-100
 )
 cv.add_sub_plot(chart)
-cv.play(df=df, fps=15, record=False)
+cv.play(df=df, fps=60, record=False, show_fps=True)

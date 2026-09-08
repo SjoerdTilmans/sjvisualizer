@@ -1,6 +1,6 @@
 from sjvisualizer import DataHandler, Canvas, BarRace
 
-dh = DataHandler.DataHandler(excel_file="sjvisualizerAI/data/Area Dev.xlsx", number_of_frames=60*60)
+dh = DataHandler.DataHandler(excel_file="sjvisualizer/data/Area Dev.xlsx", number_of_frames=60*60)
 
 df = dh.df
 

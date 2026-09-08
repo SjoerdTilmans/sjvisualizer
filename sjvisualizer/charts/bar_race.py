@@ -31,6 +31,7 @@ Typical usage
 from __future__ import annotations
 
 import os
+import math
 import random
 from tkinter import font
 
@@ -54,6 +55,10 @@ class bar_race(sub_plot):
         How many bars to display at once (top-N). Defaults to ``min(10, n_cols)``.
     allow_decrease:
         If ``False`` (default), the axis maximum is sticky and will not shrink.
+    axis_min:
+        Optional fixed starting value for the numeric axis, in either orientation.
+        The maximum still scales with the data. Bars are clipped at this minimum.
+        By default, the axis includes zero and any negative values.
     sort:
         If ``True`` (default), categories are sorted by value each frame.
     unit:
@@ -90,6 +95,7 @@ class bar_race(sub_plot):
         start_time=None,
         number_of_bars: int | None = None,
         allow_decrease: bool = False,
+        axis_min: float | None = None,
         sort: bool = True,
         unit: str = "",
         category_label_angle: float | int | None = None,
@@ -100,17 +106,22 @@ class bar_race(sub_plot):
         if df is None and "df" in kwargs:
             df = kwargs.pop("df")
 
-        if not isinstance(df, pd.DataFrame):
-            raise ValueError("bar_race requires df=<pandas.DataFrame>")
+        if not isinstance(df, pd.DataFrame) or df.empty:
+            raise ValueError("bar_race requires a non-empty pandas.DataFrame")
 
         self.df = df
-        self.start_time = start_time if start_time is not None else list(df.index)[0]
+        self.start_time = start_time if start_time is not None else df.index[0]
 
         if number_of_bars is None:
             number_of_bars = len(df.columns) if len(df.columns) < 10 else 10
         self.number_of_bars = int(number_of_bars)
+        if self.number_of_bars <= 0:
+            raise ValueError("number_of_bars must be positive")
 
         self.allow_decrease = bool(allow_decrease)
+        self.axis_min = float(axis_min) if axis_min is not None else None
+        if self.axis_min is not None and not math.isfinite(self.axis_min):
+            raise ValueError("axis_min must be finite")
         self.sort = bool(sort)
         self.unit = unit
 
@@ -227,6 +238,7 @@ class bar_race(sub_plot):
                 y=self._layout["axis_y"],
                 length=self._layout["bar_area_width"],
                 allow_decrease=self.allow_decrease,
+                fixed_min=self.axis_min,
                 is_date=False,
                 font_size=int(self.font_size / SCALEFACTOR / 1.5),
                 color=self.font_color,
@@ -243,6 +255,7 @@ class bar_race(sub_plot):
                 y=self._layout["axis_y"],
                 length=self._layout["bar_area_height"],
                 allow_decrease=self.allow_decrease,
+                fixed_min=self.axis_min,
                 is_date=False,
                 font_size=int(self.font_size / SCALEFACTOR / 1.5),
                 color=self.font_color,
@@ -444,8 +457,8 @@ class bar:
                     left_margin = 0
                     if hasattr(self.chart, "_layout"):
                         left_margin = int(self.chart._layout.get("left_margin", 0) or 0)
-                    x0 = self.chart.axis1.calc_positions(0) + self.chart.x_pos + left_margin
-                    x1 = self.chart.axis1.calc_positions(value) + self.chart.x_pos + left_margin
+                    x0 = self.chart.axis1.calc_positions(max(0, self.chart.axis1.min_val)) + self.chart.x_pos + left_margin
+                    x1 = self.chart.axis1.calc_positions(max(value, self.chart.axis1.min_val)) + self.chart.x_pos + left_margin
                     left = min(x0, x1)
                     right = max(x0, x1)
 
@@ -457,7 +470,8 @@ class bar:
                         self.y + self.bar_height / 2,
                     )
 
-                    rect_bbox = self.canvas.coords(self.rect)
+                    rect_bbox = (left, self.y - self.bar_height / 2,
+                                 right, self.y + self.bar_height / 2)
                     self.canvas.itemconfig(self.value, text=format_value(value, decimal=self.chart.decimal_places) + self.unit)
 
                     # Place value text inside near the bar end if it fits, otherwise outside.
@@ -507,8 +521,8 @@ class bar:
 
                     half = self.bar_height / 2  # thickness for vertical bars
                     axis_y = self.chart.axis1.y
-                    y0 = axis_y - self.chart.axis1.calc_positions(0)
-                    y1 = axis_y - self.chart.axis1.calc_positions(value)
+                    y0 = axis_y - self.chart.axis1.calc_positions(max(0, self.chart.axis1.min_val))
+                    y1 = axis_y - self.chart.axis1.calc_positions(max(value, self.chart.axis1.min_val))
                     top = min(y0, y1)
                     bottom = max(y0, y1)
 
@@ -578,6 +592,8 @@ class bar:
     def delete(self):
         """Remove all Tk primitives for this bar."""
 
+        if not self.exists:
+            return
         if hasattr(self, "rect"):
             self.canvas.delete(self.rect)
         if hasattr(self, "label"):

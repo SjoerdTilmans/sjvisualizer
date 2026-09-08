@@ -3,7 +3,11 @@
 from __future__ import annotations
 
 import datetime
+import hashlib
+import json
 import os
+import pickle
+import tempfile
 from pathlib import Path
 
 import numpy
@@ -31,39 +35,47 @@ class DataHandler:
         # Backwards compatible signature, with optional extras via kwargs:
         # - tail_frames: frames to hold the last value (default 60*3)
         # - cache: enable/disable caching (default True)
+        # - cache_excel: also export a human-readable Excel cache (default False)
         self.excel_file = excel_file
         self.number_of_frames = int(number_of_frames) + 7  # keep legacy +7 behaviour
         self.log_scale = log_scale
 
         self.tail_frames = int(kwargs.get("tail_frames", 60 * 3))
         self.cache = bool(kwargs.get("cache", True))
+        self.cache_excel = bool(kwargs.get("cache_excel", False))
+        if self.number_of_frames < 2 or self.tail_frames < 0:
+            raise ValueError("Frame count must produce at least two frames and tail_frames must be non-negative")
 
         if not self.excel_file:
             raise ValueError("excel_file must be provided")
 
         src_path = Path(str(self.excel_file))
-        stem = src_path.stem
+        # Include the full source identity and every interpolation option.
+        # Old caches have no settings metadata and cannot be safely reused.
+        stat = src_path.stat()
+        identity = (str(src_path.resolve()), stat.st_mtime_ns, stat.st_size,
+                    self.number_of_frames, self.tail_frames, bool(self.log_scale), 2)
+        digest = hashlib.sha256(json.dumps(identity).encode()).hexdigest()[:24]
+        stem = f"{src_path.stem}.{digest}"
         frames_tag = str(int(self.number_of_frames))
 
         cache_dir = Path("_pandas_cache")
-        cache_dir.mkdir(exist_ok=True)
+        if self.cache:
+            cache_dir.mkdir(exist_ok=True)
 
         # New cache locations (fast + robust)
         self.cache_location_pkl = str(cache_dir / f"{stem}.{frames_tag}.pkl")
         self.cache_location_xlsx = str(cache_dir / f"{stem}.{frames_tag}.xlsx")
 
-        # Legacy cache path attempt (old split-based logic)
+        # Retained attribute; settings-free legacy caches are intentionally ignored.
         self.cache_location_legacy_xlsx = None
-        try:
-            legacy_name = "{}{}.xlsx".format(str(self.excel_file).split(".")[0].split("/")[1], int(self.number_of_frames))
-            self.cache_location_legacy_xlsx = str(cache_dir / legacy_name)
-        except Exception:
-            pass
 
-        # Keep the original attribute name for compatibility
-        self.cache_location = self.cache_location_xlsx
+        # Point the convenience attribute at the cache actually written.
+        self.cache_location = self.cache_location_xlsx if self.cache_excel else self.cache_location_pkl
 
         if self.cache and self._load_from_cache_if_fresh():
+            if self.cache_excel and not os.path.exists(self.cache_location_xlsx):
+                self.df.to_excel(self.cache_location_xlsx)
             return
 
         print("loading new data frame")
@@ -87,36 +99,35 @@ class DataHandler:
 
     def _load_from_cache_if_fresh(self) -> bool:
         if self._cache_is_fresh(self.cache_location_pkl):
-            print(f"Loading cached data frame {self.cache_location_pkl}")
-            self.df = pd.read_pickle(self.cache_location_pkl)
-            self.df = self.df.loc[:, ~self.df.columns.str.contains("^Unnamed")]
+            try:
+                cached = pd.read_pickle(self.cache_location_pkl)
+                if not isinstance(cached, pd.DataFrame) or "sjvisualizer_dt" not in cached.attrs:
+                    return False
+            except (OSError, ValueError, EOFError, ImportError, pickle.UnpicklingError):
+                return False
+            self.df = cached
+            self.dt = cached.attrs["sjvisualizer_dt"]
             self.temp_df = self.df
-            return True
-
-        if self._cache_is_fresh(self.cache_location_xlsx):
-            print(f"Loading cached data frame {self.cache_location_xlsx}")
-            self._load_excel(self.cache_location_xlsx)
-            return True
-
-        if self.cache_location_legacy_xlsx and self._cache_is_fresh(self.cache_location_legacy_xlsx):
-            print(f"Loading cached data frame {self.cache_location_legacy_xlsx}")
-            self._load_excel(self.cache_location_legacy_xlsx)
             return True
 
         return False
 
     def _load_excel(self, path: str):
         self.df = pd.read_excel(path, index_col=[0])
-        self.df = self.df.loc[:, ~self.df.columns.str.contains("^Unnamed")]
+        self.df = self.df.loc[:, ~self.df.columns.astype(str).str.contains("^Unnamed")]
         self.temp_df = self.df
 
     def _prep_data(self):
-        if isinstance(self.df.index[0], numpy.int64) or isinstance(self.df.index[0], float):
+        if self.df.empty:
+            raise ValueError("Source dataframe must contain rows and columns")
+        if isinstance(self.df.index[0], (int, numpy.integer, float)):
             self.df.index = [datetime.datetime(year=int(i), month=12, day=31) for i in self.df.index]
 
         self.df.index = pd.to_datetime(self.df.index)
+        if self.df.index.hasnans or not self.df.index.is_unique:
+            raise ValueError("Source timestamps must be non-missing and unique")
         self.df = self.df.sort_index()
-        self.df = self.df.loc[:, ~self.df.columns.str.contains("^Unnamed")]
+        self.df = self.df.loc[:, ~self.df.columns.astype(str).str.contains("^Unnamed")]
 
         print("Preping data")
 
@@ -129,23 +140,12 @@ class DataHandler:
 
             temp = self.df.copy()
 
-            for col in temp.columns:
-                first_val = temp[col].iloc[0]
-                if isinstance(first_val, str):
-                    continue
-                try:
-                    temp[col] = pd.to_numeric(temp[col], errors="ignore")
-                except Exception:
-                    pass
-
             merged_index = temp.index.union(frame_index)
             temp = temp.reindex(merged_index)
 
             print("Interpolating")
-            try:
-                temp = temp.interpolate(method="time", limit_area="inside")
-            except Exception:
-                temp = temp.interpolate(limit_area="inside")
+            numeric_cols = temp.select_dtypes(include=["number"]).columns
+            temp[numeric_cols] = temp[numeric_cols].interpolate(method="time", limit_area="inside")
 
             temp_df = temp.reindex(frame_index)
 
@@ -162,24 +162,32 @@ class DataHandler:
 
         if self.log_scale:
             numeric_cols = temp_df.select_dtypes(include=["number"]).columns
-            temp_df.loc[:, numeric_cols] = numpy.log10(temp_df.loc[:, numeric_cols].clip(lower=1e-12))
+            temp_df[numeric_cols] = numpy.log10(temp_df[numeric_cols].clip(lower=1e-12))
             temp_df.replace([-numpy.inf], -1000000000, inplace=True)
 
-        self.df = temp_df.loc[:, ~temp_df.columns.str.contains("^Unnamed")].fillna(0)
+        self.df = temp_df.fillna(0)
+        self.df.attrs["sjvisualizer_dt"] = self.dt
         self.temp_df = self.df
 
     def _save_cache(self):
         print("Saving cache")
 
+        # Replace atomically so another reader never sees a partial pickle.
+        temporary = None
         try:
-            self.df.to_pickle(self.cache_location_pkl)
-        except Exception:
+            with tempfile.NamedTemporaryFile(dir=Path(self.cache_location_pkl).parent,
+                                             suffix=".tmp", delete=False) as file:
+                temporary = file.name
+            self.df.to_pickle(temporary)
+            os.replace(temporary, self.cache_location_pkl)
+        except OSError:
             pass
+        finally:
+            if temporary and os.path.exists(temporary):
+                os.unlink(temporary)
 
-        try:
+        if self.cache_excel:
             self.df.to_excel(self.cache_location_xlsx)
-        except Exception:
-            pass
 
 
 class SizeCompareDataHandler:
