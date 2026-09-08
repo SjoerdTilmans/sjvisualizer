@@ -125,9 +125,8 @@ class ChartTests(unittest.TestCase):
             self.bubble(df_size=pd.DataFrame({"wrong": [1]}, index=self.idx[:1]))
 
     def test_demo_playback(self):
-        import AITest_Area
-        import AITest_Bubble
-        for demo in (AITest_Area, AITest_Bubble):
+        from example_loader import load_example
+        for demo in (load_example("Area Chart"), load_example("Bubble Linear Axes")):
             root = Mock()
             with patch("sjvisualizer.core.canvas.Tk", return_value=root), \
                  patch("sjvisualizer.core.canvas.TkCanvas", return_value=self.cv), \

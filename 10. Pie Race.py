@@ -1,0 +1,77 @@
+"""Pie Race with generated data.
+
+Run: python "10. Pie Race.py" --seconds 12 --fps 30
+Use --smoke to render a few frames in a hidden Tk window and exit.
+"""
+import argparse
+import tkinter
+
+import numpy as np
+import pandas as pd
+
+from sjvisualizer import Canvas, PieRace, DataHandler
+
+
+def demo_data(frames):
+    """Generate smooth, positive time series without external files."""
+    t = np.linspace(0, 4 * np.pi, frames)
+    return pd.DataFrame(
+        {"Solar": 30 + 20 * np.sin(t) + t * 3,
+         "Wind": 35 + 25 * np.cos(t * .7),
+         "Hydro": 40 + 15 * np.sin(t + 1)},
+        index=pd.date_range("2000-01-01", "2025-01-01", periods=frames),
+    )
+
+
+def build_chart(cv, df, args=None):
+    """Configure this example using the public chart API."""
+    return PieRace.pie_plot(
+        canvas=cv, df=df, x_pos=100, y_pos=150,
+        width=900, height=450, font_size=18,
+        inner_radius=0 if args and args.solid else 0.5,
+        sort=not (args and args.no_sort), display_images=False,
+    )
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--seconds", type=float, default=12)
+    parser.add_argument("--fps", type=int, default=30)
+    parser.add_argument("--smoke", action="store_true",
+                        help="Render initial, middle, final, and initial frames, then exit")
+    parser.add_argument("--excel", help="Optional time-indexed Excel dataset")
+    parser.add_argument("--solid", action="store_true", help="Draw a pie instead of a donut")
+    parser.add_argument("--no-sort", action="store_true")
+    args = parser.parse_args()
+    if not np.isfinite(args.seconds) or args.seconds <= 0 or args.fps <= 0:
+        parser.error("seconds and fps must be positive")
+    frames = max(2, int(args.seconds * args.fps))
+    df = demo_data(frames)
+    if args.excel:
+        df = DataHandler.DataHandler(excel_file=args.excel, number_of_frames=frames).df
+    cv = Canvas.canvas(width=1200, height=800, include_logo=False)
+    cv.tk.attributes("-fullscreen", False)
+    cv.tk.title("SJVisualizer - Pie Race")
+    if args.smoke:
+        cv.tk.withdraw()
+    try:
+        cv.add_title("Pie Race")
+        chart = build_chart(cv, df, args=args)
+        cv.add_sub_plot(chart)
+        cv.add_time(df, time_indicator="year")
+        if args.smoke:
+            for frame in (0, len(df) // 2, len(df) - 1, 0):
+                cv.update(df.index[frame])
+            print("Pie Race: render smoke passed")
+        else:
+            cv.play(df=df, fps=args.fps)
+            cv.tk.mainloop()
+    finally:
+        try:
+            cv.tk.destroy()
+        except tkinter.TclError:
+            pass  # The window may already have been closed during playback.
+
+
+if __name__ == "__main__":
+    main()

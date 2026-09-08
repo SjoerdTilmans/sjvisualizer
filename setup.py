@@ -16,7 +16,7 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires = ["pandas>=2.0", "screeninfo>=0.7", "Pillow>9", "openpyxl>3", "opencv-python>=4.8"],
     package_data={
-        'sjvisualizer': ['assets/*', "world.json"],
+        'sjvisualizer': ['assets/*', "world.json", 'maps/*.json', 'maps/README.md'],
     },
     classifiers=[
         "Programming Language :: Python :: 3",

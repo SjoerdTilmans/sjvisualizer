@@ -83,7 +83,8 @@ class PieRaceTests(unittest.TestCase):
         cv.itemconfig.assert_not_called()
 
     def test_root_demo_playback_wiring(self):
-        import AITest_Pie as main
+        from example_loader import load_example
+        main = load_example("Pie Race")
 
         _, surface = self.chart({"A": [1]})
         root = Mock()
@@ -93,7 +94,7 @@ class PieRaceTests(unittest.TestCase):
                 patch("sjvisualizer.core.canvas.canvas._add_sj_logo"), \
                 patch("sjvisualizer.charts.pie_race.ImageTk.PhotoImage"), \
                 patch("sjvisualizer.core.canvas.time.sleep"), \
-                patch("sys.argv", ["AITest_Pie.py", "--seconds", "1", "--fps", "10"]):
+                patch("sys.argv", ["10. Pie Race.py", "--seconds", "1", "--fps", "10"]):
             main.main()
         self.assertEqual(root.update.call_count, 10)
         root.mainloop.assert_called_once()

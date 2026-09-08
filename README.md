@@ -14,6 +14,22 @@ pip install sjvisualizer
 ```
 
 ## Basic examples
+
+The repository root contains numbered, self-contained examples, ordered by
+chart type: bars, lines, pie, bubbles, area, matrix, maps, and supporting elements.
+Each file contains its own generated data, chart configuration, and playback loop.
+No Excel files or downloads are required.
+
+```shell
+python "01. Bar Race Horizontal.py"
+python "02. Bar Race Vertical.py" --seconds 20 --fps 60
+python "11. Bubble Linear Axes.py" --smoke
+```
+
+All examples accept `--seconds`, `--fps`, and `--smoke` (requires Tk).
+See [the example catalogue](docs/chart_migration.md) for the complete order,
+axis variants, public imports, and verification commands.
+
 Using sjvisualizer, you can create a basic data animation with one simple line of code.
 
 ### Bar Race
@@ -186,12 +202,14 @@ Do you like what we are doing and want to support this project, get in touch at 
 Run the self-contained demos from the repository root:
 
 ```shell
-python AITest_Bubble.py
-python AITest_Area.py
+python "11. Bubble Linear Axes.py"
+python "13. Area Chart.py"
 ```
 
-Both accept `--seconds 15 --fps 60`. Bubble also accepts `--log` and
-`--no-labels`; area accepts `--excel path/to/data.xlsx`.
+Both accept `--seconds 15 --fps 60` and `--smoke`. Bubble also accepts
+`--no-labels`; use `12. Bubble Log Axes.py` for logarithmic X and Y axes.
+Area and pie accept `--excel path/to/data.xlsx`; pie also accepts `--solid`
+and `--no-sort`.
 
 ```python
 from sjvisualizer import Bubble, AreaChart
@@ -214,7 +232,7 @@ Area data needs sorted, unique, timezone-naive dates and nonnegative values.
 Missing/nonfinite values become zero. Colors follow column order, first on top.
 The legend supports `external_legend`, `display_legend`, `display_values`, and
 `unit`. Set `label_position="right"` to place labels outside the right edge,
-centered vertically in each band's latest height (used by `AITest_Area.py`).
+centered vertically in each band's latest height (used by `13. Area Chart.py`).
 Zero-height bands hide their labels. Alternatively, `label_position="area"`
 places contrasting labels inside each band, hiding labels that cannot fit.
 Event ranges use

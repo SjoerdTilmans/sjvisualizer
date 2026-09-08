@@ -26,6 +26,15 @@ PieRace = import_module(".charts.pie_race", __name__)
 Bubble = import_module(".charts.bubble", __name__)
 AreaChart = import_module(".charts.area_chart", __name__)
 AreaPlot = AreaChart
+Histogram = import_module(".charts.histogram", __name__)
+DynamicLine = import_module(".charts.dynamic_line", __name__)
+DynamicMatrix = import_module(".charts.dynamic_matrix", __name__)
+StackedBarChart = import_module(".charts.stacked_bar_chart", __name__)
+Map = import_module(".charts.map", __name__)
+Date = import_module(".charts.date", __name__)
+Total = import_module(".charts.total", __name__)
+Legend = import_module(".charts.legend", __name__)
+Empty = import_module(".charts.empty", __name__)
 
 # Convenience: expose most-used classes directly too
 from .core.canvas import canvas  # noqa: E402
@@ -40,8 +49,35 @@ from .charts.bubble import bubble_chart  # noqa: E402
 from .charts.area_chart import area_chart, area_plot  # noqa: E402
 from .charts.static_image import static_image  # noqa: E402
 from .charts.static_text import static_text  # noqa: E402
+from .charts.histogram import histogram  # noqa: E402
+from .charts.dynamic_line import dynamic_curve  # noqa: E402
+from .charts.dynamic_matrix import dynamic_matrix  # noqa: E402
+from .charts.stacked_bar_chart import stacked_bar_chart  # noqa: E402
+from .charts.map import map  # noqa: E402
+from .charts.date import date  # noqa: E402
+from .charts.total import total  # noqa: E402
+from .charts.legend import legend  # noqa: E402
+from .charts.empty import empty  # noqa: E402
 
 __all__ = [
+    "histogram",
+    "dynamic_curve",
+    "dynamic_matrix",
+    "stacked_bar_chart",
+    "map",
+    "date",
+    "total",
+    "legend",
+    "empty",
+    "Histogram",
+    "DynamicLine",
+    "DynamicMatrix",
+    "StackedBarChart",
+    "Map",
+    "Date",
+    "Total",
+    "Legend",
+    "Empty",
     "Canvas",
     "Axis",
     "DataHandler",
