@@ -20,7 +20,7 @@ from tkinter import font
 
 from ..utils.colors import color_palette as _default_palette
 from ..utils.colors import from_rgb as _from_rgb
-from ..utils.scaling import HEIGHT, WIDTH, SCALEFACTOR
+from ..utils.scaling import HEIGHT, WIDTH, tk_font_size
 
 from . import subplot as _subplot
 
@@ -155,11 +155,11 @@ class canvas:
             self.tk.destroy()
 
     def add_title(self, text, color=(0, 0, 0)):
-        title_font = font.Font(family="Microsoft JhengHei UI", size=int(self.height / 30 / SCALEFACTOR), weight="bold")
+        title_font = font.Font(family="Microsoft JhengHei UI", size=tk_font_size(self.height / 30), weight="bold")
         self.canvas.create_text(self.width / 2, self.height / 20, font=title_font, text=text, fill=_from_rgb(color))
 
     def add_sub_title(self, text, color=(0, 0, 0)):
-        title_font = font.Font(family="Microsoft JhengHei UI", size=int(self.height / 45 / SCALEFACTOR))
+        title_font = font.Font(family="Microsoft JhengHei UI", size=tk_font_size(self.height / 45))
         self.canvas.create_text(self.width / 2, self.height / 11, font=title_font, text=text, fill=_from_rgb(color))
 
     def add_time(self, df, time_indicator="year", color=(150, 150, 150)):

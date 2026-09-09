@@ -5,10 +5,12 @@ This module implements an animated multi-series line chart.
 Two x-axis modes are supported:
 
 1) Date x-axis (default)
+
    - The animation "time" (dataframe index) is used as x.
    - The x-axis is rendered as a date axis via :class:`sjvisualizer.core.axis.axis`.
 
 2) Numeric x-axis (optional)
+
    - Provide ``x_df`` (a second dataframe/series) holding the x-values.
    - The animation time still comes from the dataframe index, but the x-position
      of each point is taken from ``x_df`` at the same frame.
@@ -75,7 +77,7 @@ import numpy as np
 from ..core.axis import axis
 from ..core.subplot import sub_plot
 from ..utils.colors import from_rgb, min_color, max_color
-from ..utils.scaling import HEIGHT, WIDTH, SCALEFACTOR
+from ..utils.scaling import DEFAULT_FONT_SIZE, HEIGHT, WIDTH, tk_font_size
 
 MAX_POINTS = 100
 
@@ -132,6 +134,10 @@ class line_chart(sub_plot):
         Explicit line width (pixels). If omitted, derived from subplot height.
     label_at_end:
         If ``True`` draw series labels at the most recent point.
+    label_min_value:
+        Hide an end label when its current absolute value is at or below this
+        cutoff. If omitted, values that round to zero at ``y_decimal_places``
+        are hidden.
     avoid_label_overlap:
         If ``True``, the end labels are laid out using a smooth overlap-avoidance
         routine. Labels may briefly overlap while exchanging vertical positions.
@@ -203,7 +209,7 @@ class line_chart(sub_plot):
         title: str | None = None,
         font_color=(0, 0, 0),
         back_ground_color=(255, 255, 255),
-        font_size: int | None = None,
+        font_size: int = DEFAULT_FONT_SIZE,
         text_font: str = "Microsoft JhengHei UI",
         # chart-specific params
         draw_points: bool = True,
@@ -213,6 +219,7 @@ class line_chart(sub_plot):
         draw_all_events: bool = False,
         line_width: int | None = None,
         label_at_end: bool = True,
+        label_min_value: float | None = None,
         avoid_label_overlap: bool | None = None,
         label_min_separation: int | None = None,
         label_padding: int = 2,
@@ -246,13 +253,6 @@ class line_chart(sub_plot):
                 prefix = removed[0]
                 raise TypeError(f"{removed} was removed; use {prefix}_min and {prefix}_max instead")
 
-        # If not provided, pick a sensible font size relative to chart height.
-        if font_size is None:
-            # keep similar scale as legacy: height/33
-            if height is None:
-                height = int(HEIGHT / 2)
-            font_size = int(height / 33)
-
         super().__init__(
             canvas=canvas,
             width=width if width is not None else int(WIDTH * 0.7),
@@ -281,6 +281,9 @@ class line_chart(sub_plot):
         self.draw_all_events = bool(draw_all_events)
         self.line_width = line_width
         self.label_at_end = bool(label_at_end)
+        if label_min_value is not None and (not np.isfinite(label_min_value) or label_min_value < 0):
+            raise ValueError("label_min_value must be finite and nonnegative")
+        self.label_min_value = None if label_min_value is None else float(label_min_value)
         if avoid_label_overlap is None:
             # Default: avoid overlap only for date x-axes (x_df is None).
             avoid_label_overlap = (x_df is None)
@@ -349,6 +352,7 @@ class line_chart(sub_plot):
             return
         active = [line for line in self.lines.values()
                   if line.label_at_end and line.label_id is not None
+                  and line.label_visible
                   and line.desired_label_y is not None
                   and line.desired_label_x is not None]
         if not active:
@@ -493,11 +497,18 @@ class line_chart(sub_plot):
                 if not np.all(np.isfinite(values) & (values > 0)):
                     raise ValueError(f"{name} log axis requires finite, strictly positive values")
 
+    def _label_value_is_visible(self, value: float) -> bool:
+        """Return whether an end value is meaningful at display precision."""
+        threshold = self.label_min_value
+        if threshold is None:
+            threshold = 0.5 * 10 ** (-self._axis_cfg.y_decimal_places)
+        return bool(np.isfinite(value) and abs(value) > threshold)
+
     def draw(self, time=None):
         self._x_is_date = (self.df_x is None)
 
         # Effective font size (respect DPI scaling)
-        self._font_px = max(8, int(self.font_size / SCALEFACTOR))
+        self._font_px = tk_font_size(self.font_size)
         self._font = font.Font(family=self.text_font, size=int(self._font_px))
 
         y_series = self._get_y_series(time)
@@ -521,7 +532,7 @@ class line_chart(sub_plot):
                 fixed_min=self.x_min,
                 fixed_max=self.x_max,
                 time_indicator=self.time_indicator,
-                font_size=self._font_px,
+                font_size=self.font_size,
                 text_font=self.text_font,
                 color=self.font_color,
                 line_tickness=self._axis_cfg.axis_line_width,
@@ -545,7 +556,7 @@ class line_chart(sub_plot):
                 is_log_scale=self.x_log,
                 fixed_min=self.x_min,
                 fixed_max=self.x_max,
-                font_size=self._font_px,
+                font_size=self.font_size,
                 text_font=self.text_font,
                 color=self.font_color,
                 line_tickness=self._axis_cfg.axis_line_width,
@@ -570,7 +581,7 @@ class line_chart(sub_plot):
             allow_decrease=False,
             is_date=False,
             is_log_scale=self.y_log,
-            font_size=self._font_px,
+            font_size=self.font_size,
             text_font=self.text_font,
             color=self.font_color,
             line_tickness=self._axis_cfg.axis_line_width,
@@ -601,7 +612,9 @@ class line_chart(sub_plot):
             )
             yv = float(y_series.get(name, 0.0))
             xv = float(x_values.get(name, 0.0))
-            self.lines[name].seed(x=xv, y=yv, time_obj=time, x_is_date=self._x_is_date)
+            line_obj = self.lines[name]
+            line_obj.set_label_visible(self._label_value_is_visible(yv))
+            line_obj.seed(x=xv, y=yv, time_obj=time, x_is_date=self._x_is_date)
 
         self._layout_end_labels()
 
@@ -668,6 +681,8 @@ class line_chart(sub_plot):
             line_obj = self.lines.get(name)
             if not line_obj:
                 continue
+
+            line_obj.set_label_visible(self._label_value_is_visible(yv))
 
             if self.draw_points:
                 # degrade markers when too many points exist
@@ -813,6 +828,7 @@ class _Line:
         self.points: list[int] = []
 
         self.label_drawn = False
+        self.label_visible = bool(label_at_end)
         self._label_y = 0.0
         self._v = 0.0
         self._a = 0.0
@@ -828,6 +844,12 @@ class _Line:
         self.font = font
         if self.label_at_end:
             self.label_id = self.canvas.create_text(-10000, -10000, text=self.name, font=self.font, fill=self.color, anchor="w")
+
+    def set_label_visible(self, visible: bool):
+        """Show or hide the end label without affecting the line itself."""
+        self.label_visible = bool(visible and self.label_at_end)
+        if self.label_id is not None:
+            self.canvas.itemconfig(self.label_id, state="normal" if self.label_visible else "hidden")
 
     def seed(self, x: float, y: float, time_obj: datetime.datetime, x_is_date: bool):
         # Store an initial point so first update can draw a segment.

@@ -6,6 +6,7 @@ import pandas as pd
 from ..core.axis import axis
 from ..core.subplot import sub_plot
 from ..utils.colors import color_palette, from_rgb
+from ..utils.scaling import tk_font_size
 
 __all__ = ["bubble_chart"]
 
@@ -70,7 +71,7 @@ class bubble_chart(sub_plot):
             color = from_rgb(self.colors[name])
             marker = self.canvas.create_oval(0, 0, 0, 0, fill=color, outline=color, state="hidden")
             label = self.canvas.create_text(0, 0, text=str(name), anchor="n",
-                font=(self.text_font, max(1, int(self.font_size * 2 / 3))),
+                font=(self.text_font, tk_font_size(self.font_size * 2 / 3)),
                 fill=from_rgb(self.font_color), state="hidden") if self.display_label else None
             self.bubbles[name] = (marker, label)
         self._axes_drawn = False

@@ -41,7 +41,7 @@ from ..core.subplot import sub_plot, load_image
 from ..core.axis import axis
 from ..utils.colors import from_rgb, min_color, max_color
 from ..utils.format import format_value
-from ..utils.scaling import HEIGHT, WIDTH, SCALEFACTOR
+from ..utils.scaling import DEFAULT_FONT_SIZE, HEIGHT, WIDTH, tk_font_size
 
 
 class bar_race(sub_plot):
@@ -69,6 +69,8 @@ class bar_race(sub_plot):
         Rotation angle (degrees) for category labels. Defaults to ``30`` for
         vertical bars (to reduce overlap) and ``0`` for horizontal bars.
 
+    Notes
+    -----
     All common positioning/styling options are inherited from
     :class:`sjvisualizer.core.subplot.sub_plot` (e.g. ``x_pos``, ``y_pos``,
     ``width``, ``height``, ``colors``).
@@ -91,7 +93,7 @@ class bar_race(sub_plot):
         font_color=(0, 0, 0),
         back_ground_color=(255, 255, 255),
         text_font: str = "Microsoft JhengHei UI",
-        font_size: int = 25,
+        font_size: int = DEFAULT_FONT_SIZE,
         start_time=None,
         number_of_bars: int | None = None,
         allow_decrease: bool = False,
@@ -191,7 +193,7 @@ class bar_race(sub_plot):
             # Bottom margin reserved for category labels in vertical mode.
             # Keep it tight so labels sit close to the bars while still
             # avoiding clipping at the bottom of the subplot.
-            base_bottom = max(self.height * 0.06, (self.font_size / SCALEFACTOR) * 1.6)
+            base_bottom = max(self.height * 0.06, tk_font_size(self.font_size) * 1.6)
             # Rotated labels need slightly more room, but avoid overly large gaps.
             if abs(getattr(self, "category_label_angle", 0) or 0) > 0.1:
                 base_bottom *= 1.10
@@ -240,7 +242,7 @@ class bar_race(sub_plot):
                 allow_decrease=self.allow_decrease,
                 fixed_min=self.axis_min,
                 is_date=False,
-                font_size=int(self.font_size / SCALEFACTOR / 1.5),
+                font_size=self.font_size / 1.5,
                 color=self.font_color,
                 anchor="n",
                 width=self.height,
@@ -257,7 +259,7 @@ class bar_race(sub_plot):
                 allow_decrease=self.allow_decrease,
                 fixed_min=self.axis_min,
                 is_date=False,
-                font_size=int(self.font_size / SCALEFACTOR / 1.5),
+                font_size=self.font_size / 1.5,
                 color=self.font_color,
                 anchor="w",
                 width=self._layout["bar_area_width"],
@@ -369,8 +371,8 @@ class bar:
         self.v = 0
         self.a = 0
 
-        self._font_obj = font.Font(family=self.text_font, size=int(self.font_size / SCALEFACTOR))
-        self._font_obj_num = font.Font(family=self.text_font, size=int(self.font_size / SCALEFACTOR * 0.9))
+        self._font_obj = font.Font(family=self.text_font, size=tk_font_size(self.font_size))
+        self._font_obj_num = font.Font(family=self.text_font, size=tk_font_size(self.font_size * 0.9))
 
         try:
             self.img = load_image(
@@ -546,7 +548,7 @@ class bar:
                         bottom_margin = int(self.chart._layout.get("bottom_margin", 0) or 0)
 
                     # Keep labels close to the bars (avoid large empty gaps).
-                    pad = max(20, int((self.chart.font_size / SCALEFACTOR) * 0.35))
+                    pad = max(20, int(tk_font_size(self.chart.font_size) * 0.35))
                     label_y = axis_y + pad
 
                     # Rotate category labels to reduce overlap.

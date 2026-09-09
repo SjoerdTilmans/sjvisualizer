@@ -15,7 +15,7 @@ from PIL import Image, ImageTk
 
 from ..core.subplot import sub_plot
 from ..utils.colors import color_palette, from_rgb
-from ..utils.scaling import SCALEFACTOR
+from ..utils.scaling import tk_font_size
 
 __all__ = ["pie_plot"]
 
@@ -122,8 +122,8 @@ class pie_plot(sub_plot):
             self._cx = self.x_pos + self.width / 2
             self._cy = self.y_pos + self.height / 2
             self._radius = 0.34 * min(self.width, self.height)
-            self._label_font = (self.text_font, max(1, int(self.font_size / SCALEFACTOR)), "bold")
-            self._percent_font = (self.text_font, max(1, int(self.font_size * 0.7 / SCALEFACTOR)))
+            self._label_font = (self.text_font, tk_font_size(self.font_size), "bold")
+            self._percent_font = (self.text_font, tk_font_size(self.font_size * 0.7))
         self._render(time_obj, immediate=True)
 
     def update(self, time_obj):

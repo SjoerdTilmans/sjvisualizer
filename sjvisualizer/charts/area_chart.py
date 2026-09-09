@@ -6,6 +6,7 @@ import pandas as pd
 from ..core.axis import axis
 from ..core.subplot import sub_plot
 from ..utils.colors import color_palette, from_rgb
+from ..utils.scaling import tk_font_size
 
 __all__ = ["area_chart", "area_plot"]
 
@@ -20,7 +21,9 @@ class area_chart(sub_plot):
     cumulative axis maxima remain exact. Seeking and repeated frames are safe.
     ``external_legend``, ``display_values``, ``unit`` and legacy date-range
     ``events`` are supported. ``draw_points`` shows current stack boundaries.
-    ``label_position="area"`` replaces the legend with contrasting labels at
+    Labels whose current value is zero, or would round to zero at the configured
+    ``decimal_places``, are hidden. ``label_min_value`` can set an explicit
+    cutoff instead. ``label_position="area"`` replaces the legend with contrasting labels at
     the horizontal midpoint of each rendered band. Labels hide when the band
     is too small to contain them. ``display_values`` still shows current values.
     ``label_position="right"`` places series-colored labels just outside the
@@ -31,7 +34,7 @@ class area_chart(sub_plot):
     def __init__(self, canvas=None, df=None, *, x_ticks=5, y_ticks=5,
                  time_indicator="year", external_legend=True, display_values=False,
                  display_legend=True, unit="", max_points=1000, draw_points=False,
-                 label_position="legend",
+                 label_position="legend", label_min_value=None,
                  events=None, event_color=(225, 225, 225), draw_all_events=False, **kwargs):
         if not isinstance(df, pd.DataFrame) or df.empty:
             raise ValueError("Area data must be a nonempty DataFrame")
@@ -48,7 +51,10 @@ class area_chart(sub_plot):
         self._values = values
         if label_position not in ("legend", "area", "right"):
             raise ValueError("label_position must be 'legend', 'area', or 'right'")
+        if label_min_value is not None and (not np.isfinite(label_min_value) or label_min_value < 0):
+            raise ValueError("label_min_value must be finite and nonnegative")
         self.label_position = label_position
+        self.label_min_value = None if label_min_value is None else float(label_min_value)
         self._tops = np.cumsum(values[:, ::-1], axis=1)[:, ::-1]
         if not np.isfinite(self._tops).all():
             raise ValueError("Stacked totals exceed the supported numeric range")
@@ -80,8 +86,9 @@ class area_chart(sub_plot):
             self.areas[name] = self.canvas.create_polygon(0, 0, 0, 0, 0, 0, fill=color, outline="")
             if self.display_legend:
                 lx = self.x_pos + self.width + 20 if self.external_legend else self.x_pos + 15
-                self._labels[name] = self.canvas.create_text(lx, self.y_pos+i*(self.font_size+8),
-                    anchor="nw", fill=color, font=(self.text_font, int(self.font_size)))
+                rendered_font_size = tk_font_size(self.font_size)
+                self._labels[name] = self.canvas.create_text(lx, self.y_pos+i*(rendered_font_size+8),
+                    anchor="nw", fill=color, font=(self.text_font, rendered_font_size))
                 if self.label_position == "right":
                     self.canvas.itemconfig(self._labels[name], anchor="w")
                 if self.label_position == "area":
@@ -96,7 +103,7 @@ class area_chart(sub_plot):
             self._event_items.append((
                 self.canvas.create_rectangle(0, 0, 0, 0, fill=from_rgb(self.event_color), stipple="gray25", outline="", state="hidden"),
                 self.canvas.create_text(0, 0, text=name, anchor="s", fill=from_rgb(self.font_color),
-                                        font=(self.text_font, int(self.font_size)), state="hidden")))
+                                        font=(self.text_font, tk_font_size(self.font_size)), state="hidden")))
         common = dict(canvas=self.canvas, x=self.x_pos, y=self.y_pos+self.height,
                       font_size=self.font_size, text_font=self.text_font,
                       color=self.font_color, ticks_only=False, allow_decrease=True)
@@ -133,13 +140,17 @@ class area_chart(sub_plot):
                 if self.display_values:
                     text += f"  {self._values[pos, i]:,.{self.decimal_places}f}{self.unit}"
                 self.canvas.itemconfig(self._labels[name], text=text)
-                if self.label_position == "area":
+                label_visible = self._label_value_is_visible(self._values[pos, i])
+                if not label_visible:
+                    self.canvas.itemconfig(self._labels[name], state="hidden")
+                elif self.label_position == "area":
                     self._position_area_label(self._labels[name], xs, top_y, bottom_y, elapsed)
                 elif self.label_position == "right":
                     self.canvas.coords(self._labels[name], self.x_pos+self.width+10,
                                        (top_y[-1]+bottom_y[-1])/2)
-                    self.canvas.itemconfig(self._labels[name],
-                                           state="normal" if self._values[pos, i] > 0 else "hidden")
+                    self.canvas.itemconfig(self._labels[name], state="normal")
+                else:
+                    self.canvas.itemconfig(self._labels[name], state="normal")
                 self.canvas.tag_raise(self._labels[name])
             if name in self._markers:
                 self.canvas.coords(self._markers[name], xs[-1]-3, top_y[-1]-3, xs[-1]+3, top_y[-1]+3)
@@ -155,6 +166,13 @@ class area_chart(sub_plot):
                 self.canvas.coords(rect, left, self.y_pos, right, self.y_pos+self.height)
                 self.canvas.coords(label, (left+right)/2, self.y_pos-5)
         self._last_frame = pos
+
+    def _label_value_is_visible(self, value):
+        """Return whether a current value is meaningful at display precision."""
+        threshold = self.label_min_value
+        if threshold is None:
+            threshold = 0.5 * 10 ** (-self.decimal_places)
+        return bool(np.isfinite(value) and value > threshold)
 
     def _position_area_label(self, label, xs, top_y, bottom_y, elapsed):
         """Fit the label inside the actual sampled polygon, including its width."""

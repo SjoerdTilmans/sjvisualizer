@@ -1,6 +1,7 @@
 """Reusable ranked legend with stable ties and bounded item count."""
 import numpy as np
 from ._frame_chart import FrameChart
+from ..utils.scaling import tk_font_size
 
 __all__ = ["legend"]
 
@@ -43,7 +44,7 @@ class legend(FrameChart):
             self.canvas.itemconfig(label, state=state, text=str(name)+suffix)
             x = self.x_pos + (rank*self.width/self.n if self.orientation == "horizontal" else 0)
             y = self.y_pos + ((rank+.5)*self.height/self.n if self.orientation == "vertical" else self.height/2)
-            r = self.font_size*.3
+            r = tk_font_size(self.font_size)*.3
             self.canvas.coords(swatch, x, y-r, x+2*r, y+r)
             self.canvas.coords(label, x+2*r+8, y)
         self._last_frame = k

@@ -5,6 +5,7 @@ import pandas as pd
 from ..core.subplot import sub_plot
 from ..core.axis import axis
 from ..utils.colors import color_palette, from_rgb
+from ..utils.scaling import tk_font_size
 
 
 def numeric_data(df):
@@ -41,7 +42,7 @@ class FrameChart(sub_plot):
         return from_rgb(self.colors[name])
 
     def text(self, x, y, **kwargs):
-        options = dict(font=(self.text_font, int(self.font_size)), fill=from_rgb(self.font_color))
+        options = dict(font=(self.text_font, tk_font_size(self.font_size)), fill=from_rgb(self.font_color))
         options.update(kwargs)
         return self.canvas.create_text(x, y, **options)
 

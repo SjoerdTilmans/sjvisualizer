@@ -1,10 +1,8 @@
 # Migrated charts
 
-The remaining chart implementations now live under `sjvisualizer/charts` and
-use the new `core.subplot`, `core.axis`, and shared color/format helpers. The
-legacy directory is retained as an archive; migrated implementations do not
-import it. `AreaPlot` and the old BarRace variants already have replacements,
-so no duplicate implementations were added for them.
+Chart implementations live under `sjvisualizer/charts` and use the shared
+`core.subplot`, `core.axis`, and color/format helpers. The separate legacy
+package has been removed. Root module compatibility imports remain available.
 
 | Root example | Public API |
 | --- | --- |
@@ -109,7 +107,7 @@ Pass `df` to `canvas.play`, or let playback infer it from an attached chart.
   contours. US states accept names or postal abbreviations, including DC.
   All map presets support the same legend, colors, and playback options.
   `map_file` accepts a custom contour JSON. See the
-  [map asset guide](../sjvisualizer/maps/README.md) for the format, coverage,
+  [map asset guide](maps.md) for the format, coverage,
   projections, source attribution, and the asset rebuild command.
 - Dynamic Matrix clips positions to the configured sentiment levels and blends
   endpoint colors through neutral gray. The old special five-color palette is
@@ -119,16 +117,10 @@ Pass `df` to `canvas.play`, or let playback infer it from an attached chart.
   Total format the initial frame correctly and skip unchanged text updates.
 - Empty is a no-op template; its example subclasses it to animate a dot.
 
-The old `plot.py` convenience functions remain in the legacy archive. This
-migration concerns chart classes and supporting subplots, not that wrapper API.
+The old `plot.py` convenience API is no longer included. Create chart classes,
+attach them with `canvas.add_sub_plot`, and call `canvas.play` instead.
 
 ## Verification
 
-```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_*.py"
-```
-
-`tests/test_migrated_charts.py` checks initial rendering, object reuse, seeking,
-zero/negative/missing data, category positions, geometry
-isolation, formatting, validation, and compatibility imports using a mocked
-Tk canvas. Use the examples' `--smoke` option for actual Tk rendering.
+See [contributing](contributing.md) for the smoke runner and package checks.
+The previous repository's regression suite is not included in this checkout.

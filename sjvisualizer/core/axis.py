@@ -10,6 +10,7 @@ import numpy as np
 
 from ..utils.colors import from_rgb
 from ..utils.format import format_date, format_value
+from ..utils.scaling import tk_font_size
 
 
 months = {
@@ -118,7 +119,7 @@ class axis:
 
         self.ticks = []
         self.tick_length = tick_length
-        self._tick_font = font.Font(family=self.text_font, size=int(self.font_size))
+        self._tick_font = font.Font(family=self.text_font, size=tk_font_size(self.font_size))
         self._ensure_tick_capacity(self.n * 3, tick_length)
 
         self._axis_line_id = None

@@ -94,6 +94,8 @@ class static_image(sub_plot):
         If ``True``, the image is raised each frame. If ``False`` (default), the
         image is lowered each frame.
 
+    Notes
+    -----
     Common positioning parameters are inherited from
     :class:`sjvisualizer.core.subplot.sub_plot`.
     """

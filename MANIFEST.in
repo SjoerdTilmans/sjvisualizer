@@ -1,0 +1,10 @@
+include LICENSE README.md requirements.txt .readthedocs.yaml
+include [0-9]*.py
+recursive-include docs *.rst *.md *.py *.txt *.png
+recursive-include scripts *.py
+recursive-include sjvisualizer/assets *.png
+recursive-include sjvisualizer/maps *.json *.md
+include sjvisualizer/world.json
+prune docs/_build
+global-exclude *.py[cod]
+global-exclude __pycache__

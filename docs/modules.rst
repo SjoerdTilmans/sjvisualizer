@@ -1,4 +1,7 @@
+API reference
+=============
+
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    sjvisualizer

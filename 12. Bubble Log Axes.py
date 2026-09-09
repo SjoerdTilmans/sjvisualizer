@@ -36,7 +36,7 @@ def build_chart(cv, df, args=None):
     size = pd.DataFrame({name: 50 + 30 * np.sin(t + i * .5)
                          for i, name in enumerate(df.columns)}, index=df.index)
     return Bubble.bubble_chart(
-        canvas=cv, df=df, x_pos=100, y_pos=150,
+        canvas=cv, x_pos=100, y_pos=150,
         width=900, height=450, font_size=18,
         df_x=x, df_y=y, df_size=size, x_log=True, y_log=True,
         x_min=1, x_max=10000, y_min=1, y_max=10000, x_ticks=4, y_ticks=4,

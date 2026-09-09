@@ -29,7 +29,7 @@ from PIL import Image, ImageTk
 
 from ..utils.colors import from_rgb
 from ..utils.format import format_date, format_value
-from ..utils.scaling import SCALEFACTOR, WIDTH, HEIGHT
+from ..utils.scaling import DEFAULT_FONT_SIZE, WIDTH, HEIGHT, tk_font_size
 
 
 # Legacy global default (Canvas.canvas.set_decimals updates this)
@@ -93,7 +93,7 @@ class sub_plot:
         title: str | None = None,
         font_color=(0, 0, 0),
         back_ground_color=(255, 255, 255),
-        font_size: int = 25,
+        font_size: int = DEFAULT_FONT_SIZE,
         text_font: str = "Microsoft JhengHei UI",
         **kwargs: Any,
     ):
@@ -181,7 +181,7 @@ class sub_plot:
                 text=title,
                 font=font.Font(
                     family=self.text_font,
-                    size=int(15 + self.height / 60 / SCALEFACTOR),
+                    size=tk_font_size(15 + self.height / 60),
                     weight="bold",
                 ),
                 fill=from_rgb(self.font_color),

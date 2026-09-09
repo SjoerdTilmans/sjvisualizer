@@ -12,7 +12,7 @@ from tkinter import font
 
 from ..core.subplot import sub_plot
 from ..utils.colors import from_rgb
-from ..utils.scaling import SCALEFACTOR
+from ..utils.scaling import DEFAULT_FONT_SIZE, tk_font_size
 
 
 UNDERLINE = 0
@@ -43,6 +43,8 @@ class static_text(sub_plot):
     align:
         Optional legacy alignment hint (e.g. ``"left"``).
 
+    Notes
+    -----
     Common positioning and styling parameters are inherited from
     :class:`sjvisualizer.core.subplot.sub_plot`.
     """
@@ -63,7 +65,7 @@ class static_text(sub_plot):
         font_color=(0, 0, 0),
         back_ground_color=(255, 255, 255),
         text_font: str = DEFAULT_TEXT_FONT,
-        font_size: int = 25,
+        font_size: int = DEFAULT_FONT_SIZE,
         angle: float = 0,
         position_mode: str = "box",
         align: str | None = None,
@@ -100,11 +102,11 @@ class static_text(sub_plot):
             self.angle = 0
 
         if hasattr(self, "font_size") and self.font_size is not None:
-            font_size = int(self.font_size / SCALEFACTOR)
+            font_size = tk_font_size(self.font_size)
         elif getattr(self, "height_is_set", False):
-            font_size = int(0.65 * self.height / SCALEFACTOR)
+            font_size = tk_font_size(0.65 * self.height)
         else:
-            font_size = int(25 / SCALEFACTOR)
+            font_size = tk_font_size(DEFAULT_FONT_SIZE)
 
         chosen_font = getattr(self, "text_font", DEFAULT_TEXT_FONT)
 

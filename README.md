@@ -1,24 +1,52 @@
-[![Downloads](https://static.pepy.tech/badge/sjvisualizer)](https://pepy.tech/project/sjvisualizer)
-# sjvisualizer 📊
-sjvisualizer is a data visualization and animation library for Python for time-series data. 
+# sjvisualizer
 
-Like this project? Please consider starring ⭐ the project on GitHub!
-
-Or buying me a coffee. It will make my day! [Buy me a Coffee](https://www.buymeacoffee.com/sjoerdtilmans)
+Animate time-series data in Python with pandas and Tkinter. Combine charts,
+legends, dates, text, and images on one canvas, then play or record the animation.
 
 ## Installation
-sjvisualizer is now available on pypi! Simply use pip to install it:
 
+Use Python 3.9 or newer with Tkinter and a graphical desktop. Python 3.11 is
+used for local verification. To install this refactored checkout:
+
+```shell
+python -m venv .venv
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+# macOS/Linux: source .venv/bin/activate
+python -m pip install -e .
 ```
-pip install sjvisualizer
+
+The published package can be installed with `python -m pip install sjvisualizer`,
+but may differ from this checkout. On Linux, install your distribution's Tk
+package (commonly `python3-tk`). `python -m tkinter` should open a test window.
+
+## Quick start
+
+```python
+import numpy as np
+import pandas as pd
+from sjvisualizer import Canvas, BarRace
+
+frames = 180
+index = pd.date_range("2000-01-01", "2025-01-01", periods=frames)
+df = pd.DataFrame({"Solar": np.linspace(10, 90, frames),
+                   "Wind": np.linspace(70, 40, frames)}, index=index)
+
+cv = Canvas.canvas(width=1200, height=800, include_logo=False)
+cv.tk.attributes("-fullscreen", False)
+cv.add_title("Energy production")
+chart = BarRace.bar_race(canvas=cv, df=df, x_pos=100, y_pos=150,
+                         width=900, height=450, number_of_bars=2, unit=" GWh")
+cv.add_sub_plot(chart)
+cv.add_time(df, time_indicator="year")
+cv.play(df=df, fps=30)
+cv.tk.mainloop()
 ```
 
-## Basic examples
+## Charts and examples
 
-The repository root contains numbered, self-contained examples, ordered by
-chart type: bars, lines, pie, bubbles, area, matrix, maps, and supporting elements.
-Each file contains its own generated data, chart configuration, and playback loop.
-No Excel files or downloads are required.
+The 24 numbered scripts in the repository root generate their own data and
+need no Excel files or downloads:
 
 ```shell
 python "01. Bar Race Horizontal.py"
@@ -26,235 +54,89 @@ python "02. Bar Race Vertical.py" --seconds 20 --fps 60
 python "11. Bubble Linear Axes.py" --smoke
 ```
 
-All examples accept `--seconds`, `--fps`, and `--smoke` (requires Tk).
-See [the example catalogue](docs/chart_migration.md) for the complete order,
-axis variants, public imports, and verification commands.
+Available charts include horizontal/vertical bar races, stacked bars,
+preaggregated histograms, date/numeric/logarithmic line charts, dynamic lines,
+pie/donut races, bubbles, stacked areas, dynamic matrices, and maps. Map presets
+cover the world, Europe, US states, Africa, North America, and Asia. Supporting
+subplots provide dates, totals, legends, static text/images, and a custom-chart
+template.
 
-Using sjvisualizer, you can create a basic data animation with one simple line of code.
+All numbered examples accept `--seconds`, `--fps`, and `--smoke`. Smoke mode
+renders several frames in a hidden Tk window and exits; Tk still needs a display.
+See the [example catalogue](docs/chart_migration.md) for every script and API,
+and [chart options](docs/chart-options.md) for bounds, labels, bubbles, and areas.
+`Examples/Catalogue.py` combines chart types using the bundled Excel data.
 
-### Bar Race
+## Data and recording
 
+Charts accept pandas DataFrames: rows are animation frames and columns are
+categories. Use sorted, unique, timezone-naive dates for time series. Numeric
+indices are supported by some charts; see each chart's API. Direct DataFrames
+are rendered row by row without automatic interpolation.
 
-https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/9340572c-56f8-4abd-97c5-e8ed674a6751
-
-
-```python
-from sjvisualizer import plot as plt
-
-plt.bar(excel="data/DesktopOS.xlsx", 
-        title="Desktop Operating System Market Share", 
-        unit="%")
-```
-
-### Pie Race
-
-
-https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/5db0d056-578e-4070-b1ba-713e590acd3d
-
+Excel input is optional. The first column holds years or Excel dates and the
+remaining columns hold numeric category values:
 
 ```python
-from sjvisualizer import plot as plt
+from sjvisualizer import DataHandler
 
-plt.pie(excel="data/browsers.xlsx", 
-        title="Desktop Browser Market Share", 
-        unit="%")
+df = DataHandler.DataHandler(
+    excel_file="Examples/Data/browsers.xlsx",
+    number_of_frames=300,
+    tail_frames=0,
+    cache=False,
+).df
 ```
 
-### Animated Line Chart
-https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/deae9c3c-8a90-4e64-a036-39fd636746a7
-```python
-from sjvisualizer import plot as plt
+The loader interpolates dates and preserves the historical extra seven frames.
+Its default final hold is 180 frames. Caching defaults to local pickle files in
+`_pandas_cache/`; use `cache_excel=True` for an additional Excel cache. Use caches
+you generated yourself, since loading pickle data can execute code.
 
-colors = {
-    "United States": [
-        23,
-        60,
-        154
-    ],
-	"Russia": [
-        255,
-        50,
-        50
-    ]
-}
-
-plt.line(excel="data/military budget.xlsx",
-        title="Military Budget of Selected Countries",
-        sub_title="in millions of US$",
-        colors=colors)
-```
-
-### Animated Area Chart
-
-
-https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/6304bb63-1076-4da8-b044-595f763d3546
-
-
+To record, replace the playback call with:
 
 ```python
-from sjvisualizer import plot as plt
-
-colors = {
-    "United States": [
-        23,
-        60,
-        154
-    ],
-	"Russia": [
-        255,
-        50,
-        50
-    ]
-}
-
-plt.stacked_area(excel="data/Nuclear.xlsx",
-        title="Nuclear Warheads by Country",
-        colors=colors)
-```
-### Custom axis bounds (non-legacy package)
-
-Set line chart bounds independently; any bound left unset scales automatically:
-
-```python
-from sjvisualizer.charts.line_chart import line_chart
-from sjvisualizer.charts.bar_race import bar_race
-
-# Date x-axis; use numbers for x_min/x_max when supplying numeric x_df.
-lines = line_chart(df=df, canvas=cv,
-                   x_min="2000-01-01", x_max="2025-01-01",
-                   y_min=50, y_max=500)
-
-# Applies to the value axis for both horizontal and vertical bars.
-bars = bar_race(df=df, canvas=cv, axis_min=50)
+cv.play(df=df, fps=30, record=True, file_name="output.mp4")
 ```
 
-These options default to `None`, preserving automatic bounds. `y_min` overrides
-`y_zero_based`. If both bounds are set, the minimum must be less than the maximum.
-The former `x_lims=(a, b)` and `y_lims=(a, b)` options have been removed; use
-`x_min=a, x_max=b` and `y_min=a, y_max=b` instead.
-Bars are clipped at `axis_min`. Choose line chart
-bounds that include the data you want to display, as lines are not clipped.
+Recording uses OpenCV and screen capture: keep the canvas visible and unobscured.
+Capture dimensions default to the canvas size. Recording closes the Tk window
+when finished, so omit `cv.tk.mainloop()` in that case. Playback is synchronous;
+`show_fps=True` enables timing output.
 
-## Data format
-Currently sjvisualizer reads data from an Excel file. The format should be as shown in the picture below:
+## Migration and documentation
 
-<img width="377" alt="example data format" src="https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/fb5b0665-77f0-4d08-81d5-05c84e02804e">
+Implementations live in `sjvisualizer/core`, `charts`, `data`, and `utils`.
+Package-root module imports such as `from sjvisualizer import Canvas, LineChart`
+remain supported. `AreaPlot.area_plot` aliases the stacked area implementation.
+The separate `sjvisualizer_legacy` directory and old `plot` convenience API have
+been removed. Use chart classes with `Canvas.canvas` as shown above.
+Replace `x_lims`/`y_lims` with `x_min`, `x_max`, `y_min`, and `y_max`.
 
-In this file the first column should contain the dates, and each subsequent column holds the data for the data categories, in this example the different countries.
+- [Getting started](docs/getting-started.md)
+- [Example catalogue and migration behavior](docs/chart_migration.md)
+- [Chart configuration](docs/chart-options.md)
+- [Framework and playback notes](docs/framework-review.md)
+- [Map formats, sources, and rebuild instructions](sjvisualizer/maps/README.md)
+- [Contributing, validation, and packaging](docs/contributing.md)
 
-The date can either be shown as just the year, or as a full date as shown below. In this case, please make sure that Excel recognises the cell as a date.
-
-<img width="651" alt="example data format_long" src="https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/999d1f19-60d6-4a16-a5fb-ea2d17671013">
-
-
-## More advanced animations
-Using sjvisualizer, you can also mix and match chart types and positions like in the following example:
-
-
-https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/420ed4a0-5bfb-436a-8f61-4e77c640f78f
-
-
-## Learn sjvisualizer
-
-Want to learn more about sjvisualizer:
-- Find additional examples and full documentation on my [website](https://www.sjdataviz.com/software)
-- Or follow my course on [Udemy](https://www.sjdataviz.com/course-link)
-
-## Roadmap
-
-![Purple Colorful Modern Roadmap Timeline Infographic (1)](https://github.com/SjoerdTilmans/sjvisualizer/assets/37220662/542e02ec-113c-4fb7-a46a-fc3b65abddd2)
-
-
-## Usage
-
-Line charts automatically stack nearby end labels on date axes. When lines
-overtake each other, labels smoothly exchange vertical positions while keeping
-their endpoint x coordinates. Labels may briefly overlap during the swap.
-
-```python
-from sjvisualizer import LineChart
-
-chart = LineChart.line_chart(
-    df=df,
-    canvas=canvas,
-    avoid_label_overlap=True,  # also enables stacking for numeric x_df charts
-    label_padding=4,           # extra vertical space between labels, in pixels
-    label_relax_iterations=14, # frames per vertical label swap
-    label_relax_strength=0.18, # following speed; lower values move more slowly
-)
-```
-
-Set `avoid_label_overlap=False` to retain independent end labels. If the text
-cannot fit within the chart height, the stack extends below the plot instead
-of reducing the spacing below the text height.
-
-sjvisualizer is a free and open-source data animation library, please include the following attribution in any publications you use it in.
-```
-Made with sjvisualizer, the open-source data animation library for Python
-```
-## SJVisualizer Supporters
-<img width="556" height="280" alt="logos-exact_size_vontobel (1)" src="https://github.com/user-attachments/assets/0efa0605-068b-401d-92e8-252c70a09402" />
-
-Do you like what we are doing and want to support this project, get in touch at info@sjdataviz.com
-
-## Bubble and stacked area charts
-
-Run the self-contained demos from the repository root:
+Build the API documentation locally:
 
 ```shell
-python "11. Bubble Linear Axes.py"
-python "13. Area Chart.py"
+python -m pip install -r docs/requirements.txt
+python -m sphinx -b html docs docs/_build/html
 ```
 
-Both accept `--seconds 15 --fps 60` and `--smoke`. Bubble also accepts
-`--no-labels`; use `12. Bubble Log Axes.py` for logarithmic X and Y axes.
-Area and pie accept `--excel path/to/data.xlsx`; pie also accepts `--solid`
-and `--no-sort`.
+Open `docs/_build/html/index.html` after building.
 
-```python
-from sjvisualizer import Bubble, AreaChart
+## License and support
 
-bubbles = Bubble.bubble_chart(canvas=canvas, df_x=df_x, df_y=df_y, df_size=df_size)
-areas = AreaChart.area_chart(canvas=canvas, df=df, display_values=True)
-```
+Released under the [MIT License](LICENSE). Map sources and attribution are
+listed in the [map asset guide](sjvisualizer/maps/README.md).
+Attribution in your animations is appreciated:
 
-Implementations live in `sjvisualizer/charts/bubble.py` and
-`sjvisualizer/charts/area_chart.py`. Package-root compatibility imports remain
-available, including `AreaPlot.area_plot`, which now uses the complete stacked
-area implementation. The original legacy sources remain available for reference.
+> Made with sjvisualizer, the open-source data animation library for Python
 
-Bubble frames must have matching indices and categories. Bubble area is
-proportional to size; zero, negative, and missing sizes hide the bubble.
-Without `df_size`, all markers have diameter `marker_size`. Log axes hide
-nonpositive coordinates. Optional `x_min`, `x_max`, `y_min`, and `y_max` fix bounds.
-
-Area data needs sorted, unique, timezone-naive dates and nonnegative values.
-Missing/nonfinite values become zero. Colors follow column order, first on top.
-The legend supports `external_legend`, `display_legend`, `display_values`, and
-`unit`. Set `label_position="right"` to place labels outside the right edge,
-centered vertically in each band's latest height (used by `13. Area Chart.py`).
-Zero-height bands hide their labels. Alternatively, `label_position="area"`
-places contrasting labels inside each band, hiding labels that cannot fit.
-Event ranges use
-`events={"Name": ["01/01/2010", "01/01/2013"]}`.
-Rendering reuses polygons and samples at most `max_points=1000` history points;
-use `max_points=None` to preserve every point, including narrow spikes. Axis
-maxima use the full data. Intraday geometry is preserved; shared date ticks
-still format dates rather than hours.
-
-## Contributing
-Contributions are always welcome! A couple of ideas to contribute:
-- Improve documentation of this project. I have been thinking of setting up a readthedocs page.
-- Add additional example scripts. If you do so, please includy any data files and image files so that the example is fully running
-- Add new chart types. I have uploaded an example skeleton of new chart types in Empty.py, this is a setup that should serve as a good starting point. (https://github.com/SjoerdTilmans/sjvisualizer/blob/main/sjvisualizer/Empty.py)
-
-Before making any changes, please create your own development branch here on GitHub. Once ready submit a pull request and set me as reviewer!
-
-## Support this project
-If you like this project, please concider supporting me using PayPal [Buy me a Coffee](https://www.buymeacoffee.com/sjoerdtilmans).
-
-## License
-sjvisualizer is released under the MIT License. See the LICENSE file for more details.
-
-## Contact
-If you have any questions or suggestions regarding sjvisualizer, post it on my [forum](https://www.sjdataviz.com/howto-sjvisualizer).
+Questions and contributions are welcome through GitHub issues and pull requests.
+You can also contact info@sjdataviz.com or
+[support the project](https://www.buymeacoffee.com/sjoerdtilmans).

@@ -45,44 +45,13 @@ on disk but ignored because their filenames do not identify all settings.
 and default tail of 180 frames remain unchanged. Duplicate or missing source
 timestamps now raise `ValueError` instead of failing during reindexing.
 
-## Validation
+## Validation and limitations
 
-Run the headless regression suite:
+Run the numbered examples with `--smoke` as described in
+[contributing](contributing.md). The former regression tests and benchmark
+scripts are not present in this checkout; historical timings are omitted.
 
-```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -p 'test_*.py'
-```
-
-Run the coordinate benchmark:
-
-```powershell
-.\.venv\Scripts\python.exe tests/benchmark_framework.py
-```
-
-One local run measured:
-
-| Points per line | Previous scalar mapping | Bulk mapping | Speedup |
-| --- | ---: | ---: | ---: |
-| 100 | 52.4 µs | 18.2 µs | 2.89× |
-| 1,000 | 518.6 µs | 99.7 µs | 5.20× |
-| 10,000 | 5,315.9 µs | 828.5 µs | 6.42× |
-
-These measurements include coordinate-list construction, but exclude Tk
-rendering and screenshot encoding. Regression tests use fake Tk widgets and
-video writers; actual GUI appearance and encoded video were not validated.
-
-## Remaining migration work
-
-- `canvas.add_time()` imports `sjvisualizer.Date`, which is not yet migrated.
-  Several legacy examples and `tests/smoke_test.py` likewise reference chart
-  types absent from the new package.
-- Playback still owns a blocking loop with `tk.update()`. An `after()`-driven
-  player with explicit pause/stop/close state would better support embedding
-  in interactive applications, but needs a deliberate lifecycle/API change.
-- Line histories remain unbounded, and every frame sends the complete path to
-  Tk. Optional screen-space simplification or a history window could reduce
-  long-animation costs, but would change the displayed data.
-- Date positioning still rounds to whole days. Sub-day animation and
-  timezone-aware dates need a coordinated change across axes, lines and events.
-- Screen capture requires a visible, unobscured window. An offscreen renderer
-  would make exports independent of desktop state.
+Playback owns a synchronous loop with `tk.update()`. Line histories send the
+complete path to Tk each frame, so long animations can become expensive.
+Screen capture requires a visible, unobscured window. Offscreen video export
+and interactive pause/stop controls are not currently provided.

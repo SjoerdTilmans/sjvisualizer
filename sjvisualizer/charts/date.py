@@ -3,6 +3,7 @@ import pandas as pd
 from ..core.subplot import sub_plot
 from ..utils.colors import from_rgb
 from ..utils.format import format_date
+from ..utils.scaling import tk_font_size
 
 __all__ = ["date"]
 
@@ -21,7 +22,7 @@ class date(sub_plot):
         direction = -1 if self.anchor == "se" else 1
         self.obj_id = self.canvas.create_text(self.x_pos+direction*self.width/2,
             self.y_pos+direction*self.height/2, anchor=self.anchor,
-            font=(self.text_font, int(self.font_size)), fill=from_rgb(self.font_color))
+            font=(self.text_font, tk_font_size(self.font_size)), fill=from_rgb(self.font_color))
         self.update(time)
 
     def update(self, time):

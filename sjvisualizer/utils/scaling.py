@@ -26,6 +26,17 @@ def _get_scalefactor() -> float:
 
 SCALEFACTOR: float = _get_scalefactor()
 
+# Font sizes exposed by the public chart API are logical pixels.  Tk expects
+# positive font sizes in points, so compensate for Windows display scaling in
+# one place instead of letting individual charts apply different conversions.
+DEFAULT_FONT_SIZE: int = 25
+
+
+def tk_font_size(size: float, *, minimum: int = 1) -> int:
+    """Convert a public logical font size to the size expected by Tk."""
+
+    return max(int(minimum), int(float(size) / SCALEFACTOR))
+
 
 def _get_primary_monitor_size() -> tuple[int, int]:
     try:
