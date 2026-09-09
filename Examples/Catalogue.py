@@ -1,3 +1,12 @@
+from pathlib import Path
+import sys
+
+# Run against the sjvisualizer package in this checkout, even when this file is
+# launched directly from the Examples directory or another working directory.
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+EXAMPLE_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
 from sjvisualizer import Canvas
 from sjvisualizer import DataHandler
 from sjvisualizer import BarRace
@@ -15,10 +24,13 @@ def main(fps = 60, duration = 0.35):
     number_of_frames = duration*60*fps
 
     # load colors
-    with open('colors/colors.json') as f:
+    with (EXAMPLE_DIR / "colors" / "colors.json").open() as f:
         colors = json.load(f)
 
-    df = DataHandler.DataHandler(excel_file="data/browsers.xlsx", number_of_frames=number_of_frames).df
+    df = DataHandler.DataHandler(
+        excel_file=EXAMPLE_DIR / "Data" / "browsers.xlsx",
+        number_of_frames=number_of_frames,
+    ).df
 
     canvas = Canvas.canvas()
 
@@ -55,7 +67,8 @@ def main(fps = 60, duration = 0.35):
     # add an area chart
     area = AreaChart.area_chart(canvas=canvas, df=df, title="Area chart", colors=colors, height=chart_height,
                                 width=int(width / 6), x_pos=int(height / 3 * 2),
-                                y_pos=int(width / 5) + 1.05 * chart_height)
+                                y_pos=int(width / 5) + 1.05 * chart_height,
+                                label_position="right")
     canvas.add_sub_plot(area)
 
     # add time indication
@@ -64,11 +77,11 @@ def main(fps = 60, duration = 0.35):
     canvas.add_sub_plot(date)
 
     # adding a static image
-    img = StaticImage.static_image(canvas=canvas.canvas, file="assets/Made with SJvisualzer.png", width=height/20, height=height/20, x_pos=width/3*2.25, y_pos=height/1.4)
+    img = StaticImage.static_image(canvas=canvas.canvas, file=str(EXAMPLE_DIR / "assets" / "Made with SJvisualzer.png"), width=height/20, height=height/20, x_pos=width/3*2.25, y_pos=height/1.4)
     canvas.add_sub_plot(img)
 
     # save colors for next run
-    with open("colors/colors.json", "w") as file:
+    with (EXAMPLE_DIR / "colors" / "colors.json").open("w") as file:
         json.dump(colors, file, indent=4)
 
     canvas.play(fps=fps)

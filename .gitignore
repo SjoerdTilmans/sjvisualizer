@@ -1,2 +1,28 @@
+# Python environments and generated files
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+_pandas_cache/
+.pytest_cache/
+.coverage
+htmlcov/
 
-*.pyc
+# Documentation output and local editor settings
+docs/_build/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local credentials and rendered videos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.mp4
+*.avi
